@@ -30,8 +30,19 @@ let voxelEdges3D = null;
 let centerCross3D = null;
 /* Snapshot of the voxel set + figure-center offsets the last time the mesh
    was rebuilt. Used by toggleEdges3D so the user can flip the edge overlay
-   without re-running voxelShell() (and without restarting any sand fall). */
+   without re-running voxelShell(). */
 let _lastVoxels3D = null, _lastDims3D = null;
+
+/* Geometry signature — every state field that should force a mesh rebuild
+   when it changes. Anything outside this list (camera ops, edges/center
+   toggles, focus events, …) does NOT rebuild. */
+let _lastGeomSig3D = null;
+function _geomSig3D(){
+  return [
+    state.shape, state.size, state.width, state.height, state.depth,
+    state.cut, state.axis, state.render, state.algo, state.style3d, state.mode
+  ].join('|');
+}
 let distance3D = 70;
 let theta3D = Math.PI / 4;
 let phi3D = Math.PI / 3;
@@ -93,13 +104,13 @@ function resetCamera3D(){
   autoZoom3D();
 }
 
-/* autoZoom3D — pick a camera distance that fits the figure's projected
-   bounding sphere into the viewport with a fixed margin, regardless of
-   axis ratio. The bounding sphere radius for an axis-aligned box of size
-   (Dx, Dy, Dz) is half its space-diagonal. The needed distance to fit a
-   sphere of radius R into the camera's vertical FOV (with margin m) is
-   roughly  R / sin(fov/2 - m). We over-fit slightly with `marginFactor`
-   so the figure never crops on any rotation. */
+/* autoZoom3D — fit the figure's projected silhouette into the camera
+   viewport. We project all 8 bounding-box corners onto the camera's
+   right + up basis at the current orbit angle (theta/phi), then size
+   the distance so the larger of the two extents exactly fills the FOV.
+   This is tighter than using the bounding sphere (which is the
+   rotation-worst-case) so flat ellipsoids — e.g. 16 × 9 × 16 — fill
+   the frame instead of getting lost in the middle. */
 function autoZoom3D(){
   if (!camera3D) return;
   const isEllipse = state.shape === 'ellipse';
@@ -107,16 +118,35 @@ function autoZoom3D(){
   const Dy = isEllipse ? state.height : state.size;
   const Dz = isEllipse ? state.depth : state.size;
 
-  const R = 0.5 * Math.sqrt(Dx*Dx + Dy*Dy + Dz*Dz);
+  // Camera-space right/up basis at the current orbit angle.
+  const dir = new THREE.Vector3(
+    Math.sin(phi3D) * Math.cos(theta3D),
+    Math.cos(phi3D),
+    Math.sin(phi3D) * Math.sin(theta3D)
+  ); // camera position direction (normalised)
+  const view = dir.clone().negate();
+  const worldUp = new THREE.Vector3(0, 1, 0);
+  const right = new THREE.Vector3().crossVectors(view, worldUp);
+  if (right.lengthSq() < 1e-6) right.set(1, 0, 0); // looking straight up/down
+  right.normalize();
+  const up = new THREE.Vector3().crossVectors(right, view).normalize();
+
+  const hx = Dx / 2, hy = Dy / 2, hz = Dz / 2;
+  let maxR = 0, maxU = 0;
+  const corner = new THREE.Vector3();
+  for (const sx of [-1, 1]) for (const sy of [-1, 1]) for (const sz of [-1, 1]){
+    corner.set(sx * hx, sy * hy, sz * hz);
+    const r = Math.abs(corner.dot(right));
+    const u = Math.abs(corner.dot(up));
+    if (r > maxR) maxR = r;
+    if (u > maxU) maxU = u;
+  }
+
   const vFov = camera3D.fov * Math.PI / 180;
   const hFov = 2 * Math.atan(Math.tan(vFov / 2) * camera3D.aspect);
-  // Account for both axes — the tighter one (usually vertical) wins.
-  const distV = R / Math.sin(vFov / 2);
-  const distH = R / Math.sin(hFov / 2);
-  const marginFactor = 1.10;  // 10 % breathing room
-  // No artificial floor — small ellipsoids should let the camera get
-  // genuinely close so the figure fills the frame proportionally.
-  distance3D = Math.max(2, Math.max(distV, distH) * marginFactor);
+  const distV = maxU / Math.tan(vFov / 2);
+  const distH = maxR / Math.tan(hFov / 2);
+  distance3D = Math.max(2, Math.max(distV, distH) * 1.15);
   updateCamera3D();
 }
 
@@ -203,6 +233,15 @@ function buildCenterCross3D(Dx, Dy, Dz){
 
 function update3D(){
   if (!_frame3DReady) return;
+  // Skip the rebuild when geometry hasn't actually changed — protects
+  // against accidental triggers (clicks, focus events) erasing state.
+  const sig = _geomSig3D();
+  if (_lastGeomSig3D === sig && voxelMesh3D){
+    scheduleRender3D();
+    return;
+  }
+  _lastGeomSig3D = sig;
+
   disposeVoxelMesh();
   disposeCenterCross();
 
