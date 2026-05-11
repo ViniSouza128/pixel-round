@@ -109,8 +109,8 @@ function resetCamera3D(){
    The bounding sphere radius (half-diagonal of the AABB) is the
    worst-case projected extent regardless of orientation, so the model
    never clips the canvas edges no matter where the user drags to.
-   autoZoom3D() is also called on every drag frame so the distance
-   self-corrects continuously as the user rotates. */
+   Called on figure changes and on double-click reset only. User-applied
+   wheel/pinch zoom is preserved across drags. */
 function autoZoom3D(){
   if (!camera3D) return;
   const isEllipse = state.shape === 'ellipse';

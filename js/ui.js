@@ -427,8 +427,10 @@ function setup3DPointer(){
     theta3D += dx * 0.005;
     phi3D   -= dy * 0.005;
     phi3D = Math.max(0.05, Math.min(Math.PI - 0.05, phi3D));
-    // Re-fit on every drag frame so the margin is preserved at any angle.
-    autoZoom3D();
+    // Only re-orient the camera; never re-fit during a drag. Any
+    // user-applied zoom (wheel, pinch) must survive a rotation —
+    // double-click resets the zoom explicitly.
+    updateCamera3D();
   });
   window.addEventListener('mouseup',   () => { _drag = null; });
   window.addEventListener('mouseleave',() => { _drag = null; });
@@ -447,8 +449,8 @@ function setup3DPointer(){
     theta3D += dx * 0.005;
     phi3D   -= dy * 0.005;
     phi3D = Math.max(0.05, Math.min(Math.PI - 0.05, phi3D));
-    // Re-fit on every drag frame so the margin is preserved at any angle.
-    autoZoom3D();
+    // Rotation only — never re-fit on drag (preserves user zoom).
+    updateCamera3D();
   }, { passive: true });
   frame.addEventListener('touchend',   () => { _drag = null; });
   frame.addEventListener('touchcancel',() => { _drag = null; });
