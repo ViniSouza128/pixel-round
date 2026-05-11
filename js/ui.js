@@ -1,0 +1,561 @@
+/* =============================================================================
+   Pixel Round — js/ui.js
+   All Rights Reserved.
+
+   Wires interactions:
+     - Route nav via icon-btns ([data-route]) and brand logo (back to tool)
+     - Mode/shape toggles in topbar center
+     - Render/algo/style3d pills
+     - Sliders (Size, W, H, D, Cut) — Cut.max is dynamic per axis
+     - Cut X|Y toggle resets the other axis
+     - Theme cycle (T or theme button); Settings prefs (data-pref)
+     - Canvas corner buttons:
+         grid    → toggles 2D grid OR 3D wireframe (mode-aware)
+         center  → toggles center guides
+         overlay → toggles perfect-circle overlay (2D only)
+         zoom    → toggles top-left quadrant zoom (2D only)
+         info    → toggles info chip
+         download→ PNG export
+     - Pinch (2D: CSS scale; 3D: distance + midpoint rotation)
+     - Wheel zoom + click-drag rotation in 3D
+     - Keyboard: G C D T I M S
+   ============================================================================ */
+
+/* ---------- ROUTE NAVIGATION ---------------------------------------------- */
+function goRoute(route){
+  state.route = route;
+  document.querySelectorAll('.route').forEach(r => {
+    r.hidden = (r.dataset.route !== route);
+  });
+  // Icon button active states (info / settings)
+  document.querySelectorAll('.icon-btn[data-route]').forEach(b => {
+    b.classList.toggle('active', b.dataset.route === route);
+  });
+  if (route === 'tool') requestAnimationFrame(() => { resize3D(); redraw(); });
+  Sfx.click();
+}
+
+/* ---------- THEME --------------------------------------------------------- */
+function cycleTheme(){
+  setTheme(getTheme() === 'dark' ? 'light' : 'dark');
+  redraw();
+  Sfx.pop();
+}
+
+/* ---------- SYNCSHAPE (visibility by mode/shape) ------------------------- */
+function syncShape(){
+  // Slider visibility
+  const showSize  = state.shape === 'circle';
+  const showW     = state.shape === 'ellipse';
+  const showH     = state.shape === 'ellipse';
+  const showDepth = state.shape === 'ellipse' && state.mode === '3d';
+  document.querySelector('[data-dim=size]').hidden   = !showSize;
+  document.querySelector('[data-dim=width]').hidden  = !showW;
+  document.querySelector('[data-dim=height]').hidden = !showH;
+  document.querySelector('[data-dim=depth]').hidden  = !showDepth;
+
+  // 2D shows algorithm pills; 3D shows style pills
+  document.querySelectorAll('.algo-pill').forEach(b => b.hidden = state.mode === '3d');
+  document.querySelectorAll('.style-pill').forEach(b => b.hidden = state.mode !== '3d');
+
+  // Cut row only in 3D
+  document.querySelector('.tool-grid').classList.toggle('has-cut', state.mode === '3d');
+
+  // Update Cut slider max based on selected axis
+  syncCutMax();
+
+  // Mode/shape button labels (Circle↔Sphere, Ellipse↔Ellipsoid)
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === state.mode));
+  document.querySelectorAll('.shape-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.shape === state.shape);
+    const lbl = SHAPE_LABELS[b.dataset.shape]?.[state.mode];
+    if (lbl) b.textContent = lbl;
+  });
+
+  // Canvas-corner buttons that don't apply to current mode
+  const overlayBtn = document.querySelector('[data-act=overlay]');
+  const zoomBtn    = document.querySelector('[data-act=zoom]');
+  if (overlayBtn) overlayBtn.hidden = state.mode === '3d';
+  if (zoomBtn)    zoomBtn.hidden    = state.mode === '3d';
+
+  // Body class drives canvas visibility (CSS)
+  document.body.classList.toggle('mode3d', state.mode === '3d');
+}
+
+/* Cut slider max = current axis dimension. So you can never cut past the
+   figure (a Cut of 14 on axis X with width 14 means "cut everything"). */
+/* Cut is stored as a fraction (cutPct ∈ [0..1]) of the chosen axis size.
+   When size changes the cut stays proportional — e.g. cutPct=0.5 always
+   removes half the figure, snapping to the nearest integer voxel. */
+function syncCutMax(){
+  const cs = document.querySelector('[data-slider=cut]');
+  if (!cs) return;
+  const isEllipse = state.shape === 'ellipse';
+  const Dx = isEllipse ? state.width : state.size;
+  const Dy = isEllipse ? state.height : state.size;
+  const maxVal = state.axis === 'x' ? Dx : Dy;
+  cs.max = maxVal;
+  cs.min = 0;
+  const pct = (state.cutPct == null) ? 1 : state.cutPct;
+  const absVal = Math.round(pct * maxVal);
+  cs.value = Math.max(0, Math.min(maxVal, absVal));
+  state.cut = +cs.value;
+  setSliderPct(cs);
+  const cv = document.querySelector('[data-val=cut]');
+  if (cv) cv.textContent = cs.value;
+}
+
+/* ---------- REDRAW ------------------------------------------------------- */
+let _redrawRaf = null;
+function redraw(){
+  if (_redrawRaf) cancelAnimationFrame(_redrawRaf);
+  _redrawRaf = requestAnimationFrame(() => {
+    _redrawRaf = null;
+    if (state.mode === '2d'){
+      draw2D(dom.canvas2D);
+    } else {
+      if (init3D(dom.canvas3D)) update3D();
+    }
+    updateInfoChip();
+    savePrefs();
+  });
+}
+
+/* ---------- CANVAS PULSE -------------------------------------------------- */
+let _pulseTimer = null;
+function pulseCanvas(){
+  if (!dom.canvasFrame) return;
+  dom.canvasFrame.classList.remove('pulse');
+  void dom.canvasFrame.offsetWidth;
+  dom.canvasFrame.classList.add('pulse');
+  clearTimeout(_pulseTimer);
+  _pulseTimer = setTimeout(() => dom.canvasFrame.classList.remove('pulse'), 200);
+}
+
+/* ---------- TOAST -------------------------------------------------------- */
+function toast(msg, kind = ''){
+  if (!dom.toastHost) return;
+  const el = document.createElement('div');
+  el.className = 'toast ' + (kind || '');
+  el.textContent = msg;
+  dom.toastHost.appendChild(el);
+  setTimeout(() => {
+    el.classList.add('out');
+    setTimeout(() => el.remove(), 250);
+  }, 1700);
+}
+
+/* ---------- RESET -------------------------------------------------------- */
+function resetState(){
+  Object.assign(state, {
+    mode:'2d', shape:'circle', render:'filled', algo:'euclidean', style3d:'classic',
+    size:16, width:20, height:12, depth:14, cut:16, cutPct:1.0, axis:'y',
+    grid:true, center:false, overlay:false, zoomBtn:false, info:false, zoom2D:1,
+    edges3d:true,
+  });
+  document.querySelectorAll('input[type=range]').forEach(s => {
+    const k = s.dataset.slider;
+    if (k && (k in state)) s.value = state[k];
+    setSliderPct(s);
+  });
+  document.querySelectorAll('[data-pref]').forEach(p => {
+    if (p.dataset.pref in state) p.checked = !!state[p.dataset.pref];
+  });
+  ['render','algo'].forEach(k =>
+    document.querySelectorAll(`[data-${k}]`).forEach(p => p.classList.toggle('active', p.dataset[k] === state[k]))
+  );
+  document.querySelectorAll('[data-3dstyle]').forEach(p =>
+    p.classList.toggle('active', p.dataset['3dstyle'] === state.style3d)
+  );
+  document.querySelectorAll('[data-axis]').forEach(b => b.classList.toggle('active', b.dataset.axis === state.axis));
+  document.querySelectorAll('[data-val]').forEach(v => {
+    const k = v.dataset.val;
+    if (k && k in state) v.textContent = state[k];
+  });
+  document.querySelectorAll('[data-act=grid],[data-act=center],[data-act=overlay],[data-act=zoom]').forEach(b => {
+    const act = b.dataset.act === 'zoom' ? 'zoomBtn' : b.dataset.act;
+    b.classList.toggle('active', !!state[act]);
+  });
+  state.zoom2D = 1;
+  syncShape();
+  if (state.mode === '3d') resetCamera3D();
+  redraw();
+  Sfx.ok();
+  toast('Reset', 'ok');
+}
+
+/* Returns true if `el` is a non-navigation tool toggle — render/algo/style
+   pills, mode/shape/axis buttons, canvas-corner buttons, reset/download
+   icon-btns. We use this to auto-leave Info/Settings the moment the user
+   touches anything that would change the figure: clicking a toggle while
+   on an inspector route should snap us back to the canvas. */
+function isToolToggle(el){
+  if (!el) return false;
+  if (el.dataset.route || el.dataset.act === 'logo' || el.dataset.act === 'theme') return false;
+  if (el.dataset.act === 'info-chip') return false;
+  return !!(el.dataset.render || el.dataset.algo || el.dataset['3dstyle']
+         || el.dataset.mode   || el.dataset.shape|| el.dataset.axis
+         || el.dataset.act);
+}
+
+/* ---------- CLICK DELEGATION --------------------------------------------- */
+function setupClickDelegation(){
+  document.body.addEventListener('click', e => {
+    const t = e.target.closest('[data-act],[data-route],[data-render],[data-algo],[data-3dstyle],[data-mode],[data-shape],[data-axis],[data-theme]');
+    if (!t) return;
+
+    // Route nav (icon-btns + brand logo). Clicking the same route again
+    // toggles back to tool, so info/settings act like inspectors.
+    if (t.dataset.route){
+      const next = (state.route === t.dataset.route && t.dataset.route !== 'tool') ? 'tool' : t.dataset.route;
+      goRoute(next);
+      return;
+    }
+
+    // If we're on Info or Settings and the user touches a tool toggle,
+    // return to the canvas first so the change is visible.
+    if (state.route !== 'tool' && isToolToggle(t)){
+      goRoute('tool');
+    }
+
+    const a = t.dataset.act;
+    if (a === 'logo'){ goRoute('tool'); return; }
+    if (a === 'theme'){ cycleTheme(); return; }
+
+    if (a === 'info-chip'){
+      const chip = document.querySelector('.info-chip');
+      chip?.classList.toggle('open');
+      Sfx.hover();
+      return;
+    }
+
+    if (a === 'grid'){
+      if (state.mode === '3d'){
+        state.edges3d = !state.edges3d;
+        t.classList.toggle('active', state.edges3d);
+        Sfx.click();
+        if (typeof toggleEdges3D === 'function') toggleEdges3D();
+        else update3D();
+        toast(`Edges ${state.edges3d ? 'on' : 'off'}`);
+      } else {
+        state.grid = !state.grid;
+        t.classList.toggle('active', state.grid);
+        const inp = document.querySelector('[data-pref=grid]');
+        if (inp) inp.checked = state.grid;
+        Sfx.click(); redraw(); toast(`Grid ${state.grid ? 'on' : 'off'}`);
+      }
+      return;
+    }
+
+    if (a === 'center'){
+      state.center = !state.center;
+      t.classList.toggle('active', state.center);
+      const inp = document.querySelector('[data-pref=center]');
+      if (inp) inp.checked = state.center;
+      Sfx.click();
+      if (state.mode === '3d') update3D(); else redraw();
+      return;
+    }
+
+    if (a === 'overlay'){
+      state.overlay = !state.overlay;
+      t.classList.toggle('active', state.overlay);
+      Sfx.click(); redraw(); return;
+    }
+
+    if (a === 'zoom'){
+      // Toggle on/off (not cumulative)
+      state.zoomBtn = !state.zoomBtn;
+      t.classList.toggle('active', state.zoomBtn);
+      Sfx.click(); redraw(); return;
+    }
+
+    if (a === 'download'){ downloadPNG(); Sfx.ok(); toast('PNG saved', 'ok'); return; }
+    if (a === 'reset'){ resetState(); return; }
+
+    // Pills
+    if (t.dataset.render){
+      state.render = t.dataset.render;
+      document.querySelectorAll('[data-render]').forEach(p => p.classList.toggle('active', p === t));
+      Sfx.click(); redraw(); return;
+    }
+    if (t.dataset.algo){
+      state.algo = t.dataset.algo;
+      document.querySelectorAll('[data-algo]').forEach(p => p.classList.toggle('active', p === t));
+      Sfx.click(); redraw(); return;
+    }
+    if (t.dataset['3dstyle']){
+      state.style3d = t.dataset['3dstyle'];
+      document.querySelectorAll('[data-3dstyle]').forEach(p => p.classList.toggle('active', p === t));
+      Sfx.click(); update3D(); return;
+    }
+
+    if (t.dataset.mode){
+      if (state.mode === t.dataset.mode) return;
+      state.mode = t.dataset.mode;
+      // Grid button reflects different state per mode: in 2D it's the cell
+      // grid toggle; in 3D it's the edge-overlay toggle (default ON).
+      const gridBtn = document.querySelector('[data-act=grid]');
+      if (gridBtn) gridBtn.classList.toggle('active',
+        state.mode === '3d' ? state.edges3d : state.grid);
+      syncShape();
+      if (state.mode === '3d'){
+        if (init3D(dom.canvas3D)){ resize3D(); autoZoom3D(); update3D(); }
+      } else {
+        redraw();
+      }
+      Sfx.pop(); return;
+    }
+    if (t.dataset.shape){
+      if (state.shape === t.dataset.shape) return;
+      state.shape = t.dataset.shape;
+      syncShape();
+      if (state.mode === '3d'){ autoZoom3D(); update3D(); }
+      else { redraw(); }
+      Sfx.pop(); return;
+    }
+    if (t.dataset.axis){
+      if (state.axis === t.dataset.axis) return;
+      state.axis = t.dataset.axis;
+      // Switching axis keeps the same percentage cut on the new axis.
+      syncCutMax();
+      document.querySelectorAll('[data-axis]').forEach(b => b.classList.toggle('active', b === t));
+      Sfx.click(); update3D(); return;
+    }
+
+    if (t.dataset.theme){ setTheme(t.dataset.theme); redraw(); Sfx.pop(); return; }
+  });
+}
+
+/* ---------- SLIDERS ------------------------------------------------------ */
+/* Each <input type=range> carries its baseline in the HTML `value="…"`
+   attribute (mirrored on input.defaultValue). Double-clicking the slider
+   snaps it back to that value, re-fires the input handler, and (for Cut)
+   restores the "no cut" / 100% position. */
+function setupSliders(){
+  document.querySelectorAll('input[type=range]').forEach(sl => {
+    sl.addEventListener('dblclick', () => {
+      const k = sl.dataset.slider;
+      if (k === 'cut'){
+        state.cutPct = 1.0;
+        sl.value = sl.max;
+      } else {
+        sl.value = sl.defaultValue;
+      }
+      sl.dispatchEvent(new Event('input', { bubbles: true }));
+      Sfx.pop();
+    });
+    sl.addEventListener('input', () => {
+      const k = sl.dataset.slider;
+      if (!k) return;
+      // Touching a slider while on Info/Settings snaps us back to the tool
+      // so the change can be seen.
+      if (state.route !== 'tool') goRoute('tool');
+      state[k] = +sl.value;
+      const valEl = document.querySelector(`[data-val=${k}]`);
+      if (valEl) valEl.textContent = sl.value;
+      setSliderPct(sl);
+      if (k === 'cut'){
+        const max = +sl.max || 1;
+        state.cutPct = max > 0 ? (+sl.value / max) : 1;
+        if (state.mode === '3d') update3D();
+      } else {
+        syncCutMax();
+        if (state.mode === '3d'){ autoZoom3D(); update3D(); }
+        else { redraw(); pulseCanvas(); }
+      }
+      if (+sl.value % 4 === 0) Sfx.tick();
+    });
+  });
+}
+
+/* ---------- PREFS (settings toggles) ------------------------------------ */
+function setupPrefs(){
+  document.querySelectorAll('[data-pref]').forEach(t => {
+    t.addEventListener('change', () => {
+      const k = t.dataset.pref;
+      if (k === 'sound'){
+        Sfx.setEnabled(t.checked);
+        toast(`Sounds ${t.checked ? 'on' : 'off'}`);
+      } else if (k in state){
+        state[k] = t.checked;
+        // Sync canvas-corner buttons
+        const btn = document.querySelector(`[data-act=${k}]`);
+        if (btn) btn.classList.toggle('active', t.checked);
+        redraw();
+        toast(`${k} ${t.checked ? 'on' : 'off'}`);
+      }
+      Sfx.click();
+      savePrefs();
+    });
+  });
+}
+
+/* ---------- 3D POINTER INPUT (mouse + touch single-finger) -------------- */
+let _drag = null;
+function setup3DPointer(){
+  const frame = dom.canvasFrame;
+  if (!frame) return;
+
+  frame.addEventListener('wheel', e => {
+    e.preventDefault();
+    if (state.mode === '3d'){
+      distance3D *= e.deltaY > 0 ? 1.08 : 0.93;
+      distance3D = Math.max(20, Math.min(400, distance3D));
+      updateCamera3D();
+    } else {
+      const nz = (state.zoom2D || 1) * (e.deltaY > 0 ? 0.92 : 1.09);
+      state.zoom2D = Math.max(0.5, Math.min(8, nz));
+      redraw();
+    }
+  }, { passive: false });
+
+  frame.addEventListener('dblclick', () => {
+    if (state.mode === '3d'){ resetCamera3D(); }
+    else { state.zoom2D = 1; redraw(); }
+  });
+
+  frame.addEventListener('mousedown', e => {
+    if (state.mode !== '3d') return;
+    _drag = { x: e.clientX, y: e.clientY };
+  });
+  window.addEventListener('mousemove', e => {
+    if (!_drag) return;
+    const dx = e.clientX - _drag.x;
+    const dy = e.clientY - _drag.y;
+    _drag.x = e.clientX; _drag.y = e.clientY;
+    theta3D += dx * 0.005;
+    phi3D   -= dy * 0.005;
+    phi3D = Math.max(0.05, Math.min(Math.PI - 0.05, phi3D));
+    updateCamera3D();
+  });
+  window.addEventListener('mouseup',   () => { _drag = null; });
+  window.addEventListener('mouseleave',() => { _drag = null; });
+
+  frame.addEventListener('touchstart', e => {
+    if (state.mode !== '3d') return;
+    if (e.touches.length === 1){
+      _drag = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }
+  }, { passive: true });
+  frame.addEventListener('touchmove', e => {
+    if (!_drag || e.touches.length !== 1) return;
+    const dx = e.touches[0].clientX - _drag.x;
+    const dy = e.touches[0].clientY - _drag.y;
+    _drag.x = e.touches[0].clientX; _drag.y = e.touches[0].clientY;
+    theta3D += dx * 0.005;
+    phi3D   -= dy * 0.005;
+    phi3D = Math.max(0.05, Math.min(Math.PI - 0.05, phi3D));
+    updateCamera3D();
+  }, { passive: true });
+  frame.addEventListener('touchend',   () => { _drag = null; });
+  frame.addEventListener('touchcancel',() => { _drag = null; });
+}
+
+/* ---------- PINCH ZOOM (2D + 3D) ---------------------------------------- */
+function setupPinch(){
+  const frame = dom.canvasFrame;
+  if (!frame) return;
+
+  let pinchStartDist = 0;
+  let pinchStart3D = 70;
+  let pinchStart2DZoom = 1;
+  let pinchPrevMid = { x:0, y:0 };
+  let isPinching = false;
+
+  const dist = (a, b) => Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+  const mid  = (a, b) => ({ x:(a.clientX + b.clientX)/2, y:(a.clientY + b.clientY)/2 });
+
+  frame.addEventListener('touchstart', e => {
+    if (e.touches.length === 2){
+      isPinching = true;
+      pinchStartDist = dist(e.touches[0], e.touches[1]);
+      pinchStart3D = distance3D;
+      pinchStart2DZoom = state.zoom2D || 1;
+      pinchPrevMid = mid(e.touches[0], e.touches[1]);
+      _drag = null;
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  frame.addEventListener('touchmove', e => {
+    if (!isPinching || e.touches.length !== 2) return;
+    e.preventDefault();
+    const d = dist(e.touches[0], e.touches[1]);
+    if (pinchStartDist <= 0) return;
+    const ratio = d / pinchStartDist;
+    const m = mid(e.touches[0], e.touches[1]);
+    const dx = m.x - pinchPrevMid.x;
+    const dy = m.y - pinchPrevMid.y;
+    pinchPrevMid = m;
+
+    if (state.mode === '3d'){
+      let nd = pinchStart3D / ratio;
+      nd = Math.max(20, Math.min(400, nd));
+      distance3D = nd;
+      theta3D += dx * 0.005;
+      phi3D   -= dy * 0.005;
+      phi3D = Math.max(0.05, Math.min(Math.PI - 0.05, phi3D));
+      updateCamera3D();
+    } else {
+      let nz = pinchStart2DZoom * ratio;
+      nz = Math.max(0.5, Math.min(8, nz));
+      state.zoom2D = nz;
+      redraw();
+    }
+  }, { passive: false });
+
+  const endPinch = e => {
+    if (e.touches.length < 2){
+      isPinching = false;
+      pinchStartDist = 0;
+    }
+  };
+  frame.addEventListener('touchend', endPinch);
+  frame.addEventListener('touchcancel', endPinch);
+}
+
+/* ---------- KEYBOARD ----------------------------------------------------- */
+function setupKeyboard(){
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    const k = e.key.toLowerCase();
+    if (k === 'g'){
+      const btn = document.querySelector('[data-act=grid]');
+      btn?.click();
+    }
+    else if (k === 'c'){
+      state.center = !state.center;
+      document.querySelector('[data-act=center]')?.classList.toggle('active', state.center);
+      const inp = document.querySelector('[data-pref=center]');
+      if (inp) inp.checked = state.center;
+      redraw();
+    }
+    else if (k === 'd'){ downloadPNG(); toast('PNG saved', 'ok'); }
+    else if (k === 't'){ cycleTheme(); }
+    else if (k === 'i'){ document.querySelector('.info-chip')?.classList.toggle('open'); }
+    else if (k === 'm'){
+      state.mode = state.mode === '2d' ? '3d' : '2d';
+      syncShape();
+      if (state.mode === '3d'){
+        if (init3D(dom.canvas3D)){ resize3D(); autoZoom3D(); update3D(); }
+      } else redraw();
+      Sfx.pop();
+    }
+    else if (k === 's'){
+      Sfx.setEnabled(!Sfx.isEnabled());
+      const inp = document.querySelector('[data-pref=sound]');
+      if (inp) inp.checked = Sfx.isEnabled();
+      toast(`Sounds ${Sfx.isEnabled() ? 'on' : 'off'}`);
+    }
+  });
+}
+
+function setupUI(){
+  setupClickDelegation();
+  setupSliders();
+  setupPrefs();
+  setup3DPointer();
+  setupPinch();
+  setupKeyboard();
+}

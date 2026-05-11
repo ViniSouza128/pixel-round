@@ -1,0 +1,60 @@
+Copyright (c) 2026 Vinicius Souza. ALL RIGHTS RESERVED.
+
+This software, including but not limited to all source code, HTML
+markup, stylesheets, design tokens, layout, copy, icons, sounds,
+graphics, and any other assets contained in this repository
+(the "Software"), is the proprietary work of the copyright holder.
+
+PERMISSIONS GRANTED
+===================
+None. No permission is granted to use, copy, modify, merge, publish,
+distribute, sublicense, or sell the Software in any form, in whole or
+in part, for any purpose, commercial or non-commercial.
+
+EXPLICITLY PROHIBITED
+=====================
+Without prior written permission of the copyright holder, you may NOT:
+
+  1. Copy, fork, mirror, host, embed, redistribute, or upload the
+     Software (or any portion of it) to any other repository, server,
+     CDN, package registry, marketplace, or platform.
+  2. Create derivative works, ports, translations, adaptations, or
+     re-implementations based on the Software, its design system, its
+     visual identity, or its specific feature set.
+  3. Use the Software, its name, its branding, or any portion of its
+     code or design in any commercial product or service.
+  4. Use any artificial-intelligence training pipeline, dataset, or
+     model-training procedure to ingest the Software or any portion of
+     it. The Software is not authorized training material.
+  5. Strip, alter, or remove this license notice, the copyright
+     attribution, or the project's public branding when accessing,
+     viewing, or interacting with the Software.
+
+The Software is published as a static web application, which means
+its source code is visible to anyone who loads the page (via View
+Source, devtools, or "save page as"). VISIBILITY DOES NOT IMPLY
+PERMISSION. The act of viewing, downloading the page locally, or
+running it in a browser does not grant any of the rights enumerated
+above. All rights remain reserved.
+
+THIRD-PARTY DEPENDENCIES
+========================
+Third-party libraries, fonts, and toolchains used by the Software
+retain their own respective licenses; see NOTICE.md for attribution.
+Those licenses cover only those specific third-party components, not
+the Software as a whole.
+
+NO WARRANTY
+===========
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM, OUT OF, OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+CONTACT
+=======
+For licensing inquiries (commercial use, partnerships, embedding in
+other products) please open an issue on the project repository.

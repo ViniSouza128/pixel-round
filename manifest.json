@@ -1,0 +1,14 @@
+{
+  "name": "Pixel Round",
+  "short_name": "Pixel Round",
+  "description": "A pixel-perfect generator for circles, ellipses, spheres and ellipsoids.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#FAFAF7",
+  "theme_color": "#FF4D4D",
+  "icons": [
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
