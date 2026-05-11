@@ -24,6 +24,7 @@
   --on-accent:#FFFFFF;
   --overlay:#3a3530;
   --grid:rgba(40,30,25,.32);
+  --grid-inner:rgba(255,255,255,.30);
   --center:rgba(40,40,50,.22);
   --track-empty:#d8d1bc;
   --radius:12px;
@@ -46,6 +47,7 @@
   --on-accent:#FFFFFF;
   --overlay:#d8d8e0;
   --grid:rgba(255,255,255,.18);
+  --grid-inner:rgba(255,255,255,.22);
   --center:rgba(220,220,235,.20);
   --track-empty:#2a2a36;
   --radius:12px;

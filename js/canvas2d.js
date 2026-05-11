@@ -23,6 +23,10 @@ function getGridColor(){
   const v = getComputedStyle(document.documentElement).getPropertyValue('--grid').trim();
   return v || 'rgba(0,0,0,.07)';
 }
+function getGridInnerColor(){
+  const v = getComputedStyle(document.documentElement).getPropertyValue('--grid-inner').trim();
+  return v || 'rgba(255,255,255,.28)';
+}
 function getCenterColor(){
   const v = getComputedStyle(document.documentElement).getPropertyValue('--center').trim();
   return v || 'rgba(100,30,30,.22)';
@@ -31,26 +35,46 @@ function getCenterColor(){
 /* Snap to half-pixel for 1-px stroke crispness */
 function snap(v){ return Math.floor(v) + 0.5; }
 
-/* Draw grid lines across the FULL canvas (extends past the shape bounds) */
-function drawFullGrid(ctx, ps, ox, oy, cW, cH){
+/* Draw grid lines across the FULL canvas (extends past the shape bounds).
+   filledRects is an optional array of [x,y,w,h] pixel rects for filled cells;
+   when provided, the grid inside those cells is redrawn in a lighter color
+   so it stays visible against the figure's fill color. */
+function drawFullGrid(ctx, ps, ox, oy, cW, cH, filledRects){
+  const sx = ((ox % ps) + ps) % ps - ps;
+  const sy = ((oy % ps) + ps) % ps - ps;
+
+  /* Dark grid over the entire canvas */
   ctx.save();
   ctx.strokeStyle = getGridColor();
   ctx.lineWidth = 1;
   ctx.beginPath();
-  const sx = ((ox % ps) + ps) % ps - ps;
-  const sy = ((oy % ps) + ps) % ps - ps;
   for (let x = sx; x <= cW + ps; x += ps){
-    const v = snap(x);
-    ctx.moveTo(v, 0);
-    ctx.lineTo(v, cH);
+    const v = snap(x); ctx.moveTo(v, 0); ctx.lineTo(v, cH);
   }
   for (let y = sy; y <= cH + ps; y += ps){
-    const v = snap(y);
-    ctx.moveTo(0, v);
-    ctx.lineTo(cW, v);
+    const v = snap(y); ctx.moveTo(0, v); ctx.lineTo(cW, v);
   }
   ctx.stroke();
   ctx.restore();
+
+  /* Light grid clipped to filled cells for contrast against the figure */
+  if (filledRects && filledRects.length > 0){
+    ctx.save();
+    ctx.beginPath();
+    for (const [rx, ry, rw, rh] of filledRects) ctx.rect(rx, ry, rw, rh);
+    ctx.clip();
+    ctx.strokeStyle = getGridInnerColor();
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (let x = sx; x <= cW + ps; x += ps){
+      const v = snap(x); ctx.moveTo(v, 0); ctx.lineTo(v, cH);
+    }
+    for (let y = sy; y <= cH + ps; y += ps){
+      const v = snap(y); ctx.moveTo(0, v); ctx.lineTo(cW, v);
+    }
+    ctx.stroke();
+    ctx.restore();
+  }
 }
 
 /* Center guides: 1 cell for odd diameters, 2 cells for even (extends past
@@ -153,6 +177,7 @@ function draw2D(canvas){
   // 1. Fill cells — run REAL algorithm
   const fRaw = computeFilled(Gx, Gy, cx, cy, rx, ry, state.algo);
   const f    = applyRenderMode(fRaw, Gx, Gy, state.render);
+  const filledRects = [];
   ctx.fillStyle = getAccentColor();
   for (let j = 0; j < Gy; j++){
     for (let i = 0; i < Gx; i++){
@@ -162,14 +187,16 @@ function draw2D(canvas){
       const w = Math.floor(ox + (i + 1) * ps) - x;
       const h = Math.floor(oy + (j + 1) * ps) - y;
       ctx.fillRect(x, y, w, h);
+      filledRects.push([x, y, w, h]);
     }
   }
 
   // 2. Center guides drawn OVER the figure as a translucent glow
   if (state.center) drawCenterGuides(ctx, cx, cy, ps, ox, oy, cw, ch);
 
-  // 3. Grid drawn OVER the figure so cells read as individual pixels
-  if (state.grid) drawFullGrid(ctx, ps, ox, oy, cw, ch);
+  // 3. Grid drawn OVER the figure so cells read as individual pixels;
+  //    inner grid uses a contrasting light color for visibility on the fill
+  if (state.grid) drawFullGrid(ctx, ps, ox, oy, cw, ch, filledRects);
 
   // 4. Perfect overlay (contrasting color, on top of everything)
   if (state.overlay) drawPerfectOverlay(ctx, cx, cy, rx, ry, ps, ox, oy);
