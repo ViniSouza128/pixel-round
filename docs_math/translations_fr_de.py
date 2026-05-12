@@ -149,6 +149,7 @@ EXTRA["fr-FR"] = dict(
     FIG_S6_CAP=r"Algorithme à seuil à $D = 20$.",
     FIG_S10_CAP=r"Sphère ($D = 12$) et ellipsoïde ($W = 20,\, H = 10,\, D = 12$) voxelisés.",
     FIG_S11_CAP=r"Coupes planes à 50\% sur les axes Y, X et diagonale (de gauche à droite).",
+    FIG_S5B_CAP=r"Algorithme de Bresenham appliqué à l\'ellipse $W = 24$, $H = 12$.",
 )
 
 # ============================================================================
@@ -297,4 +298,5 @@ EXTRA["de-DE"] = dict(
     FIG_S6_CAP=r"Schwellenwert-Algorithmus bei $D = 20$.",
     FIG_S10_CAP=r"Voxelisierte Kugel ($D = 12$) und voxelisiertes Ellipsoid ($W = 20,\, H = 10,\, D = 12$).",
     FIG_S11_CAP=r"Ebene Schnitte bei 50\% entlang Y-, X- und Diagonalachse (links nach rechts).",
+    FIG_S5B_CAP=r"Bresenham-Algorithmus angewendet auf die Ellipse $W = 24$, $H = 12$.",
 )

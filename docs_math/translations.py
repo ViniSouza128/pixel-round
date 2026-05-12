@@ -154,6 +154,7 @@ T["en-US"] = dict(
     FIG_S6_CAP=r"Threshold algorithm at $D = 20$.",
     FIG_S10_CAP=r"Voxelised sphere ($D = 12$) and ellipsoid ($W = 20,\, H = 10,\, D = 12$).",
     FIG_S11_CAP=r"Planar cuts at 50\% along Y, X and the diagonal axis (left to right).",
+    FIG_S5B_CAP=r"Bresenham algorithm applied to the ellipse $W = 24$, $H = 12$.",
 )
 
 # ============================================================================
@@ -302,6 +303,7 @@ T["pt-BR"] = dict(
     FIG_S6_CAP=r"Algoritmo de Limiar para $D = 20$.",
     FIG_S10_CAP=r"Esfera ($D = 12$) e elipsoide ($W = 20,\, H = 10,\, D = 12$) voxelizados.",
     FIG_S11_CAP=r"Cortes planos a 50\% nos eixos Y, X e diagonal (da esquerda para a direita).",
+    FIG_S5B_CAP=r"Algoritmo de Bresenham aplicado à elipse $W = 24$, $H = 12$.",
 )
 
 # ============================================================================
@@ -450,6 +452,7 @@ T["es-ES"] = dict(
     FIG_S6_CAP=r"Algoritmo de Umbral para $D = 20$.",
     FIG_S10_CAP=r"Esfera ($D = 12$) y elipsoide ($W = 20,\, H = 10,\, D = 12$) voxelizados.",
     FIG_S11_CAP=r"Cortes planos al 50\% en los ejes Y, X y diagonal (de izquierda a derecha).",
+    FIG_S5B_CAP=r"Algoritmo de Bresenham aplicado a la elipse $W = 24$, $H = 12$.",
 )
 
 
