@@ -39,6 +39,7 @@
 \usepackage{needspace}                % evita orfas em caixas didaticas
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{float}                    % [H] = "exatamente aqui, sem float"
 
 % ---------- Paleta cromatica (mesma do projeto) ------------------------------
 \definecolor{accent}{HTML}{CC2020}
@@ -161,7 +162,7 @@
 
 % Atalho para incluir figuras de captura do Pixel Round
 \newcommand{\prfig}[3][0.55\textwidth]{%
-  \begin{figure}[!htb]\centering
+  \begin{figure}[H]\centering
     \includegraphics[width=#1]{#2}
     \caption{#3}
     \label{fig:#2}
@@ -277,7 +278,7 @@ Esse movimento didático opera em diálogo com cinco tradições da pedagogia br
 
 A presença do software cumpre função epistêmica precisa: \emph{não substitui} a álgebra, mas \emph{materializa} a diferença entre formulações matemáticas concorrentes. Os três algoritmos correspondem a três definições matematicamente distintas do mesmo objeto --- a circunferência discreta --- e produzem desenhos visivelmente diferentes, como ilustra a Figura~\ref{fig:comp-d10}. O aluno percebe, pelos olhos, que \emph{a definição importa}.
 
-\begin{figure}[!htb]
+\begin{figure}[H]
 \centering
 \begin{subfigure}[t]{0.31\linewidth}\centering
   \includegraphics[width=\linewidth]{fig16_2d_d10_euclidean.png}
@@ -413,7 +414,7 @@ O TCT \acc{Cultura Digital} atravessa toda a sequência. Discutem-se questões d
 
 Além de mudar o algoritmo, o Pixel Round oferece três \emph{modos de renderização} (Preenchido, Fino, Grosso) que produzem visuais distintos para a mesma figura geométrica, como ilustra a Figura~\ref{fig:render-modes}.
 
-\begin{figure}[!htb]
+\begin{figure}[H]
 \centering
 \begin{subfigure}[t]{0.31\linewidth}\centering
   \includegraphics[width=\linewidth]{fig01_2d_d20_euclidean.png}
@@ -687,7 +688,7 @@ A célula é incluída se $\left(\dfrac{n_x - c_x}{r_x}\right)^{\!2} + \left(\df
 \textbf{Resultado esperado:} Euclidiano costuma ficar muito próximo (erro abaixo de $2\%$); Limiar sobreestima em poucos por cento; Bresenham fica no meio. Confirmar coletivamente.
 \end{atividade}
 
-\begin{figure}[!htb]
+\begin{figure}[H]
 \centering
 \begin{subfigure}[t]{0.31\linewidth}\centering
   \includegraphics[width=\linewidth]{fig01_2d_d20_euclidean.png}
@@ -731,7 +732,7 @@ $\displaystyle a_x^2 + a_y^2 + a_z^2 \leq 1,\quad \text{com } a_\xi = \dfrac{\xi
 \textbf{Demonstração:} abrir o Pixel Round no modo 3D, alternar entre Esfera e Elipsóide, rotacionar com o \emph{mouse}, observar a estrutura de voxels.
 \end{atividade}
 
-\begin{figure}[!htb]
+\begin{figure}[H]
 \centering
 \begin{subfigure}[t]{0.45\linewidth}\centering
   \includegraphics[width=\linewidth]{fig07_3d_sphere_d12.png}
@@ -782,7 +783,7 @@ A Figura~\ref{fig:cortes} ilustra os três cortes a $50\%$.
 \textbf{Discussão dirigida:} \emph{``Por que um corte diagonal tem amplitude $D_x + D_y$ e não $D_x$? Onde está a hipotenusa?''} Conduzir para o reconhecimento de que $x + y$ assume valores entre $0$ e $D_x + D_y$ na caixa retangular.
 \end{atividade}
 
-\begin{figure}[!htb]
+\begin{figure}[H]
 \centering
 \begin{subfigure}[t]{0.31\linewidth}\centering
   \includegraphics[width=\linewidth]{fig09_3d_cut_y50.png}
@@ -1035,7 +1036,7 @@ Sequência recomendada para a demonstração inicial (Atividade~1.3) e para a fa
   \item Discutir: \emph{``A equação que rege essa forma é $(x/12)^2 + (y/6)^2 = 1$. Por que dividimos $x$ por $12$ e $y$ por $6$?''}
 \end{enumerate}
 
-\begin{figure}[!htb]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.65\textwidth]{fig04_2d_ellipse_24x12.png}
 \caption{Elipse $W = 24, H = 12$ no Pixel Round. Note como as células ao longo do eixo maior são mais espaçadas que ao longo do eixo menor --- reflexo direto dos semi-eixos diferentes.}
@@ -1054,7 +1055,7 @@ Sequência recomendada para a demonstração inicial (Atividade~1.3) e para a fa
   \item Testar os três \emph{estilos 3D} (\acc{Clássico}, \acc{Suave}, \acc{Blocos}) --- a Figura~\ref{fig:styles} mostra a diferença.
 \end{enumerate}
 
-\begin{figure}[!htb]
+\begin{figure}[H]
 \centering
 \begin{subfigure}[t]{0.31\linewidth}\centering
   \includegraphics[width=\linewidth]{fig08_3d_ellipsoid.png}
