@@ -40,7 +40,7 @@ TEX = r"""% !TEX program = xelatex
 \tcbuselibrary{skins,breakable}
 \usepackage[hidelinks,bookmarks=true,bookmarksopen=true,
             pdftitle={Pixel Round — «PDF_TITLE»},
-            pdfauthor={Vinicius Souza}]{hyperref}
+            pdfauthor={Vinícius Rodrigues de Souza}]{hyperref}
 
 \definecolor{accent}{HTML}{CC2020}
 \definecolor{ink}{HTML}{1F1F23}
