@@ -88,18 +88,36 @@ function setSliderPct(input){
   input.style.setProperty('--pct', pct + '%');
 }
 
-/* ---------- Shape labels (canonical map) -------------------------------- */
-const SHAPE_LABELS = {
-  circle:  { '2d':'Circle',  '3d':'Sphere' },
-  ellipse: { '2d':'Ellipse', '3d':'Ellipsoid' },
+/* ---------- Shape / algo / style labels (canonical maps) -----------------
+   These three lookups are mutated by js/i18n.js when the locale changes,
+   so they MUST be reachable as `window.<NAME>` properties.
+
+   Top-level `const` / `let` in classic (non-module) scripts becomes a
+   script-scope binding — it's visible as a bare identifier from other
+   <script> tags but does NOT show up on the `window` object. The i18n
+   module reads them via `window.SHAPE_LABELS` etc. to decide whether
+   to apply translations, so we assign explicitly here. Without this
+   the shape toggle stays in English forever (visible: Sphere /
+   Ellipsoid never translate to Esfera / Elipsoide on PT-BR).
+
+   Keep `const`-style bare names too so existing call sites
+   (`SHAPE_LABELS[...]`) keep working — the bare names alias the
+   `window.*` slots, so a mutation through either path is visible to
+   the other. */
+window.SHAPE_LABELS = {
+  circle:  { '2d': 'Circle',  '3d': 'Sphere'    },
+  ellipse: { '2d': 'Ellipse', '3d': 'Ellipsoid' },
 };
-const ALGO_FULL_NAME = {
+window.ALGO_FULL_NAME = {
   euclidean: 'Euclidean',
   bresenham: 'Bresenham',
   threshold: 'Threshold',
 };
-const STYLE3D_FULL_NAME = {
+window.STYLE3D_FULL_NAME = {
   classic: 'Classic',
   smooth:  'Smooth',
   blocks:  'Blocks',
 };
+const SHAPE_LABELS      = window.SHAPE_LABELS;
+const ALGO_FULL_NAME    = window.ALGO_FULL_NAME;
+const STYLE3D_FULL_NAME = window.STYLE3D_FULL_NAME;

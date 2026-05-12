@@ -55,14 +55,29 @@ block-by-block into Minecraft.
 
 ## Languages
 
-The interface speaks **English (US)** and **Português (Brasil)** out
-of the box. Switch via the locale pill in the topbar or the picker in
-Settings; the choice is auto-detected from `navigator.language` on
-first visit and remembered in `localStorage` (`pr_locale`).
+Seven locales ship out of the box (~3.7 billion native speakers
+combined):
 
-Adding a locale only touches `js/i18n.js` — append an entry to
-`AVAILABLE_LOCALES` and mirror the `en-US` keys under a new `TR`
-block.
+| Locale | Language               | Native name           |
+| ------ | ---------------------- | --------------------- |
+| `en-US`| English (US)           | English (US)          |
+| `es-ES`| Spanish                | Español               |
+| `pt-BR`| Portuguese (Brazil)    | Português (Brasil)    |
+| `fr-FR`| French                 | Français              |
+| `de-DE`| German                 | Deutsch               |
+| `zh-CN`| Chinese (Simplified)   | 简体中文               |
+| `ja-JP`| Japanese               | 日本語                 |
+
+Switch via the locale pill in the topbar (cycles) or the picker in
+Settings (direct). The choice is auto-detected from
+`navigator.language` on first visit and remembered in `localStorage`
+(`pr_locale`).
+
+Adding a locale only touches [js/i18n.js](js/i18n.js) — append an
+entry to `AVAILABLE_LOCALES` and mirror the `en-US` keys under a new
+`TR` block. ES / FR / DE / ZH / JA used machine translation as a
+starting point; native-speaker proofreading is welcome via issues
+or PRs.
 
 ## Session-only state
 

@@ -238,7 +238,22 @@ Synthesized via WebAudio (`js/audio.js`). All sine waves, gain ≤.035.
 ## 14. Internationalisation (i18n)
 
 `js/i18n.js` is the single source of truth for every user-facing
-string. Supports `en-US` and `pt-BR` out of the box.
+string. Seven locales ship out of the box:
+
+| Code   | Language              | Audience       |
+|--------|-----------------------|----------------|
+| en-US  | English (US)          | base / fallback |
+| es-ES  | Español               | ~500 M speakers |
+| pt-BR  | Português (Brasil)    | ~210 M speakers |
+| fr-FR  | Français              | ~300 M speakers |
+| de-DE  | Deutsch               | ~130 M speakers |
+| zh-CN  | 简体中文              | ~1.1 B speakers |
+| ja-JP  | 日本語                | ~125 M speakers |
+
+`en-US` is the canonical key set — every other locale must mirror
+exactly those keys. Missing keys fall back to English silently;
+missing English keys return the literal key (so untranslated strings
+stay visible during development).
 
 - `AVAILABLE_LOCALES` — declarative list. Adding a locale = appending
   one entry plus a mirrored `TR[code]` block.
@@ -254,6 +269,12 @@ string. Supports `en-US` and `pt-BR` out of the box.
 - Locale is the **only** preference that survives a reload —
   everything else is session-only. Resetting the language to English
   on every visit would be hostile, so this exception is intentional.
+- **Canonical maps** (`SHAPE_LABELS`, `ALGO_FULL_NAME`,
+  `STYLE3D_FULL_NAME`) live on `window` in [js/state.js](js/state.js)
+  so the i18n module (which lives inside an IIFE) can reach them as
+  `window.<NAME>`. Top-level `const` in a classic script does NOT go
+  on `window` — declaring them as `const` alone silently breaks
+  shape-button / info-chip translation.
 
 DOs and DON'Ts:
 
