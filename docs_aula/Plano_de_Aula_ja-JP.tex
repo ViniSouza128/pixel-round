@@ -1,0 +1,867 @@
+% !TEX program = xelatex
+% =============================================================================
+% Pixel Round — 学習指導案 (ja-JP)
+% 日本の高等学校3年生（数学）を対象とする四単位時間の単元構想
+% 文字体裁は docs_math/Pixel_Round_Math_ja-JP.pdf に準拠
+% コンパイル: xelatex Plano_de_Aula_ja-JP.tex   （目次・参照のため2回実行）
+% =============================================================================
+\documentclass[12pt,a4paper]{scrartcl}
+
+% ---------- フォント（和文 Yu Gothic, 欧文 Latin Modern） ----------------------
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\setCJKmainfont{Yu Gothic}[Scale=1.05]
+\setCJKsansfont{Yu Gothic}[Scale=1.05]
+\setmainfont{Latin Modern Roman}[Scale=1.05]
+\setsansfont{Latin Modern Sans}[Scale=1.05]
+\setmonofont{Latin Modern Mono}[Scale=1.00]
+\usepackage{unicode-math}
+\setmathfont{Latin Modern Math}[Scale=1.05]
+
+% ---------- 数式・組版 -------------------------------------------------------
+\usepackage{amsmath}
+\usepackage{mathtools}
+
+\usepackage[a4paper,top=2.8cm,bottom=2.8cm,left=2.6cm,right=2.6cm,
+            headheight=16pt]{geometry}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage[hidelinks,bookmarks=true,bookmarksopen=true,
+            pdftitle={Pixel Round — 学習指導案 (ja-JP)},
+            pdfauthor={Vinicius Souza}]{hyperref}
+
+% ---------- 配色 -------------------------------------------------------------
+\definecolor{accent}{HTML}{CC2020}
+\definecolor{ink}{HTML}{1F1F23}
+\definecolor{muted}{HTML}{4E4E58}
+\definecolor{bg}{HTML}{FBF6E9}
+\definecolor{rule}{HTML}{D8D1BC}
+
+\color{ink}
+
+% ---------- 見出し体裁 -------------------------------------------------------
+\titleformat{\section}
+  {\sffamily\Large\bfseries\color{accent}}{\thesection.}{0.6em}{}
+\titleformat{\subsection}
+  {\sffamily\large\bfseries\color{accent!85!ink}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}
+  {\sffamily\normalsize\bfseries\color{muted}}{\thesubsubsection}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.2\baselineskip}{0.6\baselineskip}
+\titlespacing*{\subsection}{0pt}{0.8\baselineskip}{0.3\baselineskip}
+\titlespacing*{\subsubsection}{0pt}{0.6\baselineskip}{0.2\baselineskip}
+
+% ---------- ヘッダ・フッタ ---------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily\bfseries\color{accent}PIXEL ROUND}
+\fancyhead[R]{\small\sffamily\color{muted}学習指導案 --- 高校3年}
+\fancyfoot[L]{\small\sffamily\color{muted}Pixel Round --- 教員資料}
+\fancyfoot[R]{\small\sffamily\color{muted}第 \thepage{} ページ}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\headrule}{{\color{rule}\hrule height \headrulewidth}}
+\renewcommand{\footrule}{{\color{rule}\vskip-\footrulewidth\hrule height \footrulewidth\vskip-\footrulewidth}}
+
+% ---------- 教材用ボックス ---------------------------------------------------
+\newtcolorbox{kousiki}{
+  colback=bg, colframe=rule, boxrule=0.4pt, arc=2pt,
+  left=10pt,right=10pt,top=8pt,bottom=8pt,
+  before skip=8pt, after skip=8pt,
+  fontupper=\color{accent}, breakable
+}
+
+\newtcolorbox{katsudou}[1][学習活動]{
+  enhanced, breakable,
+  colback=bg, colframe=accent, boxrule=0.6pt, arc=4pt,
+  left=12pt,right=12pt,top=10pt,bottom=10pt,
+  before skip=12pt, after skip=12pt,
+  attach boxed title to top left={xshift=10pt,yshift=-8pt},
+  boxed title style={colback=accent,colframe=accent,boxrule=0pt,arc=2pt},
+  coltitle=white, fonttitle=\sffamily\bfseries\small,
+  title=#1
+}
+
+\newtcolorbox{ryuui}[1][指導上の留意点]{
+  enhanced, breakable,
+  colback=bg!50!white, colframe=rule, boxrule=0.4pt, arc=2pt,
+  left=10pt,right=10pt,top=8pt,bottom=8pt,
+  before skip=8pt, after skip=8pt,
+  attach boxed title to top left={xshift=10pt,yshift=-7pt},
+  boxed title style={colback=muted,colframe=muted,boxrule=0pt,arc=2pt},
+  coltitle=white, fonttitle=\sffamily\bfseries\footnotesize,
+  title=#1
+}
+
+\newtcolorbox{youryou}[1][学習指導要領]{
+  enhanced, breakable,
+  colback=bg!70!white, colframe=accent!60!ink, boxrule=0.4pt, arc=2pt,
+  left=10pt,right=10pt,top=6pt,bottom=6pt,
+  before skip=6pt, after skip=6pt,
+  attach boxed title to top left={xshift=10pt,yshift=-6pt},
+  boxed title style={colback=accent!60!ink,colframe=accent!60!ink,boxrule=0pt,arc=2pt},
+  coltitle=white, fonttitle=\sffamily\bfseries\footnotesize,
+  title=#1
+}
+
+\setlength{\parskip}{0.75em}
+\setlength{\parindent}{0pt}
+\linespread{1.20}
+
+\newcommand{\code}[1]{\texttt{\small #1}}
+\newcommand{\acc}[1]{\textcolor{accent}{\textbf{#1}}}
+\newcommand{\jikan}[1]{\textbf{\small\color{muted}\textsf{#1}}}
+
+\begin{document}
+
+% =============================================================================
+% 表紙
+% =============================================================================
+\begin{titlepage}
+  \centering
+  \vspace*{3.2cm}
+  {\sffamily\bfseries\fontsize{56}{60}\selectfont \color{accent} Pixel Round\par}
+  \vspace{0.7cm}
+  {\sffamily\LARGE\color{muted} 学習指導案\par}
+  \vspace{0.25cm}
+  {\sffamily\Large\color{muted} 高等学校第3学年 数学\par}
+  \vspace{1.4cm}
+  {\color{rule}\rule{0.6\textwidth}{0.6pt}\par}
+  \vspace{0.9cm}
+  \begin{minipage}{0.84\textwidth}
+    \centering\color{ink}\large
+    本指導案は，文部科学省告示『高等学校学習指導要領』
+    （平成30年告示，令和4年度入学者から実施）に基づき，
+    オープンソースの \emph{Pixel Round} を用いて4時間で構想された
+    数学単元である。連続的な曲線を有限のピクセル格子の上に
+    どう表すか，という一つの問いを軸に，
+    数学的見方・考え方を働かせる主体的・対話的で深い学びを目指す。
+  \end{minipage}
+  \vspace{0.9cm}\\
+  {\color{rule}\rule{0.6\textwidth}{0.6pt}\par}
+  \vspace{1.8cm}
+  \begin{minipage}{0.82\textwidth}
+    \centering\sffamily\small\color{muted}
+    \textbf{教科横断：}数学 $\cdot$ 情報 $\cdot$ 美術 $\cdot$ 物理 \\[0.4em]
+    \textbf{根拠：}高等学校学習指導要領（平成30年告示）数学編 $\cdot$ GIGAスクール構想
+  \end{minipage}
+\end{titlepage}
+
+% =============================================================================
+% 目次
+% =============================================================================
+\renewcommand{\contentsname}{\color{accent}目\quad 次}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =============================================================================
+\section{単元の概要}
+
+\begin{center}
+\begin{tabular}{@{}p{0.28\textwidth}p{0.66\textwidth}@{}}
+\toprule
+\textbf{教科・科目} & 数学（主として数学III「微分・積分」，数学C「ベクトル」「平面上の曲線と複素数平面」と関連）。情報I／II との教科横断を推奨。 \\
+\addlinespace[2pt]
+\textbf{学年} & 高等学校第3学年。第2学年への調整も可能。 \\
+\addlinespace[2pt]
+\textbf{学校種別} & 全日制公立高等学校を主たる対象。定時制・通信制への適応案は附録~\ref{ap:adapt}。 \\
+\addlinespace[2pt]
+\textbf{時数} & 50分×4単位時間（計200分）。100分の2連時間方式の変奏は §\ref{sec:bunka}。 \\
+\addlinespace[2pt]
+\textbf{中核教材} & Pixel Round --- 無償・登録不要・サーバ不要のブラウザ・アプリ。 PWA としてオフライン動作。個人情報を一切送信せず，GIGAスクール端末で安全に利用可能。 \\
+\addlinespace[2pt]
+\textbf{学習指導要領の対応} & 数学C「平面上の曲線」（楕円，二次曲線の方程式），数学III「積分」（体積），情報I「アルゴリズム」。 \\
+\addlinespace[2pt]
+\textbf{教科横断} & 情報（アルゴリズムと Python 実装），美術（デジタル表現），物理（波と音）。 \\
+\addlinespace[2pt]
+\textbf{学習者の既習事項} & 円の方程式，楕円の標準形（高2），ベクトルと空間座標（高3前期），柱・錐・球の体積，関数の概念，比例と百分率。 \\
+\addlinespace[2pt]
+\textbf{教員の準備} & Pixel Round の操作確認15分；\texttt{docs\_math/Pixel\_Round\_Math\_ja-JP.pdf} の通読。 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{ryuui}[実施環境について]
+本指導案は，日本の公立高等学校の実態を踏まえて設計されている。GIGAスクール構想により1人1台端末が整備された学校が大多数を占める一方，端末の運用ルール，フィルタリング，個人情報保護への配慮には学校・地域差がある。Pixel Round は，アカウント登録もデータ送信も一切伴わないため，どのような運用方針のもとでも安全に導入できる。端末配備が困難な状況や，端末利用が制限される授業時間帯においては，附録~\ref{ap:adapt} の \emph{完全にアナログな代替プラン} を採用すれば，本単元の本質を損なわずに実施できる。
+\end{ryuui}
+
+% =============================================================================
+\section{単元設定の理由}
+
+ピクセルアートとボクセルアートは，現代日本の高校生にとって極めて身近な視覚言語である。任天堂のスーパーマリオに端を発し，ポケモン，ファイナルファンタジー，あつまれどうぶつの森，星のカービィなど，世界に発信された日本産のゲーム文化はピクセル表現と切り離せない。学習者がふだん消費している視覚イメージを，本単元では \acc{数学的研究の対象} として捉え直す ---\, この移行こそが，「数学を学ぶ意味」を体感させる原動力となる。
+
+本指導案は，次の三つの理論的基盤に立っている。
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item \acc{主体的・対話的で深い学び}（アクティブ・ラーニング）。学習指導要領の核心的方向性に対応し，各時間で「問い → 個人思考 → ペア／グループ対話 → 全体共有 → 整理」のサイクルを回す。
+  \item \acc{授業研究の伝統}。本単元は，日本で世界に発信された \emph{lesson study} の枠組みに沿って構想されており，「ねらい」「展開」「練り上げ」「まとめ」の四相を明示する。各時間に \emph{板書計画} を併載できる構成にしている。
+  \item \acc{和算と現代数学の接続}。江戸時代の和算家たちが算額に残した幾何問題の精神 ---\, 連続的な図形を，与えられた離散的制約のもとで巧みに扱う ---\, は，本単元の問いと深く呼応する。第3時にこの伝統への言及を組み込む。
+\end{itemize}
+
+\begin{ryuui}[なぜ「教科書通り」ではないか]
+高校数学Cの楕円方程式は，標準的には数時間で消化される。本単元はその扱いを深め，\emph{「同じ連続曲線を離散格子で表す方法は一意ではない」} という認識を生徒に育む。この認識は，受験対策の範囲を超えた数学的成熟の表れであり，大学進学後の応用数学，情報科学，工学のいずれにも橋渡しとなる。共通テストや個別試験での得点に直接寄与する一方で，それ以上のものを与えるのが本単元のねらいである。
+\end{ryuui}
+
+% =============================================================================
+\section{単元の目標}
+
+\subsection{総括的目標}
+
+\acc{連続的な数学的対象を離散格子の上に表すことは，それ自体が数学的判断であり，複数の妥当な答えが存在する} ことを，学習者が体験を通して理解する。同時に，それぞれの判断が「方格の中心・整数アルゴリズム・角点による被覆」など，精密に定式化できる基準であることを認識する。
+
+\subsection{知識・技能}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item 半軸 $r_x, r_y$ の楕円の陰関数方程式 $(x/r_x)^2 + (y/r_y)^2 = 1$ を理解し，円を特別な場合（$r_x = r_y$）として位置づける。
+  \item ピクセル所属判定における3つのアルゴリズム（ユークリッド距離・Bresenham 中点法・閾値法）を，それぞれの定義の違いとともに把握する。
+  \item 2次元の方程式を3次元に一般化し，楕円体（楕円面）の方程式を導く。
+  \item 3次元立体の平面切断を，ボクセル座標に対する \emph{線形不等式} として理解する。
+\end{itemize}
+
+\subsection{思考力・判断力・表現力}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Pixel Round を用いて2D・3Dの図形生成と PNG 書き出しを行う技能を身に付ける。
+  \item 方眼紙の上で，明示された判定規則に従って離散的な円を手描きし，ソフトウェアの出力と照合する。
+  \item セルの数え上げで楕円の離散面積を求め，連続面積 $\pi r_x r_y$ と比較して相対誤差を算出する。
+  \item 円・楕円・球・楕円体を組み合わせた独創的なピクセル作品を構成し，その選択を数学的言葉で説明する。
+\end{itemize}
+
+\subsection{主体的に学習に取り組む態度}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item ペア・グループ活動に粘り強く取り組み，他者の考えに耳を傾ける。
+  \item 美的な選択を数学的に根拠付ける論述に挑戦する。
+  \item 同一の現実問題に対し，複数の技術的に正しい解が存在することを受け入れる柔軟さを養う。
+\end{itemize}
+
+% =============================================================================
+\section{学習指導要領との対応}
+
+本単元は，\acc{高等学校学習指導要領}（平成30年告示）の数学科および情報科に直接対応する。
+
+\begin{youryou}[数学C --- 平面上の曲線（楕円）]
+楕円の方程式とその図形的性質を理解し，諸量の関係を用いて問題を解決すること。
+\end{youryou}
+
+\begin{youryou}[数学III --- 積分法]
+立体の体積を，積分を用いて求めることができる。楕円体の体積を求める問題は，回転体の体積の代表例として取り上げられる。
+\end{youryou}
+
+\begin{youryou}[情報I --- アルゴリズムとプログラミング]
+問題の解決手順をアルゴリズムとして表現し，プログラムにすること。本単元の Bresenham 算法は，アルゴリズム例題として最適。
+\end{youryou}
+
+\subsection{資質・能力の三つの柱}
+
+評価の3観点に沿って，本単元で育成する資質・能力は次のとおり整理できる。
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item \acc{知識・技能：}楕円および楕円体の方程式，体積公式，3つのアルゴリズムの定義。
+  \item \acc{思考力・判断力・表現力：}離散と連続の関係を考察し，アルゴリズムの選択を根拠とともに表現する。
+  \item \acc{学びに向かう力・人間性：}対話的な作品制作を通して，他者の発想を取り入れつつ自らの判断を磨く。
+\end{itemize}
+
+% =============================================================================
+\section{単元の構成（4時間）}
+
+\subsection{学習内容のあらまし}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item 直交座標系，方格の中心と角，円と楕円の陰関数方程式。
+  \item 所属の不等式：内部，外部，境界。
+  \item 楕円体の方程式と体積 $V = \tfrac{4}{3}\pi r_x r_y r_z$。
+  \item 平面切断の代数表現としての一次不等式。
+  \item セルの近傍（2次元4近傍，3次元6近傍）。
+\end{itemize}
+
+\subsection{学習方略}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item 方眼紙上の手描き，明示された規則のもとで。
+  \item Pixel Round の操作（モード切替，スライダー操作，アルゴリズム選択，PNG 書き出し）。
+  \item セルの数え上げによる離散面積の算出，連続面積との比較。
+  \item オリジナル作品の構成と数学的弁明。
+\end{itemize}
+
+\subsection{態度面の目標}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item ペアまたは三人組での建設的な協働。
+  \item 数学的根拠による説明（口頭・文章）。
+  \item デジタル・シティズンシップとして，ソフトウェアの利用規約と他者の作品の尊重。
+\end{itemize}
+
+% =============================================================================
+\section{既習事項の確認}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item 直交座標系（数学I「数と式」，数学II「図形と方程式」）。
+  \item 円および楕円の方程式（数学II・数学C）。
+  \item 球の体積（中学校3年・高1）。
+  \item 関数の概念（数学I）。
+  \item 比例と百分率，相対誤差の概念。
+\end{itemize}
+
+理解の不確かな生徒がいる場合は，第1時の冒頭で \emph{10分の診断的活動} を実施できるよう，§\ref{ji1} に配慮を組み込んでいる。
+
+% =============================================================================
+\section{教材・教具}
+
+\subsection{ICT 環境}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Pixel Round（1人1台または2人1台）；
+  \item プロジェクター，または電子黒板；
+  \item GIGAスクール端末（Chromebook，iPad，Windows ノート PC のいずれか） \emph{または} 自治体配備のタブレット \emph{または} BYOD（生徒所有のスマートフォン）。
+\end{itemize}
+
+\subsection{紙の教材}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item 方眼紙（1cm 方眼），生徒1人2枚；
+  \item 鉛筆，消しゴム，30cm 定規；
+  \item 色鉛筆またはサインペン（プロジェクトの基本色 \texttt{\#CC2020} の赤と黒を推奨）；
+  \item 印刷されたワークシート（附録~\ref{ap:wk}）；
+  \item 黒板またはホワイトボード。
+\end{itemize}
+
+\subsection{Pixel Round の配布方法}
+
+実施の容易さの順に：
+
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item \textbf{教員ホスティング}：GitHub Pages，校内サーバ等で公開。QR コードで配布。
+  \item \textbf{ローカル配置}：プロジェクト一式を各端末にコピーし，\texttt{index.html} を \texttt{file://} で開く。
+  \item \textbf{PWA オフライン}：初回のみオンラインで開き，ブラウザにキャッシュさせる。
+\end{enumerate}
+
+% =============================================================================
+\section{学習形態と支援}\label{sec:bunka}
+
+各活動は \acc{少なくとも2つの取り組み方} と \acc{2つの成果提出方法} を提供する。これにより，多様な学習者を包括できる構造になっている。
+
+\subsection{特別な支援を要する生徒}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item 第1時の活動 1.2 では時間延長（15 分）。
+  \item 円の中心を予め印した方眼紙を準備。
+  \item 最終課題の弁明（活動 4.3）は，口頭・文章・録音から選択可能。
+\end{itemize}
+
+\subsection{発展的な学習を求める生徒}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item 発展課題：Bresenham の初期決定パラメータ $d_0 = 1 - R$ を，$F(x, y) = x^2 + y^2 - R^2$ の中点 $(1,\, R - \tfrac{1}{2})$ における値から導出する。
+  \item 探究課題：離散面積が $\pi r^2$ に収束する速さを評価する。解は数論的に深く，$O(r^{2/3})$（Huxley 2003）。これはガウスの円格子問題として知られる。
+  \item プログラミング課題：Python で20行のユークリッド・アルゴリズム実装。
+\end{itemize}
+
+\subsection{2連時間方式}
+学校行事等で50分授業の4時間連続実施が難しい場合，100分の2連時間にまとめることができる。第1+2時を第1連，第3+4時を第2連とし，間に10分の休憩を設ける。
+
+\subsection{オンライン・ハイブリッド授業}
+Pixel Round はブラウザベースであり，遠隔配信に完全対応する（Google Meet，Microsoft Teams，Zoom など）。教員が画面共有し，生徒は自分の端末で並行操作する。方眼紙作業はスマートフォンで撮影し，校内学習プラットフォーム（Google Classroom，Microsoft Teams，Manabi Pocket 等）に提出する。
+
+% =============================================================================
+\section{学習指導の計画}
+
+各時間の構成は，日本の数学授業研究で蓄積されてきた典型構造に従う ---\, \acc{ねらいの提示 → 課題提示 → 個人思考 → 練り上げ → まとめ}。各時間における時間配分は，50分授業の例を示す。
+
+% =============================================================================
+\subsection{第1時 ---「コンピュータはどうやって四角で円を描くか」}\label{ji1}
+
+\subsubsection*{本時のねらい}
+離散ラスタライゼーションを真正な数学的問題として位置づけ，円の方程式を再活性化し，Pixel Round を導入する。
+
+\medskip
+
+\begin{katsudou}[1.1 ---\, 導入：問いの提示 \quad\jikan{8分}]
+\textbf{形態：}\emph{think-pair-share}。\\[0.4em]
+\textbf{展開：}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.2em,topsep=0.3em,nosep]
+  \item 3つの古典的ピクセル絵をスクリーンに投影：スーパーマリオのキノコ，初代ポケモン，Google のレトロロゴ。
+  \item 問いかけ：\emph{「3つの絵に共通するのは何か。コンパスで描いた円との違いは何か。」}
+  \item 一人で1分間，自分の考えをノートに書く。続いて隣の生徒と2分間意見交換。
+  \item 数名を当てて全体で共有。教員は \acc{「コンピュータは方格を点けるか消すかしかできない ---\, どうやって選んでいるのだろう」} へと焦点化する。
+\end{enumerate}
+\end{katsudou}
+
+\begin{katsudou}[1.2 ---\, 課題提示：手描きで円を描く \quad\jikan{12分}]
+\textbf{形態：}個人 → グループ。\\[0.4em]
+\textbf{教材：}方眼紙，鉛筆。\\[0.4em]
+\textbf{展開：}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.2em,topsep=0.3em,nosep]
+  \item 各生徒は方眼紙の半分に $11\times 11$ の領域を定め，中心セルに印を付ける。
+  \item 指示：\emph{「直径10の円としてあなたが最もよいと思うものを塗りなさい。4分。消しゴムは使わない。」}
+  \item 時間後，3〜4名の生徒が黒板の方眼に自分の絵を再現する。
+  \item 教員：\emph{「同じ絵になりましたか。違うのはなぜですか。誰が正しいですか。」}
+  \item まとめ：唯一の答えは存在しない。それぞれが暗黙のうちに異なる \acc{判定規則} を採用している。
+\end{enumerate}
+\end{katsudou}
+
+\begin{katsudou}[1.3 ---\, 整理：方程式と3つの規則 \quad\jikan{15分}]
+\textbf{形態：}教師の説明とノート記述。
+
+原点を中心とする半径 $r$ の円の陰関数方程式：
+
+\begin{kousiki}
+\centering
+$\displaystyle x^2 + y^2 \;=\; r^2$
+\end{kousiki}
+
+内部の点は $x^2 + y^2 < r^2$ を満たす。半軸 $r_x, r_y$ の楕円への一般化：
+
+\begin{kousiki}
+\centering
+$\displaystyle \left(\dfrac{x}{r_x}\right)^{\!2} + \left(\dfrac{y}{r_y}\right)^{\!2} \;=\; 1$
+\end{kousiki}
+
+ピクセル格子の上では，どの \acc{セル} が内部に属するかを決める必要がある。Pixel Round はその「決め方」を3つ用意している：
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item \acc{ユークリッド法}：セルの中心 $(i + \tfrac{1}{2},\, j + \tfrac{1}{2})$ は内部か？
+  \item \acc{Bresenham 法}：1965 年の整数アルゴリズム。
+  \item \acc{閾値法}：セルのどこかの \emph{角} が内部にあるか？
+\end{itemize}
+
+\textbf{実演：}教員が Pixel Round を起動し，直径を 10 に設定。3つのアルゴリズムを順に切替え，それぞれ30秒程度観察。強調すべき点：\emph{3つとも数学的に正しい，ただし採用する規則が異なるだけ}。
+\end{katsudou}
+
+\begin{katsudou}[1.4 ---\, まとめ：規則の厳格適用 \quad\jikan{15分}]
+\textbf{課題：}\emph{「方眼紙に戻り，直径10の円を \acc{厳格に} ユークリッド法で塗りなさい：セルの中心 $(i + 0.5,\, j + 0.5)$ が円の中心から距離 5 以下のときに限り塗る。」}
+
+完成後，Pixel Round のユークリッドモード（直径 10）と照合させる。\emph{両者は完全に一致するはずである}。
+
+\textbf{振り返り（2分）：}\emph{「セルが「円の中」にあるとはどういうことか，一文で書きなさい。」}
+\end{katsudou}
+
+\subsubsection*{家庭学習（任意）}
+活動 1.4 を直径 8 と 14 で繰り返す。2 枚の絵を次の授業に持参する。
+
+% =============================================================================
+\subsection{第2時 ---「3つのアルゴリズム，3つの絵」}
+
+\subsubsection*{本時のねらい}
+それぞれのアルゴリズムを独自の数学的定義として深く分析し，定量的に比較する。
+
+\begin{katsudou}[2.1 ---\, 振り返り \quad\jikan{5分}]
+家庭学習を回収。生徒の絵の差異を簡潔に確認し，本時の目標を共有：\emph{「今日は，どうして Bresenham が情報科学の宝石と呼ばれるのかを，顕微鏡で見るように調べる。」}
+\end{katsudou}
+
+\begin{katsudou}[2.2 ---\, ユークリッド法 \quad\jikan{10分}]
+セル $(i, j)$ について，正規化された距離を計算する：
+
+\begin{kousiki}
+\centering
+$\displaystyle d_x = \dfrac{i + \tfrac{1}{2} - c_x}{r_x},\qquad d_y = \dfrac{j + \tfrac{1}{2} - c_y}{r_y}$
+\end{kousiki}
+
+$d_x^{\,2} + d_y^{\,2} \leq 1$ のときに限り塗る。
+
+\textbf{板書例：}$c_x = c_y = 5$，$r_x = r_y = 5$，セル $(2, 1)$。$d_x = -0.5$，$d_y = -0.7$，$d_x^2 + d_y^2 = 0.74 \leq 1$。\emph{内部}。
+
+\textbf{各自確認：}セル $(0, 0)$ を確認する。（答え：$1.62 > 1$，\acc{外部}。）
+\end{katsudou}
+
+\begin{katsudou}[2.3 ---\, Bresenham 法 \quad\jikan{15分}]
+\textbf{歴史的背景：}Jack Bresenham は IBM 在籍時の 1965 年に発表。当時，浮動小数点の1回の乗算が数百マイクロ秒かかる時代であった。彼の貢献：\emph{整数の加算と比較のみ} で円を描く方法。
+
+\textbf{日本における歴史的呼応：}1965 年は，京都大学・東京大学・東北大学などで電子計算機の教育が始まった時期にあたる。和算における関孝和（1642--1708）が，西欧と独立に行列式を発見したことを引き合いに出し，計算のアルゴリズム化が日本の知的伝統にも根づいていることを示すと，文化的な厚みが生まれる。
+
+$(x = 0,\, y = R)$，$d_0 = 1 - R$ から開始。$0$〜$45°$ の八分の一弧で各ステップ：
+
+\begin{kousiki}
+\centering
+$\begin{cases}
+d < 0 \text{ のとき}: & \text{次のピクセル } (x{+}1,\, y),\; d \mathrel{+}= 2x+3 \\
+d \geq 0 \text{ のとき}: & \text{次のピクセル } (x{+}1,\, y{-}1),\; d \mathrel{+}= 2(x-y)+5
+\end{cases}$
+\end{kousiki}
+
+\textbf{板書追跡：}$R = 5$ について $x$，$y$，$d$ をステップごとに書き出す。残り7つの八分弧は $D_4$ 対称性により得られる。
+
+\textbf{支援上の注意：}決定パラメータの代数で生徒が困難を示す場合は，アルゴリズムを\emph{ルールとして提示}するにとどめる。詳細な導出は \texttt{Pixel\_Round\_Math\_ja-JP.pdf} の §5 に記載。
+\end{katsudou}
+
+\begin{katsudou}[2.4 ---\, 閾値法 \quad\jikan{10分}]
+セル $(i, j)$ について，円の中心に最も近い角を求める：
+
+\begin{kousiki}
+\centering
+$\displaystyle n_x = \mathrm{clamp}(c_x,\, i,\, i{+}1),\qquad n_y = \mathrm{clamp}(c_y,\, j,\, j{+}1)$
+\end{kousiki}
+
+$\left(\dfrac{n_x - c_x}{r_x}\right)^{\!2} + \left(\dfrac{n_y - c_y}{r_y}\right)^{\!2} \leq 0.94$ なら塗る。
+
+\textbf{なぜ 0.94 で 1 でないのか：}経験的に，閾値を 1 とすると東西南北4方向に1ピクセルの「角張り」（スパイク）が発生する。わずかに低い閾値がそれを除去する。\emph{これは視覚的観察に基づく工学的判断} であり，純粋数学が常に最終答を与えるわけではないことの好例である。
+\end{katsudou}
+
+\begin{katsudou}[2.5 ---\, 定量比較 \quad\jikan{10分}]
+\textbf{ペア活動：}Pixel Round 上で：
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em,nosep]
+  \item 直径 16 に設定，モード\emph{塗りつぶし}。
+  \item 情報チップから3アルゴリズムの離散面積を記録する。
+  \item 連続面積 $\pi r^2 = 64\pi \approx 201.06$ を計算する。
+  \item 各アルゴリズムについて，相対誤差 $\dfrac{|S_{\text{離散}} - S_{\text{連続}}|}{S_{\text{連続}}} \times 100\%$ を求める。
+  \item 誤差の小さい順に並べる。
+\end{enumerate}
+
+\textbf{予想結果：}ユークリッド法は誤差 $< 1\%$；閾値法は数 \% 過大評価；Bresenham 法はその中間。全体で振り返り。
+\end{katsudou}
+
+% =============================================================================
+\subsection{第3時 ---「2次元から3次元へ：楕円体と切断面」}
+
+\subsubsection*{本時のねらい}
+楕円の方程式を3次元に一般化し，ボクセルと離散体積を導入し，平面切断を一次不等式として理解する。
+
+\begin{katsudou}[3.1 ---\, 2D から 3D へ \quad\jikan{15分}]
+第3座標 $z$ を導入する。楕円の方程式は直ちに一般化される：
+
+\begin{kousiki}
+\centering
+$\displaystyle \left(\dfrac{x}{r_x}\right)^{\!2} + \left(\dfrac{y}{r_y}\right)^{\!2} + \left(\dfrac{z}{r_z}\right)^{\!2} \;=\; 1$
+\end{kousiki}
+
+$r_x = r_y = r_z = r$ のときは球面 $x^2 + y^2 + z^2 = r^2$。
+
+\textbf{ボクセル：}3次元格子のセルを \emph{ボクセル}（voxel，\emph{volume element}）と呼ぶ。所属の判定は2次元と同型である：
+
+\begin{kousiki}
+\centering
+$\displaystyle a_x^2 + a_y^2 + a_z^2 \leq 1,\quad a_\xi = \dfrac{\xi + \tfrac{1}{2} - c_\xi}{r_\xi}$
+\end{kousiki}
+
+\textbf{実演：}Pixel Round を 3D に切り替え，球と楕円体を交互に表示。マウスで回転し，3つのシェーディング（\emph{Classic, Smooth, Blocks}）を比較する。
+\end{katsudou}
+
+\begin{katsudou}[3.2 ---\, 連続体積と離散体積 \quad\jikan{15分}]
+楕円体の連続体積は積分学の古典的結果：
+
+\begin{kousiki}
+\centering
+$\displaystyle V \;=\; \dfrac{4}{3}\,\pi\, r_x\, r_y\, r_z$
+\end{kousiki}
+
+$r_x = r_y = r_z = r$ のとき $V = \tfrac{4}{3}\pi r^3$。共通テストおよび個別試験の積分問題で繰り返し問われる公式である。
+
+\textbf{ペア活動：}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em,nosep]
+  \item 直径12（$r = 6$）の球の連続体積を計算：$V = \tfrac{4}{3}\pi \cdot 216 \approx 904.78$。
+  \item Pixel Round で $D = 12$ の球を生成（塗りつぶしモード）。離散体積を読む。
+  \item 相対誤差を求める。
+\end{enumerate}
+
+\textbf{議論：}$V_{\text{離散}}/V_{\text{連続}} \to 1$ ，$D \to \infty$ で。小さい $D$ では大きな乖離 ---\, それは離散化が \emph{実際に} 計数を変えていることの正直な反映である。
+\end{katsudou}
+
+\begin{katsudou}[3.3 ---\, 平面切断と一次不等式 \quad\jikan{10分}]
+Pixel Round では，立体を3つの平面で切断できる。各切断は \acc{一次不等式} としてボクセル座標に作用する：
+
+\begin{kousiki}
+\centering
+$\begin{array}{lcl}
+\text{X 軸切断：} & x \geq \mathit{cut} & \Rightarrow \text{ボクセルを除去} \\
+\text{Y 軸切断：} & y \geq \mathit{cut} & \Rightarrow \text{ボクセルを除去} \\
+\text{対角切断：} & x + y \geq \mathit{cut} & \Rightarrow \text{ボクセルを除去}
+\end{array}$
+\end{kousiki}
+
+\textbf{実演：}球を $Y$ 軸 50\% で切断，$X$ 軸 50\% で切断，対角線 50\% で切断と順に試す。
+
+\textbf{問い：}\emph{「対角切断のスライダはなぜ $0$〜$D_x + D_y$ で動くのか。$D_x$ ではなく $D_x + D_y$ なのはどうしてか。」}
+\end{katsudou}
+
+\begin{katsudou}[3.4 ---\, 和算と算額への接続 \quad\jikan{10分}]
+\emph{日本の数学的伝統との対話。}
+
+スクリーンに以下を提示：
+\begin{itemize}[leftmargin=1.3em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item \emph{算額}：江戸時代から明治初期にかけて神社や寺院に奉納された絵馬。図形問題（特に内接円・接円・楕円弧の難問）が描かれている。
+  \item 関孝和（1642--1708）と建部賢弘（1664--1739）の業績：行列式の独立発見，$\pi$ の精密計算。
+  \item 現代建築：安藤忠雄の \emph{光の教会}，\emph{淡路夢舞台} に見る幾何学形式の美。
+\end{itemize}
+
+\textbf{議論：}\emph{「江戸時代の算額作者たちは，円と楕円の幾何学を独自に深めた。本単元の問題 ---\, 円を方格でどう表すか ---\, は，彼らの研究の現代版とも言える。算額の伝統において，連続的な図形を有限の操作（コンパスと定規）で構成することが探究の主題だった。コンピュータの方格は，現代の定規である。」}
+
+このつなぎは「数学文化」「総合的な探究の時間」のテーマとしても発展可能。
+\end{katsudou}
+
+% =============================================================================
+\subsection{第4時 ---「最終課題：オリジナル作品と数学的弁明」}
+
+\subsubsection*{本時のねらい}
+単元全体を統合する独自の作品を制作し，数学的言葉で説明することで思考力・判断力・表現力を評価する。
+
+\begin{katsudou}[4.1 ---\, 課題提示 \quad\jikan{5分}]
+\textbf{課題：}\emph{「2〜3人組で，Pixel Round が生成する図形を少なくとも 3 種類（円・楕円・球・楕円体のうち）組み合わせ，独自のピクセル／ボクセル作品を作りなさい。キャラクター，アイコン，動物，ロゴ ---\, 何でもよい。最後に各組が作品を発表し，選択を \acc{数学的に} 弁明する：なぜこのアルゴリズム？ なぜこの比率？ なぜこの切断？」}
+
+\textbf{グループ：}事前に異質性を考慮して編成。
+\end{katsudou}
+
+\begin{katsudou}[4.2 ---\, 制作 \quad\jikan{30分}]
+\textbf{グループの教材：}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em,nosep]
+  \item Pixel Round を実行する端末；
+  \item 方眼紙，鉛筆，サインペン（下書き用）；
+  \item 必答3問の入った課題シート（附録~\ref{ap:wk} の問題 5）。
+\end{itemize}
+
+\textbf{内部フェーズ：}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em,nosep]
+  \item \jikan{5分} ブレインストーミングと下書き。
+  \item \jikan{15分} Pixel Round 上で制作し，部分を PNG で書き出す。
+  \item \jikan{5分} 最終構成（方眼紙にサインペンで書き写し，あるいはスライドで配置）。
+  \item \jikan{5分} 数学的弁明を課題シートに書く。
+\end{enumerate}
+
+\textbf{教員の机間指導：}\emph{「なぜこのアルゴリズム？ この切断は不等式でどう書く？」} と問いかけ，思考を深める。
+\end{katsudou}
+
+\begin{katsudou}[4.3 ---\, 発表とまとめ \quad\jikan{15分}]
+各組 2 分で発表し，必答 3 問の少なくとも 1 つに答える。
+
+\textbf{最低基準：}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item 作品中に存在する数学的図形を少なくとも 1 つ同定する；
+  \item 選択したアルゴリズムを名指し，（事後的にでも）理由を述べる；
+  \item 3D 切断がある場合は不等式で表現する。
+\end{itemize}
+
+\textbf{教員によるまとめ（3分）：}単元の核心命題を再提示する ---\, \emph{「離散格子の上では，同じ連続曲線が複数の表現を許す。その一つを選ぶことは，それ自体が数学的決定である」}。評価シートの提出期限を伝える。
+\end{katsudou}
+
+% =============================================================================
+\section{学習評価}
+
+評価は学習指導要領の \acc{3観点}（知識・技能；思考力・判断力・表現力；学びに向かう力・人間性）に対応させて行う。
+
+\subsection{診断的評価}
+第1時の活動 1.2 にて。座標系，円の方程式，面積概念の弱い生徒を把握し，第2時以降の個別支援を計画する。
+
+\subsection{形成的評価}
+全4時間に分散：観察による参加態度，活動 1.4・2.2・2.5・3.2 における個人の回答の質。
+
+\subsection{総括的評価}
+2 つの提出物：
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.2em,topsep=0.3em,nosep]
+  \item \textbf{ワークシート}（附録~\ref{ap:wk}），5 問，第4時終了時に提出。
+  \item \textbf{最終課題}（活動 4.2）と弁明シート。
+\end{enumerate}
+
+\subsection{評価規準}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.20\textwidth}XX@{}}
+\toprule
+\textbf{観点} & \textbf{十分達成（A）} & \textbf{おおむね達成（B）／要努力（C）} \\
+\midrule
+\textbf{知識・技能} & 楕円・楕円体の方程式を正確に運用，3つのアルゴリズムを識別。 & 円の方程式はできるが楕円への一般化で躓く，アルゴリズムを混同。 \\
+\addlinespace[3pt]
+\textbf{思考・判断・表現} & 数学的言葉で選択を弁明，専門用語（アルゴリズム，ボクセル，切断，不等式）を適切に用いる。 & 美的記述に留まり，数学用語が不足。 \\
+\addlinespace[3pt]
+\textbf{主体的に学ぶ態度} & ペア・グループで建設的に貢献，全体討議に参加。 & 個人作業中心，貢献が少ない。 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{評価の重み（目安）}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item ワークシート：40\%；
+  \item 最終課題と発表：50\%；
+  \item 学習過程の観察：10\%。
+\end{itemize}
+
+% =============================================================================
+\section{教科横断・教科外との接続}
+
+\subsection{情報I／II との接続}
+Bresenham 算法はあらゆる入門アルゴリズム教科書の古典である。第2時 2.3 を情報科教員と協働で実施し，さらに Python での実装（約25 行）を情報科の課題として連動できる。
+
+\subsection{美術との接続}
+ピクセルアートは美術教育における重要なデジタル表現様式である。Pixel Round は，図形が \emph{同時に} 方程式であり構図でもあるという，数学と美術の希少な接点を提供する。美術科教員との共同企画として，校内ホールや学校公式 SNS での展示が考えられる。
+
+\subsection{物理との接続}
+Pixel Round の効果音は，純粋な正弦波の加算合成で生成されている。選ばれた周波数は \acc{平均律12音} の音名に近似する（半音ごとの周波数比は $2^{1/12} \approx 1.0595$）。物理「波と音」単元と直接連動する。
+
+\subsection{総合的な探究の時間 / 課題研究}
+本単元で芽生えた問い ---\, 「離散と連続の関係」「アルゴリズム選択の妥当性」「文化と数学の交差」 ---\, は，総合的な探究の時間における個人課題研究の素材として極めて豊かである。
+和算・算額と現代計算機グラフィックスを結ぶテーマは，学校文化祭の発表や，スーパーサイエンスハイスクール（SSH）の研究テーマとしても適している。
+
+% =============================================================================
+\section{参考文献}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.2em,topsep=0.3em]
+  \item Bresenham, J. E. Algorithm for computer control of a digital plotter. \emph{IBM Systems Journal}, 第 4 巻, 第 1 号, pp.~25--30, 1965.
+  \item 文部科学省. \emph{高等学校学習指導要領（平成 30 年告示）解説 数学編・理数編}. 東京：学校図書, 2019.
+  \item 文部科学省. \emph{高等学校学習指導要領（平成 30 年告示）解説 情報編}. 東京：開隆堂, 2019.
+  \item 国立教育政策研究所. \emph{「指導と評価の一体化」のための学習評価に関する参考資料 高等学校 数学}. 東京：国立教育政策研究所, 2021.
+  \item Lakatos, I. \emph{数学的発見の論理 ---\, 証明と反駁}（佐々木力訳）. 東京：共立出版, 1980.
+  \item Pólya, G. \emph{いかにして問題をとくか}（柿内賢信訳）. 東京：丸善, 1954.
+  \item 平山諦. \emph{和算の歴史 ---\, その本質と発展}. 東京：ちくま学芸文庫, 2007.
+  \item 上垣渉. \emph{算額の数学 ---\, 江戸庶民の幾何挑戦}. 東京：日本評論社, 2018.
+  \item 佐藤健一. \emph{江戸の数学者たち}. 東京：東洋書店, 2008.
+  \item Stigler, J. W.; Hiebert, J. \emph{授業の研究 ---\, 国境を超えた教育のスタンダード}（湊三郎訳）. 京都：ミネルヴァ書房, 2002.
+  \item Pixel Round 技術解説：\texttt{docs\_math/Pixel\_Round\_Math\_ja-JP.pdf}.
+\end{itemize}
+
+\newpage
+% =============================================================================
+% 附録
+% =============================================================================
+\appendix
+\renewcommand{\thesection}{\Alph{section}}
+\setcounter{section}{0}
+
+\section{Pixel Round 操作の実演スクリプト}\label{ap:demo}
+
+第1時の活動 1.3 における実演と，教員の自己研修用のスクリプト。所要時間 15 分。
+
+\subsection{起動と 2D モード}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item Pixel Round を起動。上部バー，キャンバス，コントロール部を指し示す。
+  \item \acc{2D / 円} モードを確認。
+  \item Size スライダを 10 に設定。
+  \item Info チップを起動し，読み上げ：「直径 10, 半径 5, 面積 …, アルゴリズム ユークリッド」。
+  \item アルゴリズム切替：\acc{ユークリッド / Bresenham / 閾値}。各 30 秒。
+\end{enumerate}
+
+\subsection{楕円}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item 形を \acc{楕円} に変更。Width と Height のスライダが現れる。
+  \item $W = 16$，$H = 8$ に設定。
+  \item 問い：\emph{「この図形の方程式は $(x/8)^2 + (y/4)^2 = 1$。$x$ を 8 で，$y$ を 4 で割るのはなぜか。」}
+\end{enumerate}
+
+\subsection{3D モード}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item \acc{3D / 球} に切替，$D = 12$。
+  \item マウスドラッグで回転。
+  \item Info チップで体積を確認。
+  \item \acc{楕円体} に切替：$W = 20, H = 10, D = 10$。
+  \item Cut スライダを Y 軸 50\% に。
+  \item 対角軸に切替え，斜め切断を議論。
+\end{enumerate}
+
+\subsection{書き出し}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item キャンバス角のダウンロードボタン。
+  \item PNG を保存。
+  \item 高解像度で書き出される ---\, 印刷・投影・スライド貼付に好適。
+\end{enumerate}
+
+% =============================================================================
+\newpage
+\section{ワークシート}\label{ap:wk}
+
+\textbf{指示：}個別に解く。Pixel Round で検証してもよいが，\emph{数学的説明は必須}。手書きまたは入力。
+
+\subsection*{問題 1 ---\, 円の方程式}
+原点を中心，半径 $r = 7$。各点が \emph{内部・外部・周上} のいずれにあるか判定し，理由を書きなさい。
+\begin{enumerate}[label=\alph*),leftmargin=1.5em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item $(3, 4)$ \hfill \emph{解答：}内部（$25 < 49$）。
+  \item $(5, 5)$ \hfill \emph{解答：}外部（$50 > 49$）。
+  \item $(0, 7)$ \hfill \emph{解答：}周上。
+  \item $(-7, 0)$ \hfill \emph{解答：}周上。
+\end{enumerate}
+
+\subsection*{問題 2 ---\, ユークリッド判定}
+中心 $(5, 5)$，半径 $5$ の円について，セル $(1, 3)$ にユークリッド規則を適用：塗られるか。
+
+\emph{解答：}セル中心 $(1.5, 3.5)$。距離 $\sqrt{14.5} \approx 3.81 < 5$。\acc{塗られる}。
+
+\subsection*{問題 3 ---\, 離散面積 vs.\ 連続面積}
+Pixel Round で直径 20 のユークリッド円を生成。離散面積を記録。$\pi r^2$ を計算。相対誤差を求める。閾値アルゴリズムでも同様に。比較せよ。
+
+\emph{解答：}$A_{\text{連続}} = 100\pi \approx 314.16$。ユークリッドは誤差 $< 2\%$。閾値は 5--8\% 過大。
+
+\subsection*{問題 4 ---\, 楕円体の体積と切断}
+楕円体 $r_x = 4$，$r_y = 6$，$r_z = 3$。
+\begin{enumerate}[label=\alph*),leftmargin=1.5em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item 連続体積を求める。
+  \item $Y$ 軸方向に 50\% 切断後の残体積。
+  \item 切断を $y$ 座標の不等式で表現。
+\end{enumerate}
+
+\emph{解答：}
+(a) $V = 96\pi \approx 301.59$；
+(b) 対称性より $\approx 150.80$；
+(c) $y < \mathit{cut}$，$\mathit{cut} = 6$。
+
+\subsection*{問題 5 ---\, 最終課題弁明シート}
+グループで作品を制作した後，答えなさい：
+\begin{enumerate}[label=(\arabic*),leftmargin=1.7em,itemsep=0.15em,topsep=0.2em,nosep]
+  \item 使用した幾何図形（円，楕円，球，楕円体）とパラメータを列挙。
+  \item メインの図形には，どのアルゴリズムを選んだか。理由は何か。他の2つでは得られない視覚効果とは何か。
+  \item 3D 切断はあるか。あれば，そのうち \emph{1つ} を不等式で書きなさい。
+\end{enumerate}
+
+% =============================================================================
+\newpage
+\section{紙のみで実施する代替プラン}\label{ap:adapt}
+
+ICT 環境が限られる学級・授業時間でも，本単元の核心を保ったまま \emph{完全に紙で} 実施できる。学習内容の本質は変わらず，媒体のみが変わる。
+
+\subsection{時間ごとの代替}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.14\textwidth}p{0.36\textwidth}X@{}}
+\toprule
+\textbf{時間} & \textbf{元の活動} & \textbf{紙での代替} \\
+\midrule
+1 & Pixel Round 実演（1.3） & 教員が大判方眼紙に3つのアルゴリズム円（$D = 10$）を手描きして黒板に貼り出す。 \\
+\addlinespace[3pt]
+2 & ソフトウェア量的比較（2.5） & 事前に印刷した3アルゴリズム円（$D = 16$）の図を配布。学生がセルを手で数える。 \\
+\addlinespace[3pt]
+3 & 3D 球の生成（3.1, 3.2） & 球の \emph{断層} を $z = 0, 1, 2, \ldots$ ごとに方眼紙に描いたシートを配布。生徒は心の中で積み上げる。 \\
+\addlinespace[3pt]
+4 & Pixel Round での制作（4.2） & \emph{完全に} 方眼紙と色鉛筆で制作。数学的弁明（4.3）は不変。 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{準備物（一度きり）}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item A3 サイズの方眼紙 1 枚（$30 \times 30$ 方眼を手書き，黒板または掲示板に貼付）。
+  \item 1人につき A4 方眼紙 4 枚。
+  \item 3アルゴリズム比較円の参照シート（事前に Pixel Round で生成・PNG 書き出し・学校印刷）。
+\end{itemize}
+
+\subsection{校種別の運用}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item \textbf{進学校・SSH 校：}第2時 Bresenham 推導を全員に行い，第3時のガウス円格子問題を発展課題とする。
+  \item \textbf{標準的な公立高校：}本指導案の標準ルート。共通テストとの接続を強調。
+  \item \textbf{専門高校（工業・商業）・定時制：}附録の紙ベース代替を採用し，制作課題を専門領域（製品ロゴ，建築アイコン等）に振り替える。
+\end{itemize}
+
+% =============================================================================
+\newpage
+\section{教員用 用語集}\label{ap:glos}
+
+\begin{itemize}[leftmargin=1.4em,itemsep=0.3em,topsep=0.3em]
+  \item \acc{アルゴリズム} ---\, 問題解決のための有限かつ明確な手続きの列。Pixel Round の3つのアルゴリズムは，同一の問題（どのセルを塗るか）に対する3つの異なる手順。
+  \item \acc{Bresenham 法} ---\, 1965 年に Jack Bresenham（IBM）が直線描画用に発表，後に Pitteway と Kappel によって楕円に拡張。整数演算のみという特徴を持つ。
+  \item \acc{キャンバス（canvas）} ---\, ブラウザ上で2D／3D 描画空間を提供する HTML 要素。
+  \item \acc{陰関数方程式} ---\, $F(x, y) = 0$ の形で，曲線をある関数の零集合として定義する方程式。楕円の場合：$(x/r_x)^2 + (y/r_y)^2 - 1 = 0$。
+  \item \acc{ピクセル（pixel）} ---\, picture element の略。デジタル画像の最小単位。格子上では $1 \times 1$ のセル。
+  \item \acc{PWA（Progressive Web App）} ---\, 端末にインストール可能でオフラインでも動作する Web アプリ。Pixel Round はこの一例。
+  \item \acc{ラスタライゼーション} ---\, 連続的な幾何的記述を，ピクセル（2D）またはボクセル（3D）の格子に変換する処理。
+  \item \acc{半軸（semi-axis）} ---\, 中心 $C$ の楕円において，$C$ から対応する軸方向の頂点までの距離。$r_x = r_y$ のときに円。
+  \item \acc{平均律12音} ---\, 1オクターヴを12個の等しい半音に分割。隣り合う半音の周波数比は $\sqrt[12]{2} \approx 1.0595$。西欧および現代日本音楽の基盤。
+  \item \acc{ボクセル（voxel）} ---\, volume element の略。3D 格子における $1 \times 1 \times 1$ の立方単位。
+  \item \acc{WebGL} ---\, ブラウザの 3D グラフィックス API。Pixel Round は \emph{three.js} を介して利用。
+\end{itemize}
+
+\vspace{2em}
+\begin{center}
+\color{muted}\small\sffamily
+--- 学習指導案 終 ---
+\end{center}
+
+\end{document}

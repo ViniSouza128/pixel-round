@@ -93,10 +93,38 @@ interface to English on every visit.
 Vanilla JavaScript + Canvas 2D + three.js. No framework, no build
 step. Loads as a single static HTML file. Works offline (PWA).
 
-## License & notices
+## Documentation
 
-- **Code, layout, design system:** All Rights Reserved — see `LICENSE`
-- **Third-party attributions:** see `NOTICE.md`
+Two complete documentation sets live in this repo, both rendered as
+PDF in nine locales (en-US, es-ES, pt-BR, fr-FR, de-DE, zh-CN, ja-JP,
+ru-RU, ko-KR):
+
+- [`docs_math/`](docs_math/) — **technical math companion.** Implicit
+  equations, the three rasterization algorithms (Euclidean,
+  Bresenham, threshold) with derivations, voxelization, planar cuts,
+  3D camera in spherical coordinates, auto-zoom by bounding sphere,
+  Lambertian shading approximation, 12-tone audio synthesis.
+  Source: shared XeLaTeX template + per-locale translation tables.
+- [`docs_aula/`](docs_aula/) — **classroom lesson plans.** Four-period
+  sequence aligned to each country's curriculum (BNCC for Brazil,
+  Common Core for the US, LOMLOE for Spain, BO for France, KMK for
+  Germany, 2017 课标 for China, 学習指導要領 for Japan, ФГОС for
+  Russia, 2022 개정 교육과정 for Korea), with figures captured from
+  the app, cross-references, and adaptations for low-resource
+  classrooms.
+
+Math PDFs build via `cd docs_math && python build.py`. Lesson plans
+compile per locale with `xelatex Plano_de_Aula_<locale>.tex`
+(two passes for TOC + cross-refs).
+
+## Author & License
+
+Authored by **Vinicius Souza** ([@ViniSouza128](https://github.com/ViniSouza128)).
+Copyright © 2026 Vinicius Souza. **All Rights Reserved.**
+
+- **Code, layout, design system, documents:** All Rights Reserved —
+  see [`LICENSE`](LICENSE).
+- **Third-party attributions:** see [`NOTICE.md`](NOTICE.md).
 
 ## Companion project
 

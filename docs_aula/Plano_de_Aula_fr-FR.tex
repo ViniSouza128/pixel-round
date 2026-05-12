@@ -1,0 +1,858 @@
+% !TEX program = xelatex
+% =============================================================================
+% Pixel Round — Séquence pédagogique (fr-FR)
+% Adaptée à la Terminale générale, spécialité Mathématiques (lycée public)
+% Identité visuelle alignée sur docs_math/Pixel_Round_Math_fr-FR.pdf
+% Compilation : xelatex Plano_de_Aula_fr-FR.tex  (deux passages : TOC + refs)
+% =============================================================================
+\documentclass[12pt,a4paper]{scrartcl}
+
+% ---------- Langue et polices ------------------------------------------------
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{french}
+\PolyglossiaSetup{french}{indentfirst=false}
+\setmainfont{Latin Modern Roman}[Scale=1.08]
+\setsansfont{Latin Modern Sans}[Scale=1.08]
+\setmonofont{Latin Modern Mono}[Scale=1.00]
+\usepackage{unicode-math}
+\setmathfont{Latin Modern Math}[Scale=1.08]
+
+% ---------- Paquets ----------------------------------------------------------
+\usepackage{amsmath}
+\usepackage{mathtools}
+
+\usepackage[a4paper,top=2.8cm,bottom=2.8cm,left=2.6cm,right=2.6cm,
+            headheight=16pt]{geometry}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage[hidelinks,bookmarks=true,bookmarksopen=true,
+            pdftitle={Pixel Round — Séquence pédagogique (fr-FR)},
+            pdfauthor={Vinicius Souza}]{hyperref}
+
+% ---------- Palette ----------------------------------------------------------
+\definecolor{accent}{HTML}{CC2020}
+\definecolor{ink}{HTML}{1F1F23}
+\definecolor{muted}{HTML}{4E4E58}
+\definecolor{bg}{HTML}{FBF6E9}
+\definecolor{rule}{HTML}{D8D1BC}
+
+\color{ink}
+
+% ---------- Sections ---------------------------------------------------------
+\titleformat{\section}
+  {\sffamily\Large\bfseries\color{accent}}{\thesection.}{0.6em}{}
+\titleformat{\subsection}
+  {\sffamily\large\bfseries\color{accent!85!ink}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}
+  {\sffamily\normalsize\bfseries\color{muted}}{\thesubsubsection}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.2\baselineskip}{0.6\baselineskip}
+\titlespacing*{\subsection}{0pt}{0.8\baselineskip}{0.3\baselineskip}
+\titlespacing*{\subsubsection}{0pt}{0.6\baselineskip}{0.2\baselineskip}
+
+% ---------- En-têtes ---------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily\bfseries\color{accent}PIXEL ROUND}
+\fancyhead[R]{\small\sffamily\color{muted}Séquence pédagogique --- Terminale}
+\fancyfoot[L]{\small\sffamily\color{muted}Pixel Round --- Ressource enseignante}
+\fancyfoot[R]{\small\sffamily\color{muted}Page \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\headrule}{{\color{rule}\hrule height \headrulewidth}}
+\renewcommand{\footrule}{{\color{rule}\vskip-\footrulewidth\hrule height \footrulewidth\vskip-\footrulewidth}}
+
+% ---------- Boîtes -----------------------------------------------------------
+\newtcolorbox{formula}{
+  colback=bg, colframe=rule, boxrule=0.4pt, arc=2pt,
+  left=10pt,right=10pt,top=8pt,bottom=8pt,
+  before skip=8pt, after skip=8pt,
+  fontupper=\color{accent}, breakable
+}
+
+\newtcolorbox{activite}[1][Activité]{
+  enhanced, breakable,
+  colback=bg, colframe=accent, boxrule=0.6pt, arc=4pt,
+  left=12pt,right=12pt,top=10pt,bottom=10pt,
+  before skip=12pt, after skip=12pt,
+  attach boxed title to top left={xshift=10pt,yshift=-8pt},
+  boxed title style={colback=accent,colframe=accent,boxrule=0pt,arc=2pt},
+  coltitle=white, fonttitle=\sffamily\bfseries\small,
+  title=#1
+}
+
+\newtcolorbox{note}[1][Note pédagogique]{
+  enhanced, breakable,
+  colback=bg!50!white, colframe=rule, boxrule=0.4pt, arc=2pt,
+  left=10pt,right=10pt,top=8pt,bottom=8pt,
+  before skip=8pt, after skip=8pt,
+  attach boxed title to top left={xshift=10pt,yshift=-7pt},
+  boxed title style={colback=muted,colframe=muted,boxrule=0pt,arc=2pt},
+  coltitle=white, fonttitle=\sffamily\bfseries\footnotesize,
+  title=#1
+}
+
+\newtcolorbox{competence}[1][Programme]{
+  enhanced, breakable,
+  colback=bg!70!white, colframe=accent!60!ink, boxrule=0.4pt, arc=2pt,
+  left=10pt,right=10pt,top=6pt,bottom=6pt,
+  before skip=6pt, after skip=6pt,
+  attach boxed title to top left={xshift=10pt,yshift=-6pt},
+  boxed title style={colback=accent!60!ink,colframe=accent!60!ink,boxrule=0pt,arc=2pt},
+  coltitle=white, fonttitle=\sffamily\bfseries\footnotesize,
+  title=#1
+}
+
+\setlength{\parskip}{0.75em}
+\setlength{\parindent}{0pt}
+\linespread{1.10}
+
+\newcommand{\code}[1]{\texttt{\small #1}}
+\newcommand{\acc}[1]{\textcolor{accent}{\textbf{#1}}}
+\newcommand{\duree}[1]{\textbf{\small\color{muted}\textsf{#1}}}
+
+\begin{document}
+
+% =============================================================================
+% COUVERTURE
+% =============================================================================
+\begin{titlepage}
+  \centering
+  \vspace*{3.2cm}
+  {\sffamily\bfseries\fontsize{56}{60}\selectfont \color{accent} Pixel Round\par}
+  \vspace{0.7cm}
+  {\sffamily\LARGE\color{muted} Séquence pédagogique\par}
+  \vspace{0.25cm}
+  {\sffamily\Large\color{muted} Classe de Terminale --- Spécialité Mathématiques\par}
+  \vspace{1.4cm}
+  {\color{rule}\rule{0.6\textwidth}{0.6pt}\par}
+  \vspace{0.9cm}
+  \begin{minipage}{0.84\textwidth}
+    \centering\color{ink}\large
+    Séquence de quatre séances pour introduire le logiciel
+    \emph{Pixel Round} dans une classe de Terminale générale,
+    spécialité Mathématiques. Articule géométrie dans l'espace,
+    pensée algorithmique et expression visuelle autour d'un seul
+    problème : comment représenter une courbe continue sur une
+    grille finie de pixels.
+  \end{minipage}
+  \vspace{0.9cm}\\
+  {\color{rule}\rule{0.6\textwidth}{0.6pt}\par}
+  \vspace{1.8cm}
+  \begin{minipage}{0.82\textwidth}
+    \centering\sffamily\small\color{muted}
+    \textbf{Disciplines articulées :} Mathématiques $\cdot$ Numérique et Sciences Informatiques (NSI) $\cdot$ Arts plastiques $\cdot$ Physique \\[0.4em]
+    \textbf{Cadre :} BO spécial n°8 du 25 juillet 2019 (programme Terminale spé Maths) $\cdot$ Bac 2021
+  \end{minipage}
+\end{titlepage}
+
+% =============================================================================
+% TABLE DES MATIÈRES
+% =============================================================================
+\renewcommand{\contentsname}{\color{accent}Sommaire}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =============================================================================
+\section{Identification et cadre}
+
+\begin{center}
+\begin{tabular}{@{}p{0.30\textwidth}p{0.64\textwidth}@{}}
+\toprule
+\textbf{Discipline} & Mathématiques --- spécialité (voie générale). Adaptable à la spécialité NSI, aux Mathématiques complémentaires et à l'enseignement scientifique. \\
+\addlinespace[2pt]
+\textbf{Niveau} & Terminale. Adaptable à la Première spé Maths et à la voie technologique (STI2D, STL). \\
+\addlinespace[2pt]
+\textbf{Cadre institutionnel} & Lycée public. Adaptations pour LP et hybride en Annexe~\ref{ap:adapt}. \\
+\addlinespace[2pt]
+\textbf{Durée} & 4 séances de 55 minutes (220 min). Variante en demi-groupes de TP de 1\,h\,30 décrite en §\ref{sec:diff}. \\
+\addlinespace[2pt]
+\textbf{Ressource centrale} & Pixel Round : application web gratuite, sans compte, sans serveur, exécution hors-ligne (PWA). Conforme RGPD. \\
+\addlinespace[2pt]
+\textbf{Programme officiel} & Géométrie dans l'espace + Algorithmique et programmation (BO spécial n°8, 25/07/2019). \\
+\addlinespace[2pt]
+\textbf{Disciplines articulées} & NSI (algorithmique) ; Arts plastiques (image numérique) ; Physique-Chimie (acoustique, ondes). \\
+\addlinespace[2pt]
+\textbf{Prérequis élèves} & Équation cartésienne du cercle (Première) ; vecteurs et coordonnées dans l'espace (début Terminale) ; aires et volumes des solides usuels ; notion de fonction. \\
+\addlinespace[2pt]
+\textbf{Préparation enseignante} & 15 min de manipulation du Pixel Round ; lecture du document \texttt{docs\_math/Pixel\_Round\_Math\_fr-FR.pdf}. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{note}[Réalité matérielle du lycée français]
+La séquence est conçue pour les réalités effectives des lycées publics : tableau numérique interactif (TNI) en salle, chariots de tablettes ou Chromebooks de prêt dans certains établissements, ENT (\emph{Pronote}, \emph{École Directe}, \emph{Index Éducation}), filtrage académique des connexions. Pixel Round s'exécute sur n'importe quel navigateur, n'exige aucun compte et respecte intégralement le RGPD : aucune donnée n'est transmise à un serveur tiers. Un parcours \emph{entièrement papier} sans ordinateur est détaillé en Annexe~\ref{ap:adapt}.
+\end{note}
+
+% =============================================================================
+\section{Justification didactique}
+
+L'imagerie \emph{pixel art} et \emph{voxel art} occupe une place culturelle massive chez l'adolescent contemporain --- de Minecraft à Hollow Knight, de Stardew Valley aux pictogrammes des applications mobiles. Faire de ce répertoire visuel familier un \emph{objet mathématique} convertit un goût quotidien en problème authentique : comment l'ordinateur, qui ne dispose que de cellules carrées, représente-t-il une courbe analytiquement définie sur $\mathbb{R}$ ?
+
+La séquence s'inscrit dans une \acc{démarche scientifique} explicite, au sens du programme officiel : observation d'un phénomène, formulation d'une conjecture, expérimentation pour la mettre à l'épreuve, formalisation, généralisation. Elle adopte la grille des six \acc{compétences mathématiques} fixées par le BO (\emph{chercher, modéliser, représenter, raisonner, calculer, communiquer}) en répartissant explicitement le travail de la séance sur chacune d'elles.
+
+Trois engagements théoriques structurent l'ensemble :
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item \acc{Théorie des situations didactiques} (Brousseau, 1998). Chaque séance commence par une \emph{situation-problème} où la connaissance visée n'est pas donnée mais devient l'outil nécessaire à la résolution. Le \emph{milieu} matériel est ici doublement constitué : papier quadrillé et Pixel Round.
+  \item \acc{Pensée algorithmique au lycée}, en cohérence avec le programme officiel qui place \emph{algorithmique et programmation} comme transversale. Les trois algorithmes du Pixel Round (euclidien, Bresenham, seuil) deviennent des objets d'étude en soi.
+  \item \acc{Validation par la mise à l'épreuve}. Le logiciel n'est pas un substitut au calcul : il fournit un dispositif de \emph{vérification empirique} d'une conjecture théoriquement formulée. C'est l'esprit du raisonnement qui parcourt toute la mathématique scolaire française depuis Polya et Bachelard.
+\end{itemize}
+
+\begin{note}[Pourquoi pas un simple cours sur l'équation du cercle ?]
+Le programme de Première traite l'équation cartésienne du cercle en quelques séances. La séquence Pixel Round n'est ni un rappel ni un approfondissement direct : elle prend l'équation déjà acquise comme \emph{moyen} pour résoudre un problème nouveau, dont la formulation rend visible un débat épistémologique --- à savoir, que la définition du \emph{discret} à partir du \emph{continu} n'admet pas une seule réponse. C'est précisément ce que Lakatos a appelé \emph{preuves et réfutations}, transposé au tableau de Terminale.
+\end{note}
+
+% =============================================================================
+\section{Objectifs}
+
+\subsection{Compréhension durable}
+
+À l'issue des quatre séances, les élèves comprendront que \acc{représenter un objet mathématique continu sur une grille discrète constitue en soi une décision mathématique}, dont plusieurs réponses sont défendables, chacune formalisable comme critère précis d'appartenance des cellules.
+
+\subsection{Connaissances visées}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Maîtriser l'équation cartésienne de l'ellipse $(x/r_x)^2 + (y/r_y)^2 = 1$ et reconnaître le cercle comme cas particulier ($r_x = r_y$).
+  \item Énoncer trois critères distincts d'appartenance d'une cellule (euclidien, point milieu de Bresenham, couverture de coin) et anticiper qualitativement leurs différences.
+  \item Généraliser l'équation 2D à l'équation de l'ellipsoïde dans l'espace $\mathbb{R}^3$.
+  \item Interpréter une coupe planaire d'un solide comme une \emph{inéquation linéaire} appliquée aux coordonnées des voxels.
+\end{itemize}
+
+\subsection{Capacités procédurales}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Naviguer dans Pixel Round en mode 2D comme en 3D ; exporter des images au format PNG.
+  \item Dessiner à la main, sur papier quadrillé, l'approximation discrète d'un cercle suivant une règle énoncée, et la confronter au logiciel.
+  \item Calculer l'aire discrète d'une ellipse par comptage de cellules et la comparer à l'aire continue $\pi r_x r_y$, en exprimant l'écart en pourcentage d'erreur.
+  \item Composer une figure originale combinant cercles, ellipses, sphères et ellipsoïdes, et défendre les choix dans un registre mathématique.
+\end{itemize}
+
+\subsection{Attitudes}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Coopérer en binôme ou trinôme dans les activités pratiques.
+  \item Argumenter mathématiquement en défense d'un choix esthétique --- ce qui constitue un excellent entraînement au \emph{Grand Oral}.
+  \item Accepter qu'un même problème réel puisse admettre plusieurs réponses techniquement correctes.
+\end{itemize}
+
+% =============================================================================
+\section{Compétences mathématiques et programme officiel}
+
+La séquence mobilise simultanément les \acc{six compétences} fixées par le programme :
+
+\begin{competence}[Chercher]
+Engager une recherche --- analyser et interpréter une figure, explorer une situation. \emph{Concrètement :} la situation initiale (Activité 1.2) où les élèves dessinent à la main un cercle de diamètre 10 sans règle unique.
+\end{competence}
+
+\begin{competence}[Modéliser]
+Reconnaître des situations relevant des mathématiques ; traduire un problème en langage mathématique. \emph{Concrètement :} la traduction du dessin de cellules en équation $(x/r_x)^2 + (y/r_y)^2 \leq 1$.
+\end{competence}
+
+\begin{competence}[Représenter]
+Choisir un cadre (analytique, géométrique, algorithmique) adapté ; passer d'un registre à un autre. \emph{Concrètement :} basculer entre l'équation, le dessin, le code de l'algorithme.
+\end{competence}
+
+\begin{competence}[Raisonner]
+Démontrer ; effectuer des déductions ; valider ou réfuter. \emph{Concrètement :} la dérivation du paramètre de décision $d_0 = 1 - R$ chez Bresenham (Activité 2.3, niveau approfondi).
+\end{competence}
+
+\begin{competence}[Calculer]
+Effectuer un calcul automatisable ; calculer le résultat. \emph{Concrètement :} le calcul de l'erreur relative entre aire discrète et $\pi r^2$ (Activité 2.5) et du volume de l'ellipsoïde $\tfrac{4}{3}\pi r_x r_y r_z$ (Activité 3.2).
+\end{competence}
+
+\begin{competence}[Communiquer]
+Faire preuve de précision dans l'usage de la langue ; recevoir et émettre une argumentation. \emph{Concrètement :} la défense orale du projet final (Activité 4.3), entraînement direct au Grand Oral.
+\end{competence}
+
+\subsection{Connaissances du programme directement travaillées}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item \textbf{Géométrie dans l'espace :} vecteurs et coordonnées dans $\mathbb{R}^3$ ; équations cartésiennes et paramétriques de plans ; représentations planes de solides.
+  \item \textbf{Algorithmique et programmation :} algorithmes itératifs ; structures conditionnelles ; complexité naïve (ordre de grandeur).
+  \item \textbf{Numérique :} approximation, erreur relative ; convergence d'une suite ; représentation d'un réel par un entier.
+\end{itemize}
+
+% =============================================================================
+\section{Connaissances préalables}
+
+La séquence présuppose l'acquisition des notions suivantes :
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Plan cartésien : repérage de points $(x, y)$ et $(x, y, z)$.
+  \item Équation cartésienne du cercle (contenu de Première).
+  \item Aires des polygones et du disque ; volumes du cube, du prisme, du cylindre (acquis Seconde--Première).
+  \item Notion de fonction : ensemble de définition, image, courbe représentative.
+  \item Pourcentage et proportionnalité.
+\end{itemize}
+
+Un \emph{diagnostic} de 10 minutes en début de Séance~1 (cf.\ §\ref{seance1}) permet d'identifier des lacunes éventuelles, fréquentes après la période post-COVID.
+
+% =============================================================================
+\section{Ressources matérielles}
+
+\subsection{Numérique}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Pixel Round (un poste par élève ou par binôme) ;
+  \item Vidéoprojecteur ou TNI ;
+  \item Salle informatique \emph{ou} chariot de tablettes/Chromebooks \emph{ou} BYOD via smartphones.
+\end{itemize}
+
+\subsection{Papier}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Papier quadrillé Seyès 5\,mm, 2 feuilles par élève ;
+  \item Crayon noir HB, gomme, règle 30\,cm ;
+  \item Crayons de couleur ou feutres fins (palette du projet : rouge \texttt{\#CC2020} sur fond crème \texttt{\#FBF6E9}) ;
+  \item Fiche d'exercices imprimée (Annexe~\ref{ap:exo}) ;
+  \item Tableau blanc, tableau noir ou TNI.
+\end{itemize}
+
+\subsection{Déploiement du logiciel}
+
+Trois options par ordre de simplicité :
+
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item \textbf{Hébergement} sur GitHub Pages ou Netlify (gratuit). URL distribuée par QR code projeté.
+  \item \textbf{Copie locale} des fichiers du projet sur chaque poste (ouverture de \texttt{index.html} via \texttt{file://}).
+  \item \textbf{Mode PWA hors-ligne} : ouverture initiale en ligne, le navigateur installe l'application pour les usages ultérieurs.
+\end{enumerate}
+
+% =============================================================================
+\section{Différenciation et accessibilité}\label{sec:diff}
+
+Chaque activité offre au moins \acc{deux entrées} et \acc{deux modes de restitution}, ce qui permet d'accompagner la diversité des élèves dans la classe.
+
+\subsection{Élèves à besoins particuliers (PAP, PPS)}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Temps majoré pour l'Activité~1.2 (15 min au lieu de 10) ;
+  \item Feuilles quadrillées pré-marquées avec le centre du cercle ;
+  \item Choix entre défense écrite et défense orale enregistrée pour le projet final ;
+  \item Polices et tailles agrandies sur les supports imprimés (corps 14 minimum).
+\end{itemize}
+
+\subsection{Élèves en réussite forte}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Approfondissement : démontrer le paramètre initial $d_0 = 1 - R$ de Bresenham en évaluant $F(x, y) = x^2 + y^2 - R^2$ au point milieu $(1,\, R - \tfrac{1}{2})$.
+  \item Conjecture : estimer la vitesse de convergence de l'aire discrète vers $\pi r^2$ quand $r \to \infty$. Réponse : $O(r^{2/3})$ (résultat profond de théorie analytique des nombres).
+  \item Implémentation libre : programmer l'algorithme euclidien en 20 lignes de Python.
+\end{itemize}
+
+\subsection{Variante TP de 1\,h\,30 (demi-groupes)}
+Lorsque le lycée organise un dédoublement TP, la séquence se condense : Séances 1+2 dans un premier TP, 3+4 dans un second, avec respiration obligatoire à mi-parcours.
+
+\subsection{Hybride et distanciel}
+La nature \emph{web} du Pixel Round permet de mener la séquence intacte en visioconférence (Ma Classe à la Maison, BBB de l'académie). Les travaux papier sont photographiés et déposés sur l'ENT (Pronote, École Directe).
+
+% =============================================================================
+\section{Séquence pédagogique}
+
+La progression suit une structure \acc{en quatre temps} caractéristique de la tradition didactique française : \emph{situation d'amorce} → \emph{problématisation} → \emph{institutionnalisation} → \emph{remobilisation}. À chaque séance correspond une remontée du concret vers l'abstrait, suivie d'une redescente vers le concret par l'application.
+
+% =============================================================================
+\subsection{Séance 1 --- « Comment un ordinateur dessine-t-il un cercle avec des carrés ? »}\label{seance1}
+
+\subsubsection*{Objectif de séance}
+Poser le problème central de la rastérisation discrète comme problème mathématique authentique ; mobiliser l'équation du cercle ; présenter Pixel Round.
+
+\medskip
+
+\begin{activite}[1.1 --- Situation d'amorce \quad\duree{10 min}]
+\textbf{Modalité :} \emph{réfléchir--échanger--mettre en commun}. \\[0.4em]
+\textbf{Déroulé :}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.2em,topsep=0.3em,nosep]
+  \item Projeter trois sprites classiques du \emph{pixel art} : le champignon de Super Mario, un Pokémon de première génération et le logo Google en version rétro.
+  \item Consigne : \emph{« Observez attentivement. Qu'ont ces trois images en commun ? Qu'est-ce qui les distingue d'un cercle tracé au compas ? »}
+  \item Chaque élève écrit individuellement sa réponse (1 min), puis échange avec son voisin (2 min).
+  \item Mise en commun guidée : noter les réponses-clés au tableau. Conduire vers l'observation : \emph{« l'ordinateur ne sait qu'allumer des cases carrées --- comment décide-t-il lesquelles ? »}
+\end{enumerate}
+\end{activite}
+
+\begin{activite}[1.2 --- Problématisation \quad\duree{15 min}]
+\textbf{Modalité :} dessin manuel confronté à la définition formelle. \\[0.4em]
+\textbf{Matériel :} papier quadrillé, crayon. \\[0.4em]
+\textbf{Déroulé :}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.2em,topsep=0.3em,nosep]
+  \item Chaque élève reçoit une demi-feuille quadrillée et délimite une région $11 \times 11$ cellules en marquant le centre.
+  \item Consigne : \emph{« Coloriez le meilleur cercle possible de diamètre 10. Quatre minutes. Pas de gomme. »}
+  \item Au temps, trois ou quatre volontaires reproduisent leur dessin au tableau sur une grille tracée à la craie.
+  \item Observation dirigée : \emph{« Avez-vous fait le même dessin ? Pourquoi non ? Qui a raison ? »}
+  \item Institutionnalisation : aucune solution unique. Chaque élève a implicitement adopté un \acc{critère} différent.
+\end{enumerate}
+\end{activite}
+
+\begin{activite}[1.3 --- Institutionnalisation \quad\duree{15 min}]
+\textbf{Modalité :} cours dialogué au tableau. \\[0.4em]
+\textbf{Contenu :}
+
+L'équation cartésienne du cercle de centre $O$ et de rayon $r$ :
+
+\begin{formula}
+\centering
+$\displaystyle x^2 + y^2 \;=\; r^2$
+\end{formula}
+
+Les points du \emph{disque ouvert} vérifient $x^2 + y^2 < r^2$. Généralisation à l'ellipse de demi-axes $r_x, r_y$ :
+
+\begin{formula}
+\centering
+$\displaystyle \left(\dfrac{x}{r_x}\right)^{\!2} + \left(\dfrac{y}{r_y}\right)^{\!2} \;=\; 1$
+\end{formula}
+
+Sur une grille de pixels, le problème est de décider quelles \acc{cellules} appartiennent à l'intérieur. Plusieurs réponses sont possibles. Pixel Round implémente \emph{trois} critères :
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item \acc{Euclidien} : le centre $(i + \tfrac{1}{2},\, j + \tfrac{1}{2})$ est-il à l'intérieur ?
+  \item \acc{Bresenham} : algorithme historique de 1965, en arithmétique entière.
+  \item \acc{Seuil} : un \emph{coin} de la cellule est-il à l'intérieur ?
+\end{itemize}
+
+\textbf{Démonstration en direct.} L'enseignant ouvre Pixel Round, fixe le diamètre à 10, alterne entre les trois algorithmes en commentant. Souligner : les trois figures sont \emph{mathématiquement correctes}, chacune sous son propre critère.
+\end{activite}
+
+\begin{activite}[1.4 --- Remobilisation immédiate \quad\duree{10 min}]
+\textbf{Consigne :} \emph{« Reprenez votre feuille. Redessinez le cercle de diamètre 10 en appliquant \acc{rigoureusement} le critère euclidien : on colorie la cellule si et seulement si son centre $(i + 0{,}5,\, j + 0{,}5)$ est à une distance $\leq 5$ du centre du cercle. »}
+
+À la fin, comparer avec la sortie de Pixel Round en mode euclidien, diamètre 10. \emph{Les dessins doivent coïncider.}
+
+\textbf{Ticket de sortie (2 min) :} \emph{« En une phrase, qu'est-ce que cela signifie pour une cellule d'être ``à l'intérieur'' du cercle ? »}
+\end{activite}
+
+\subsubsection*{Travail à la maison (facultatif)}
+Reprendre l'Activité~1.4 avec les diamètres 8 et 14. Apporter les deux dessins en Séance~2.
+
+% =============================================================================
+\subsection{Séance 2 --- « Trois algorithmes, trois dessins »}
+
+\subsubsection*{Objectif de séance}
+Approfondir l'analyse de chacun des trois algorithmes comme définition mathématique propre et les comparer quantitativement.
+
+\begin{activite}[2.1 --- Reprise \quad\duree{5 min}]
+Collecter rapidement les dessins du travail à la maison, observer les variations, annoncer le fil de la séance : \emph{« Aujourd'hui nous regardons chaque algorithme à la loupe et nous découvrons pourquoi Bresenham est considéré comme un bijou de l'informatique. »}
+\end{activite}
+
+\begin{activite}[2.2 --- Algorithme euclidien \quad\duree{10 min}]
+Reformulation. Pour une cellule $(i, j)$, calculer
+
+\begin{formula}
+\centering
+$\displaystyle d_x = \dfrac{i + \tfrac{1}{2} - c_x}{r_x},\qquad d_y = \dfrac{j + \tfrac{1}{2} - c_y}{r_y}$
+\end{formula}
+
+La cellule est coloriée si et seulement si $d_x^{\,2} + d_y^{\,2} \leq 1$.
+
+\textbf{Au tableau.} Résoudre explicitement le cas $c_x = c_y = 5$, $r_x = r_y = 5$, cellule $(2, 1)$. On obtient $d_x = -0{,}5$, $d_y = -0{,}7$, donc $d_x^2 + d_y^2 = 0{,}74 \leq 1$. Cellule \emph{intérieure}.
+
+\textbf{Travail individuel.} Chaque élève teste la cellule $(0, 0)$. (Réponse : $1{,}62 > 1$, donc \acc{extérieure}.)
+\end{activite}
+
+\begin{activite}[2.3 --- Algorithme de Bresenham \quad\duree{15 min}]
+\textbf{Repère historique.} Jack Bresenham publie l'algorithme en 1965 chez IBM. À cette époque, une seule multiplication en virgule flottante peut coûter des centaines de microsecondes. Son apport : dessiner en utilisant \emph{exclusivement} additions et comparaisons entières.
+
+Partant de $(x = 0,\, y = R)$ avec $d_0 = 1 - R$, à chaque pas dans l'octant $0$--$45°$ :
+
+\begin{formula}
+\centering
+$\begin{cases}
+\text{si } d < 0 : & \text{suivant : } (x{+}1,\, y),\; d \mathrel{+}= 2x+3 \\
+\text{si } d \geq 0 : & \text{suivant : } (x{+}1,\, y{-}1),\; d \mathrel{+}= 2(x-y)+5
+\end{cases}$
+\end{formula}
+
+\textbf{Trace au tableau.} Dérouler l'algorithme pour $R = 5$, en tabulant $x$, $y$, $d$. Les sept autres octants s'obtiennent par symétrie ($D_4$). \\
+
+\textbf{Note de différenciation.} Si la classe peine sur l'algèbre du paramètre $d$, présenter l'algorithme comme \emph{règle} sans démonstration formelle. Le détail complet est dans \texttt{Pixel\_Round\_Math\_fr-FR.pdf}, §5.
+
+\textbf{Articulation NSI :} l'algorithme peut être implémenté en 25 lignes de Python en classe de NSI ; coordonner la séance avec le collègue de NSI si possible.
+\end{activite}
+
+\begin{activite}[2.4 --- Algorithme de seuil \quad\duree{10 min}]
+Pour chaque cellule $(i, j)$, identifier le \emph{coin le plus proche} du centre :
+
+\begin{formula}
+\centering
+$\displaystyle n_x = \mathrm{clamp}(c_x,\, i,\, i{+}1),\qquad n_y = \mathrm{clamp}(c_y,\, j,\, j{+}1)$
+\end{formula}
+
+La cellule est coloriée si $\left(\dfrac{n_x - c_x}{r_x}\right)^{\!2} + \left(\dfrac{n_y - c_y}{r_y}\right)^{\!2} \leq 0{,}94$.
+
+\textbf{Pourquoi 0,94 et pas 1 ?} Empiriquement, avec $1$ apparaissent des « pics » d'un pixel aux quatre points cardinaux. Le seuil légèrement inférieur les supprime. \emph{C'est une décision d'ingénierie issue d'une inspection visuelle} --- exemple précieux de ce que la mathématique pure ne tranche pas toujours.
+\end{activite}
+
+\begin{activite}[2.5 --- Comparaison quantitative \quad\duree{10 min}]
+\textbf{Travail en binôme.} Sur Pixel Round :
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em,nosep]
+  \item Régler le diamètre sur 16, mode \emph{Plein}.
+  \item Activer le badge d'information. Relever l'aire discrète pour chacun des trois algorithmes.
+  \item Calculer l'aire continue $\pi r^2 = 64\pi \approx 201{,}06$.
+  \item Pour chaque algorithme, calculer l'erreur relative : $\dfrac{|A_{\text{disc}} - A_{\text{cont}}|}{A_{\text{cont}}} \times 100\%$.
+  \item Ordonner les trois algorithmes du plus proche au plus éloigné de la valeur continue.
+\end{enumerate}
+
+\textbf{Résultat attendu :} euclidien autour de $1\%$ ; seuil sur-estime de quelques pour cent ; Bresenham se place entre les deux. Confirmation collective au tableau.
+\end{activite}
+
+% =============================================================================
+\subsection{Séance 3 --- « De l'ellipse à l'ellipsoïde : la troisième dimension »}
+
+\subsubsection*{Objectif de séance}
+Généraliser l'équation à la dimension 3 ; introduire les voxels et le volume discret ; comprendre les coupes planaires comme inéquations linéaires.
+
+\begin{activite}[3.1 --- Du 2D au 3D \quad\duree{15 min}]
+Ajouter une troisième coordonnée $z$. L'équation de l'ellipse se généralise immédiatement :
+
+\begin{formula}
+\centering
+$\displaystyle \left(\dfrac{x}{r_x}\right)^{\!2} + \left(\dfrac{y}{r_y}\right)^{\!2} + \left(\dfrac{z}{r_z}\right)^{\!2} \;=\; 1$
+\end{formula}
+
+Lorsque $r_x = r_y = r_z = r$, on retrouve la \acc{sphère} $x^2 + y^2 + z^2 = r^2$.
+
+\textbf{Voxels :} la cellule d'une grille 3D s'appelle \emph{voxel} (\emph{volume element}). Le critère d'appartenance est identique au 2D, avec la troisième coordonnée :
+
+\begin{formula}
+\centering
+$\displaystyle a_x^2 + a_y^2 + a_z^2 \leq 1,\quad a_\xi = \dfrac{\xi + \tfrac{1}{2} - c_\xi}{r_\xi}$
+\end{formula}
+
+\textbf{Démonstration.} Basculer Pixel Round en 3D, alterner Sphère/Ellipsoïde, faire tourner à la souris, observer la structure de voxels et les trois styles d'ombrage (Classic, Smooth, Blocks).
+\end{activite}
+
+\begin{activite}[3.2 --- Volume continu \emph{vs.} discret \quad\duree{15 min}]
+Le volume continu de l'ellipsoïde est un résultat classique du calcul intégral :
+
+\begin{formula}
+\centering
+$\displaystyle V \;=\; \dfrac{4}{3}\,\pi\, r_x\, r_y\, r_z$
+\end{formula}
+
+Lorsque $r_x = r_y = r_z = r$, $V = \tfrac{4}{3}\pi r^3$. Formule récurrente dans les sujets du Bac (épreuve écrite et Grand Oral).
+
+\textbf{Travail en binôme :}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em,nosep]
+  \item Calculer le volume continu d'une sphère de diamètre 12 ($r = 6$) : $V = \tfrac{4}{3}\pi \cdot 216 \approx 904{,}78$.
+  \item Dans Pixel Round, générer la sphère $D = 12$, mode \emph{Plein}. Relever le volume discret.
+  \item Calculer l'erreur relative.
+\end{enumerate}
+
+\textbf{Discussion :} le rapport $V_{\text{disc}}/V_{\text{cont}} \to 1$ lorsque $D \to \infty$. Pour $D$ petit, la divergence est sensible, ce qui est \emph{mathématiquement correct} : la discrétisation modifie le décompte.
+\end{activite}
+
+\begin{activite}[3.3 --- Coupes comme inéquations linéaires \quad\duree{10 min}]
+Pixel Round permet de couper le solide par \acc{trois plans}. Chaque coupe est une \emph{inéquation linéaire} appliquée au centre du voxel :
+
+\begin{formula}
+\centering
+$\begin{array}{lcl}
+\text{Plan X :} & x \geq \mathit{cut} & \Rightarrow \text{voxel éliminé} \\
+\text{Plan Y :} & y \geq \mathit{cut} & \Rightarrow \text{voxel éliminé} \\
+\text{Plan diagonal :} & x + y \geq \mathit{cut} & \Rightarrow \text{voxel éliminé}
+\end{array}$
+\end{formula}
+
+\textbf{Démonstration.} Couper une sphère en $Y$ à 50\% ; puis en $X$ à 50\% ; puis basculer sur l'axe diagonal à 50\%.
+
+\textbf{Discussion :} \emph{« Pourquoi le curseur de la coupe diagonale va-t-il de 0 à $D_x + D_y$ et non à $D_x$ ? Où, dans l'équation, se trouve la réponse ? »}
+\end{activite}
+
+\begin{activite}[3.4 --- Connexion patrimoniale et culturelle \quad\duree{10 min}]
+\emph{Articulation avec l'enseignement d'histoire des arts.}
+
+Projeter trois images :
+\begin{itemize}[leftmargin=1.3em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item Une mosaïque romaine de la villa du Casale ou de Provence (par exemple les rondelles de Vienne) : cercles tessellés en pierres carrées.
+  \item Une rosace gothique de Notre-Dame de Paris ou de Chartres : symétrie radiale et subdivision géométrique.
+  \item Une vue intérieure de la Sagrada Familia (Gaudí) ou de la Cité Radieuse (Le Corbusier) : sphères, paraboloïdes et formes quadratiques en architecture.
+\end{itemize}
+
+\textbf{Discussion :} \emph{« Les Romains ont tesselé des cercles avec des pierres carrées il y a deux mille ans. Quel algorithme aurait-on dit qu'ils utilisaient ? Le problème change-t-il quand la pierre fait 3 centimètres au lieu d'1 pixel ? »}
+
+Cette articulation est aussi une excellente piste de sujet pour le \acc{Grand Oral} en spécialité Mathématiques : la rastérisation discrète comme problème transhistorique.
+\end{activite}
+
+% =============================================================================
+\subsection{Séance 4 --- « Projet final : pixel art original avec défense mathématique »}
+
+\subsubsection*{Objectif de séance}
+Mobiliser l'ensemble du contenu dans une production originale ; évaluer par la défense argumentée des choix mathématiques.
+
+\begin{activite}[4.1 --- Présentation du défi \quad\duree{5 min}]
+\textbf{Consigne :} \emph{« En binôme ou trinôme, vous allez produire une image de \emph{pixel art} ou \emph{voxel art} qui combine au moins trois figures générées par Pixel Round (cercles, ellipses, sphères ou ellipsoïdes). Personnage, icône, animal, logo --- vous choisissez. À la fin, chaque groupe présentera l'œuvre en justifiant \acc{mathématiquement} les choix : pourquoi cet algorithme ? pourquoi cette proportion ? pourquoi cette coupe ? »}
+
+\textbf{Formation des groupes :} hétérogènes, pré-assignés. 1 minute pour s'installer.
+\end{activite}
+
+\begin{activite}[4.2 --- Production \quad\duree{30 min}]
+\textbf{Matériel par groupe :}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em,nosep]
+  \item Un poste avec Pixel Round ;
+  \item Papier quadrillé, crayons, feutres pour ébauche ;
+  \item Fiche-guide avec trois questions obligatoires (Annexe~\ref{ap:exo}, exercice~5).
+\end{itemize}
+
+\textbf{Phases internes :}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em,nosep]
+  \item \duree{5 min} brainstorming et ébauche papier.
+  \item \duree{15 min} production dans Pixel Round et exports PNG des composantes.
+  \item \duree{5 min} montage final (sur papier quadrillé avec feutres, ou en présentation numérique).
+  \item \duree{5 min} rédaction de la justification mathématique sur la fiche-guide.
+\end{enumerate}
+
+\textbf{Accompagnement enseignant :} circuler entre les groupes ; questions médiatrices --- \emph{« pourquoi cet algorithme ? comment décririez-vous cette coupe par une inéquation ? »}
+\end{activite}
+
+\begin{activite}[4.3 --- Présentation et synthèse \quad\duree{15 min}]
+Chaque groupe dispose de 2 minutes pour présenter et répondre à \emph{au moins une} des trois questions mathématiques obligatoires.
+
+\textbf{Critères minimaux :}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item identifier au moins une figure mathématique dans l'œuvre ;
+  \item nommer l'algorithme choisi et justifier (même \emph{a posteriori}) son adéquation ;
+  \item s'il y a coupe 3D, la décrire comme inéquation.
+\end{itemize}
+
+\textbf{Synthèse finale enseignant (3 min) :} reprendre l'idée centrale --- \emph{« sur une grille discrète, une même courbe continue admet plusieurs représentations ; en choisir une est prendre une décision mathématique. »} Annoncer l'évaluation sommative.
+
+\textbf{Lien Grand Oral :} cette défense est un exercice direct de communication scientifique adapté à l'épreuve du Grand Oral. Encourager les élèves à mémoriser leur défense de 1 minute pour s'en servir comme \emph{rampe de lancement} d'un sujet du Grand Oral.
+\end{activite}
+
+% =============================================================================
+\section{Évaluation}
+
+L'évaluation est \acc{formative} pendant la séquence et \acc{sommative} en clôture, conformément aux orientations du Bac 2021 (contrôle continu, épreuves terminales).
+
+\subsection{Évaluation diagnostique}
+Séance~1, Activité~1.2. L'enseignant repère les lacunes éventuelles sur le plan cartésien, l'équation du cercle, le calcul d'aire.
+
+\subsection{Évaluation formative}
+Distribuée sur les quatre séances : observation directe, qualité des productions individuelles dans les activités 1.4, 2.2, 2.5, 3.2.
+
+\subsection{Évaluation sommative}
+Deux livrables :
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.2em,topsep=0.3em,nosep]
+  \item \textbf{Fiche d'exercices} (Annexe~\ref{ap:exo}), 5 questions, à rendre en fin de Séance~4.
+  \item \textbf{Projet final} (Activité~4.2), avec fiche-guide remplie.
+\end{enumerate}
+
+\subsection{Grille d'évaluation par compétences}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.20\textwidth}XX@{}}
+\toprule
+\textbf{Compétence} & \textbf{Maîtrise satisfaisante / très bonne (12--20)} & \textbf{Insuffisante / Fragile (0--11)} \\
+\midrule
+\textbf{Modéliser} & Applique correctement l'équation de l'ellipse/ellipsoïde ; reconnaît les trois algorithmes et leurs effets. & Utilise l'équation du cercle mais bute sur la généralisation à l'ellipse / confond les algorithmes. \\
+\addlinespace[3pt]
+\textbf{Calculer} & Calcule sans erreur l'aire, le volume et l'erreur relative ; vérifie au logiciel. & Erreurs de calcul, vérification absente. \\
+\addlinespace[3pt]
+\textbf{Communiquer} & Défend ses choix avec un vocabulaire mathématique précis ; expression orale claire et argumentée. & Justification esthétique seule, vocabulaire imprécis. \\
+\addlinespace[3pt]
+\textbf{Coopérer} & Contribue activement au binôme ; participe au débat collectif. & Travail individuel ; faible contribution. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Pondération suggérée}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item Fiche d'exercices : 40\%.
+  \item Projet final et défense orale : 50\%.
+  \item Implication processuelle : 10\%.
+\end{itemize}
+
+% =============================================================================
+\section{Articulations interdisciplinaires}
+
+\subsection{Avec NSI (Numérique et Sciences Informatiques)}
+L'algorithme de Bresenham est un classique de l'informatique. La Séance~2.3 peut être co-pilotée avec le professeur de NSI, qui prolongera l'analyse par une implémentation en Python --- objet d'évaluation possible de la partie projet de l'épreuve de NSI.
+
+\subsection{Avec les Arts plastiques}
+La production de \emph{pixel art} est traditionnellement abordée comme un langage artistique. Pixel Round offre l'occasion de croiser Mathématiques et Arts plastiques sur le même objet : la figure \emph{est} à la fois équation et composition. Suggestion : exposition conjointe des productions sur les murs du CDI ou sur le site du lycée.
+
+\subsection{Avec la Physique-Chimie}
+La couche sonore du Pixel Round utilise la synthèse additive d'ondes sinusoïdales pures. Les fréquences choisies approchent les notes du \acc{tempérament égal de 12 demi-tons} (chaque demi-ton multiplie la fréquence par $2^{1/12} \approx 1{,}0595$). Articulation directe avec les chapitres \emph{Ondes mécaniques} et \emph{Lumière et matière} de la spé Physique-Chimie.
+
+\subsection{Avec l'Histoire des arts}
+Le problème de la rastérisation d'un cercle n'a pas attendu l'ordinateur : il est déjà présent dans les mosaïques romaines, les vitraux gothiques, les œuvres de Vasarely, le Modulor de Le Corbusier. Une coplanification avec le professeur d'Histoire est possible pour les élèves suivant l'option Histoire des arts.
+
+\subsection{Avec le Grand Oral}
+La défense du projet final (Activité~4.3) constitue un excellent prototype de réponse au Grand Oral. Les sujets potentiels : \emph{« Existe-t-il un cercle parfait sur une grille de pixels ? »}, \emph{« De Bresenham aux GPU : pourquoi l'arithmétique entière reste-t-elle stratégique en informatique ? »}
+
+% =============================================================================
+\section{Bibliographie}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.2em,topsep=0.3em]
+  \item BACHELARD, G. \emph{La formation de l'esprit scientifique}. Paris : Vrin, 1938.
+  \item BRESENHAM, J. E. Algorithm for computer control of a digital plotter. \emph{IBM Systems Journal}, vol.~4, n°~1, p.~25--30, 1965.
+  \item BROUSSEAU, G. \emph{Théorie des situations didactiques}. Grenoble : La Pensée sauvage, 1998.
+  \item FRANCE. \emph{Bulletin officiel spécial n°8 du 25 juillet 2019}. Programme de spécialité Mathématiques de la classe Terminale générale.
+  \item HOUDEMENT, C. ; KUZNIAK, A. Paradigmes géométriques et espaces de travail mathématique. \emph{Annales de didactique et de sciences cognitives}, vol.~11, p.~175--193, 2006.
+  \item LAKATOS, I. \emph{Preuves et réfutations : Essai sur la logique de la découverte mathématique}. Paris : Hermann, 1984.
+  \item PITTEWAY, M. L. V. Algorithm for drawing ellipses or hyperbolae with a digital plotter. \emph{The Computer Journal}, vol.~10, n°~3, p.~282--289, 1967.
+  \item POLYA, G. \emph{Comment poser et résoudre un problème}. Paris : Jacques Gabay, 1989 [orig.~1945].
+  \item VERGNAUD, G. La théorie des champs conceptuels. \emph{Recherches en didactique des mathématiques}, vol.~10, p.~133--170, 1990.
+  \item Pixel Round --- document technique : \texttt{docs\_math/Pixel\_Round\_Math\_fr-FR.pdf}.
+\end{itemize}
+
+\newpage
+% =============================================================================
+% ANNEXES
+% =============================================================================
+\appendix
+\renewcommand{\thesection}{\Alph{section}}
+\setcounter{section}{0}
+
+\section{Script de démonstration en direct}\label{ap:script}
+
+Séquence recommandée pour la démonstration initiale (Activité~1.3) et pour la familiarisation de l'enseignant. Durée : 15 minutes.
+
+\subsection{Ouverture et mode 2D}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item Ouvrir Pixel Round. Repérer la barre supérieure, le canevas central, les contrôles latéraux.
+  \item Confirmer le mode \acc{2D / Cercle}.
+  \item Régler le curseur \emph{Size} sur 10. Observer la figure.
+  \item Activer le badge d'information dans le coin du canevas. Lecture à voix haute : « Diamètre 10, Rayon 5, Aire \dots, Algorithme Euclidien. »
+  \item Basculer entre les trois algorithmes : \acc{Euclidien / Bresenham / Seuil}. 30 secondes sur chacun.
+\end{enumerate}
+
+\subsection{Ellipse}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item Passer à \acc{Ellipse}. Les curseurs \emph{Largeur} et \emph{Hauteur} apparaissent.
+  \item Régler $W = 16$, $H = 8$.
+  \item Question : \emph{« L'équation qui régit cette forme est $(x/8)^2 + (y/4)^2 = 1$. Pourquoi divise-t-on $x$ par 8 et $y$ par 4 ? »}
+\end{enumerate}
+
+\subsection{Mode 3D}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item Passer à \acc{3D / Sphère}, $D = 12$.
+  \item Faire glisser à la souris pour faire tourner.
+  \item Activer le badge d'information : relever le volume.
+  \item Basculer sur \acc{Ellipsoïde}, $W = 20, H = 10, D = 10$.
+  \item Démontrer le curseur de coupe sur l'axe $Y$, 50\%.
+  \item Basculer sur l'axe diagonal. Discussion sur la coupe oblique.
+\end{enumerate}
+
+\subsection{Export}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item Utiliser le bouton de téléchargement.
+  \item Sauvegarder le PNG.
+  \item Note : haute résolution, exploitable pour impression ou présentation.
+\end{enumerate}
+
+% =============================================================================
+\newpage
+\section{Fiche d'exercices}\label{ap:exo}
+
+\textbf{Consignes.} Travail individuel. Vous pouvez vérifier dans Pixel Round, \emph{mais la justification mathématique est obligatoire}. À rendre manuscrit ou tapuscrit.
+
+\subsection*{Exercice 1 --- Équation du cercle}
+\textbf{Énoncé.} Un cercle est centré à l'origine $(0, 0)$ et a pour rayon $r = 7$. Pour chacun des points ci-dessous, déterminer s'il est \emph{intérieur}, \emph{extérieur} ou \emph{sur} le cercle. Justifier.
+\begin{enumerate}[label=\alph*),leftmargin=1.5em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item $(3, 4)$ \hfill \emph{correction :} intérieur ($25 < 49$).
+  \item $(5, 5)$ \hfill \emph{correction :} extérieur ($50 > 49$, $\sqrt{50} \approx 7{,}07$).
+  \item $(0, 7)$ \hfill \emph{correction :} sur.
+  \item $(-7, 0)$ \hfill \emph{correction :} sur.
+\end{enumerate}
+
+\subsection*{Exercice 2 --- Critère euclidien sur une cellule}
+\textbf{Énoncé.} Un cercle a pour centre $(5, 5)$ et pour rayon $5$. Appliquer le critère euclidien à la cellule $(i, j) = (1, 3)$ : est-elle coloriée ?
+
+\emph{Correction :} centre de cellule $(1{,}5,\, 3{,}5)$. Distance : $\sqrt{12{,}25 + 2{,}25} = \sqrt{14{,}5} \approx 3{,}81 < 5$. La cellule est \acc{coloriée}.
+
+\subsection*{Exercice 3 --- Aire discrète \emph{vs.} continue}
+\textbf{Énoncé.} Dans Pixel Round, générer un cercle de diamètre 20 en algorithme euclidien. Relever l'aire discrète. Calculer $\pi r^2$. Calculer l'erreur relative. Recommencer avec l'algorithme \emph{Seuil}. Comparer.
+
+\emph{Correction :} $A_{\text{cont}} = 100\pi \approx 314{,}16$. Euclidien sous 2\%. Seuil sur-estime de 5 à 8\%.
+
+\subsection*{Exercice 4 --- Volume d'un ellipsoïde et coupe}
+\textbf{Énoncé.} Soit un ellipsoïde de demi-axes $r_x = 4$, $r_y = 6$, $r_z = 3$.
+\begin{enumerate}[label=\alph*),leftmargin=1.5em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item Calculer le volume continu.
+  \item Après une coupe sur l'axe $Y$ conservant 50\% de la hauteur, quel est le volume restant ?
+  \item Décrire la coupe comme inéquation sur la coordonnée $y$ du voxel.
+\end{enumerate}
+
+\emph{Correction :}
+(a) $V = \tfrac{4}{3}\pi \cdot 4 \cdot 6 \cdot 3 = 96\pi \approx 301{,}59$.
+(b) Par symétrie, $\approx 150{,}80$.
+(c) $y < \mathit{cut}$, avec $\mathit{cut} = 0{,}5 \cdot D_y = 6$.
+
+\subsection*{Exercice 5 --- Fiche-guide du projet final}
+\textbf{Consigne.} Après production de l'image originale en groupe, répondre :
+\begin{enumerate}[label=(\arabic*),leftmargin=1.7em,itemsep=0.15em,topsep=0.2em,nosep]
+  \item Lister les figures géométriques utilisées (cercle, ellipse, sphère, ellipsoïde) et leurs paramètres.
+  \item Pour la figure principale, quel algorithme avez-vous choisi ? Pourquoi ? Quel effet visuel produit-il que les deux autres ne produiraient pas ?
+  \item Y a-t-il des coupes 3D ? Si oui, décrire \emph{une} d'entre elles comme inéquation.
+\end{enumerate}
+
+% =============================================================================
+\newpage
+\section{Adaptation aux établissements sans dotation numérique}\label{ap:adapt}
+
+Cette adaptation permet d'appliquer la séquence \emph{intégralement sur papier} lorsque l'accès au numérique n'est pas garanti. L'axe conceptuel demeure ; seul le support change.
+
+\subsection{Substitutions par séance}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.16\textwidth}p{0.36\textwidth}X@{}}
+\toprule
+\textbf{Séance} & \textbf{Activité originale} & \textbf{Substitut papier} \\
+\midrule
+1 & Démonstration de Pixel Round (1.3) & L'enseignant dessine à la main les trois versions du cercle $D = 10$ sur un quadrillage tracé en grand format. \\
+\addlinespace[3pt]
+2 & Comparaison logicielle (2.5) & Distribuer des fiches imprimées montrant les trois cercles $D = 16$ ; comptage manuel. \\
+\addlinespace[3pt]
+3 & Génération de la sphère 3D (3.1, 3.2) & Distribuer les \emph{tranches} de la sphère ($z = 0, 1, 2, \ldots$) sur papier quadrillé. Empilement mental. \\
+\addlinespace[3pt]
+4 & Production logicielle (4.2) & Production \emph{exclusivement} sur papier quadrillé avec crayons de couleur. La défense (4.3) est identique. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Kit de préparation (à constituer une seule fois)}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item Une feuille A3 quadrillée $30 \times 30$ tracée à la règle.
+  \item Un jeu par élève de 4 feuilles A4 quadrillées (5\,mm).
+  \item Une fiche-référence imprimée des trois cercles comparatifs.
+\end{itemize}
+
+\subsection{Articulation avec le LP ou la voie technologique}
+
+Pour les Lycées Professionnels et les voies technologiques (STI2D, STL), la séquence est entièrement réutilisable en redéployant le projet final autour d'une production artistique : design d'icône d'application, logotype d'un produit, illustration pour un dossier de Projet pluritechnologique encadré (PPE). Le poids accordé à la justification mathématique est ajusté à la baisse, et le contenu géométrique reste de niveau Première en voie technologique.
+
+% =============================================================================
+\newpage
+\section{Glossaire technique pour l'enseignant}\label{ap:glos}
+
+\begin{itemize}[leftmargin=1.4em,itemsep=0.3em,topsep=0.3em]
+  \item \acc{Algorithme} --- suite finie et bien définie d'instructions résolvant un problème. Les trois algorithmes de Pixel Round sont des procédures distinctes pour le même problème (décider quelles cellules colorier).
+  \item \acc{Bresenham (algorithme de)} --- algorithme publié en 1965 par Jack Bresenham (IBM) pour les segments, étendu ensuite aux cercles puis aux ellipses (Pitteway, Kappel). Sa marque : arithmétique entière seule.
+  \item \acc{Canevas (canvas)} --- élément HTML offrant un espace de dessin 2D ou 3D dans le navigateur.
+  \item \acc{Équation cartésienne} --- équation de la forme $F(x, y) = 0$, où la courbe est l'ensemble des zéros d'une fonction. Pour l'ellipse : $(x/r_x)^2 + (y/r_y)^2 - 1 = 0$.
+  \item \acc{Pixel} --- abréviation de \emph{picture element}. Unité minimale d'une image numérique.
+  \item \acc{PWA --- Progressive Web App} --- application web installable et utilisable hors-ligne. Pixel Round en est une.
+  \item \acc{Rastérisation} --- conversion d'une description géométrique continue en une matrice de pixels (2D) ou de voxels (3D).
+  \item \acc{Demi-axe} --- dans une ellipse de centre $C$, distance de $C$ à un sommet selon l'axe correspondant. Le cercle est le cas particulier $r_x = r_y$.
+  \item \acc{Tempérament égal de 12 demi-tons} --- division de l'octave en 12 intervalles égaux. Rapport entre deux demi-tons consécutifs : $\sqrt[12]{2} \approx 1{,}0595$. Fondement du système musical occidental.
+  \item \acc{Voxel} --- abréviation de \emph{volume element}. Généralisation 3D du pixel : cellule cubique $1 \times 1 \times 1$.
+  \item \acc{WebGL} --- API graphique 3D pour navigateur. Pixel Round y accède via \emph{three.js}.
+\end{itemize}
+
+\vspace{2em}
+\begin{center}
+\color{muted}\small\sffamily
+--- fin de la séquence pédagogique ---
+\end{center}
+
+\end{document}
