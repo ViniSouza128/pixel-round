@@ -100,7 +100,7 @@
   colback=bg, colframe=accent, boxrule=0.6pt, arc=4pt,
   left=12pt,right=12pt,top=10pt,bottom=10pt,
   before skip=12pt, after skip=12pt,
-  before={\par\needspace{8\baselineskip}},
+  before={\par\needspace{14\baselineskip}},\n  pad at break*=6pt,
   attach boxed title to top left={xshift=10pt,yshift=-8pt},
   boxed title style={colback=accent,colframe=accent,boxrule=0pt,arc=2pt},
   coltitle=white, fonttitle=\sffamily\bfseries\small,
@@ -157,7 +157,7 @@
 
 \newcommand{\code}[1]{\texttt{\small #1}}
 \newcommand{\acc}[1]{\textcolor{accent}{\textbf{#1}}}
-\newcommand{\tempo}[1]{\textbf{\small\color{muted}\textsf{#1}}}
+\newcommand{\tempo}[1]{\textnormal{\footnotesize\color{bg!90!white}\textsf{#1}}}
 
 % Atalho para incluir figuras de captura do Pixel Round
 \newcommand{\prfig}[3][0.55\textwidth]{%

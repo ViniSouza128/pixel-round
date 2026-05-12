@@ -143,6 +143,12 @@ EXTRA["fr-FR"] = dict(
     S17_AREA7_NAME="Synthèse de signaux",
     S17_AREA7_DESC="ondes sinusoïdales pures et approximation du tempérament égal à douze tons.",
     S17_P2=r"L'observation centrale que l'étude permet de formuler est la suivante : sur une grille discrète, \acc{il n'existe pas de représentation correcte unique} d'une courbe continue. Chaque algorithme présenté dans ce document correspond à une définition mathématique distincte du critère d'inclusion de cellules, et chaque définition produit une silhouette aux propriétés formelles propres --- douceur dans l'algorithme euclidien, motif en escalier de Bresenham, couverture plus large dans le critère de couverture de coin. Le choix de l'algorithme est donc une décision technique qui doit tenir compte de l'objectif de représentation visuelle visé et des caractéristiques métriques souhaitées pour la forme résultante.",
+    FIG_S3_CAP=r"Ellipse de demi-axes $W = 24$ et $H = 12$ sur la grille discrète.",
+    FIG_S4_CAP=r"Algorithme euclidien à $D = 20$.",
+    FIG_S5_CAP=r"Algorithme de Bresenham à $D = 20$.",
+    FIG_S6_CAP=r"Algorithme à seuil à $D = 20$.",
+    FIG_S10_CAP=r"Sphère ($D = 12$) et ellipsoïde ($W = 20,\, H = 10,\, D = 12$) voxelisés.",
+    FIG_S11_CAP=r"Coupes planes à 50\% sur les axes Y, X et diagonale (de gauche à droite).",
 )
 
 # ============================================================================
@@ -285,4 +291,10 @@ EXTRA["de-DE"] = dict(
     S17_AREA7_NAME="Signalsynthese",
     S17_AREA7_DESC="reine Sinuswellen und Approximation der gleichstufigen Zwölftonstimmung.",
     S17_P2=r"Die zentrale Beobachtung, die die Studie zu formulieren erlaubt, lautet: Auf einem diskreten Gitter \acc{gibt es keine einzige korrekte Darstellung} einer stetigen Kurve. Jeder in diesem Dokument vorgestellte Algorithmus entspricht einer eigenen mathematischen Definition des Zellaufnahmekriteriums, und jede Definition erzeugt eine Silhouette mit eigenen formalen Eigenschaften --- Glätte beim Euklidischen Algorithmus, Treppenmuster bei Bresenham, größere Abdeckung beim Eckenabdeckungskriterium. Die Wahl des Algorithmus ist daher eine technische Entscheidung, die das beabsichtigte Darstellungsziel und die gewünschten metrischen Eigenschaften der resultierenden Form berücksichtigen muss.",
+    FIG_S3_CAP=r"Ellipse mit $W = 24$ und $H = 12$ auf dem diskreten Raster.",
+    FIG_S4_CAP=r"Euklidischer Algorithmus bei $D = 20$.",
+    FIG_S5_CAP=r"Bresenham-Algorithmus bei $D = 20$.",
+    FIG_S6_CAP=r"Schwellenwert-Algorithmus bei $D = 20$.",
+    FIG_S10_CAP=r"Voxelisierte Kugel ($D = 12$) und voxelisiertes Ellipsoid ($W = 20,\, H = 10,\, D = 12$).",
+    FIG_S11_CAP=r"Ebene Schnitte bei 50\% entlang Y-, X- und Diagonalachse (links nach rechts).",
 )

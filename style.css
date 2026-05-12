@@ -463,6 +463,22 @@ body.mode3d .three-canvas{display:block;}
 }
 .help-item h3{font-size:15px; color:var(--text-strong); margin-bottom:7px;}
 .help-item p{font-size:14px; color:var(--text-muted); line-height:1.7;}
+.help-item a{
+  color:var(--accent);
+  text-decoration:none;
+  border-bottom:1px solid var(--accent-dim);
+  transition:color .12s ease-out, border-color .12s ease-out, background .12s ease-out;
+}
+.help-item a:hover{
+  color:var(--accent-light);
+  border-bottom-color:var(--accent);
+  background:var(--accent-dim);
+}
+.help-item a:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+  border-bottom-color:transparent;
+}
 .help-item code,
 .key{
   display:inline-block; font-family:'JetBrains Mono',monospace; font-size:11px;

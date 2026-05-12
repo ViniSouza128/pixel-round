@@ -38,6 +38,9 @@ TEX = r"""% !TEX program = xelatex
 \usepackage{csquotes}
 \usepackage{tcolorbox}
 \tcbuselibrary{skins,breakable}
+\usepackage{caption}
+\usepackage{subcaption}
+\graphicspath{{../docs_aula/img/}}
 \usepackage[hidelinks,bookmarks=true,bookmarksopen=true,
             pdftitle={Pixel Round — «PDF_TITLE»},
             pdfauthor={Vinícius Rodrigues de Souza}]{hyperref}
@@ -81,6 +84,9 @@ TEX = r"""% !TEX program = xelatex
 
 \newcommand{\code}[1]{\texttt{\small #1}}
 \newcommand{\acc}[1]{\textcolor{accent}{\textbf{#1}}}
+
+\captionsetup{font=small, labelfont={bf,color=accent}, textfont={color=muted}, justification=centering}
+\captionsetup[sub]{font=footnotesize, labelfont={bf,color=accent!75!ink}, textfont={color=muted}}
 
 \begin{document}
 
@@ -162,6 +168,11 @@ $\displaystyle d_x = \dfrac{i+\tfrac{1}{2}-c_x}{r_x},\qquad
                 \text{«S3_INSIDE»}\;\Longleftrightarrow\; d_x^2 + d_y^2 \leq 1$
 \end{formula}
 
+\begin{figure}[!htb]\centering
+\includegraphics[width=0.62\textwidth]{fig04_2d_ellipse_24x12.png}
+\caption{«FIG_S3_CAP»}
+\end{figure}
+
 % =============================================================================
 \section{«S4_TITLE»}
 
@@ -189,6 +200,11 @@ $\displaystyle \mathit{lo} = \lceil c_x - \mathit{dxM} - \tfrac{1}{2} \rceil,
 \end{formula}
 
 \textbf{«S4_JUST_LABEL»} «S4_P4»
+
+\begin{figure}[!htb]\centering
+\includegraphics[width=0.48\textwidth]{fig01_2d_d20_euclidean.png}
+\caption{«FIG_S4_CAP»}
+\end{figure}
 
 % =============================================================================
 \section{«S5_TITLE»}
@@ -233,6 +249,11 @@ p_2 &= b^2\!\left(x+\tfrac{1}{2}\right)^{\!2} + a^2\!\left(y-1\right)^{\!2} - a^
 
 «S5_P8»
 
+\begin{figure}[!htb]\centering
+\includegraphics[width=0.48\textwidth]{fig02_2d_d20_bresenham.png}
+\caption{«FIG_S5_CAP»}
+\end{figure}
+
 % =============================================================================
 \section{«S6_TITLE»}
 
@@ -249,6 +270,11 @@ $\displaystyle \text{«S3_INSIDE»}\;\Longleftrightarrow\;
 «S6_P2»
 
 «S6_P3»
+
+\begin{figure}[!htb]\centering
+\includegraphics[width=0.48\textwidth]{fig03_2d_d20_threshold.png}
+\caption{«FIG_S6_CAP»}
+\end{figure}
 
 % =============================================================================
 \section{«S7_TITLE»}
@@ -311,6 +337,16 @@ V \;=\; \dfrac{4}{3}\,\pi\, r_x\, r_y\, r_z
 
 \textbf{«S10_SHELL_LABEL»} «S10_P3»
 
+\begin{figure}[!htb]\centering
+\begin{subfigure}[t]{0.42\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig07_3d_sphere_d12.png}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.42\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig08_3d_ellipsoid.png}
+\end{subfigure}
+\caption{«FIG_S10_CAP»}
+\end{figure}
+
 % =============================================================================
 \section{«S11_TITLE»}
 
@@ -328,6 +364,19 @@ V \;=\; \dfrac{4}{3}\,\pi\, r_x\, r_y\, r_z
 \mathit{cut} \;=\; \mathit{cutPct} \cdot \max_{\text{«S11_AXIS»}}
 \]
 «S11_P3»
+
+\begin{figure}[!htb]\centering
+\begin{subfigure}[t]{0.31\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig09_3d_cut_y50.png}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.31\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig10_3d_cut_x50.png}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.31\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig11_3d_cut_diag50.png}
+\end{subfigure}
+\caption{«FIG_S11_CAP»}
+\end{figure}
 
 % =============================================================================
 \section{«S12_TITLE»}
