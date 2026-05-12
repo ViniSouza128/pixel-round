@@ -1,14 +1,23 @@
 {
+  "id": "/pixel-round/",
   "name": "Pixel Round",
   "short_name": "Pixel Round",
-  "description": "A pixel-perfect generator for circles, ellipses, spheres and ellipsoids.",
+  "description": "A pixel-perfect generator for circles, ellipses, spheres and ellipsoids. Vanilla JS + Canvas + three.js. Works offline.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "browser"],
   "orientation": "any",
   "background_color": "#FAFAF7",
   "theme_color": "#FF4D4D",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["graphics", "utilities", "design", "education"],
   "icons": [
-    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+    { "src": "favicon.svg",            "sizes": "any",     "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icon-192.png",           "sizes": "192x192", "type": "image/png",     "purpose": "any" },
+    { "src": "icon-512.png",           "sizes": "512x512", "type": "image/png",     "purpose": "any" },
+    { "src": "icon-maskable-192.png",  "sizes": "192x192", "type": "image/png",     "purpose": "maskable" },
+    { "src": "icon-maskable-512.png",  "sizes": "512x512", "type": "image/png",     "purpose": "maskable" }
   ]
 }
