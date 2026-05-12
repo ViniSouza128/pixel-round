@@ -1,0 +1,6 @@
+__pycache__/
+*.aux
+*.log
+*.toc
+*.out
+Pixel_Round_Math_*.tex
