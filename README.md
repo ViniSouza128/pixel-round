@@ -4,7 +4,9 @@ A pixel-perfect generator for **circles, ellipses, spheres and
 ellipsoids** in pixel art. Browser-based, no installation, no account,
 no backend. Exports as PNG.
 
-**Live:** *(GitHub Pages URL — set after deployment)*
+**Live:** [vinisouza128.github.io/pixel-round](https://vinisouza128.github.io/pixel-round/)
+
+**Docs (PDF):** [Math companion](https://vinisouza128.github.io/pixel-round/docs_math/) · [Classroom lesson plans](https://vinisouza128.github.io/pixel-round/docs_aula/) — both in 9 languages.
 
 ## What it does
 
@@ -119,8 +121,8 @@ compile per locale with `xelatex Plano_de_Aula_<locale>.tex`
 
 ## Author & License
 
-Authored by **Vinicius Souza** ([@ViniSouza128](https://github.com/ViniSouza128)).
-Copyright © 2026 Vinicius Souza. **All Rights Reserved.**
+Authored by **Vinícius Rodrigues de Souza** ([@ViniSouza128](https://github.com/ViniSouza128)).
+Copyright © 2026 Vinícius Rodrigues de Souza. **All Rights Reserved.**
 
 - **Code, layout, design system, documents:** All Rights Reserved —
   see [`LICENSE`](LICENSE).

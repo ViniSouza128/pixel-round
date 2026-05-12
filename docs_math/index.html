@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Pixel Round — Math companion (PDF)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="index,follow">
+<meta name="description" content="Pixel Round technical math companion. PDFs in 9 languages covering implicit equations, rasterization algorithms, voxelization, planar cuts, Lambertian shading and 12-tone audio synthesis.">
+<style>
+  :root{--bg:#f2ede2;--surface:#fbf6e9;--border:#d8d1bc;--text:#1f1f23;--muted:#4e4e58;--accent:#cc2020;--accent-dim:rgba(204,32,32,.12)}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,-apple-system,Segoe UI,system-ui,sans-serif;line-height:1.6}
+  main{max-width:780px;margin:0 auto;padding:48px 28px 80px}
+  header a.back{color:var(--muted);text-decoration:none;font-size:14px;letter-spacing:.04em;text-transform:uppercase;font-weight:700}
+  header a.back:hover{color:var(--accent)}
+  h1{font-size:38px;font-weight:800;color:var(--accent);margin:14px 0 6px;letter-spacing:-.01em}
+  .sub{color:var(--muted);font-size:16px;margin-bottom:36px}
+  .card{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin:10px 0;text-decoration:none;color:var(--text);transition:.12s ease-out;font-size:15px}
+  .card:hover{border-color:var(--accent);background:var(--accent-dim);transform:translateY(-1px)}
+  .card .locale{font-weight:700;letter-spacing:.04em;font-size:13px;color:var(--accent);text-transform:uppercase;display:inline-block;min-width:72px}
+  .card .name{font-family:JetBrains Mono,SFMono-Regular,Consolas,monospace;color:var(--muted);font-size:13px;margin-left:10px}
+  .card .arrow{color:var(--accent);font-weight:700}
+  section.about{margin-top:42px;padding-top:24px;border-top:1px solid var(--border);color:var(--muted);font-size:14px}
+  section.about p{margin:8px 0}
+  section.about a{color:var(--accent);text-decoration:none}
+  section.about a:hover{text-decoration:underline}
+  code{background:var(--surface);border:1px solid var(--border);padding:1px 6px;border-radius:4px;font-family:JetBrains Mono,SFMono-Regular,Consolas,monospace;font-size:12px}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <a class="back" href="../">← Pixel Round</a>
+    <h1>Math companion</h1>
+    <p class="sub">A Matemática do Projeto — full technical companion in nine languages. Covers the implicit ellipse and ellipsoid equations, three rasterization algorithms (Euclidean, Bresenham, threshold) with derivations, voxel volume, planar cuts including the 45° diagonal, spherical-coordinate camera, auto-zoom by bounding sphere, Lambertian shading approximation, and 12-tone audio synthesis.</p>
+  </header>
+
+  <a class="card" href="Pixel_Round_Math_en-US.pdf"><span><span class="locale">en-US</span><span class="name">Pixel_Round_Math_en-US.pdf</span></span><span class="arrow">→</span></a>
+  <a class="card" href="Pixel_Round_Math_es-ES.pdf"><span><span class="locale">es-ES</span><span class="name">Pixel_Round_Math_es-ES.pdf</span></span><span class="arrow">→</span></a>
+  <a class="card" href="Pixel_Round_Math_pt-BR.pdf"><span><span class="locale">pt-BR</span><span class="name">Pixel_Round_Math_pt-BR.pdf</span></span><span class="arrow">→</span></a>
+  <a class="card" href="Pixel_Round_Math_fr-FR.pdf"><span><span class="locale">fr-FR</span><span class="name">Pixel_Round_Math_fr-FR.pdf</span></span><span class="arrow">→</span></a>
+  <a class="card" href="Pixel_Round_Math_de-DE.pdf"><span><span class="locale">de-DE</span><span class="name">Pixel_Round_Math_de-DE.pdf</span></span><span class="arrow">→</span></a>
+  <a class="card" href="Pixel_Round_Math_zh-CN.pdf"><span><span class="locale">zh-CN</span><span class="name">Pixel_Round_Math_zh-CN.pdf</span></span><span class="arrow">→</span></a>
+  <a class="card" href="Pixel_Round_Math_ja-JP.pdf"><span><span class="locale">ja-JP</span><span class="name">Pixel_Round_Math_ja-JP.pdf</span></span><span class="arrow">→</span></a>
+  <a class="card" href="Pixel_Round_Math_ru-RU.pdf"><span><span class="locale">ru-RU</span><span class="name">Pixel_Round_Math_ru-RU.pdf</span></span><span class="arrow">→</span></a>
+  <a class="card" href="Pixel_Round_Math_ko-KR.pdf"><span><span class="locale">ko-KR</span><span class="name">Pixel_Round_Math_ko-KR.pdf</span></span><span class="arrow">→</span></a>
+
+  <section class="about">
+    <p><strong>Rebuilding:</strong> <code>cd docs_math &amp;&amp; python build.py</code> (requires XeLaTeX/MiKTeX with <code>unicode-math</code>, <code>polyglossia</code>, <code>xeCJK</code>, <code>tcolorbox</code>).</p>
+    <p>Math content is identical across locales; only the prose varies.</p>
+    <p><a href="../docs_aula/">Classroom lesson plans →</a></p>
+    <p>© 2026 Vinícius Rodrigues de Souza. All Rights Reserved.</p>
+  </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Pixel Round — Classroom lesson plans (PDF)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="index,follow">
+<meta name="description" content="Pixel Round classroom lesson plans. Four-period sequences in 9 locales, each adapted (not translated) to the local curriculum, exam system, pedagogy and visual culture.">
+<style>
+  :root{--bg:#f2ede2;--surface:#fbf6e9;--border:#d8d1bc;--text:#1f1f23;--muted:#4e4e58;--accent:#cc2020;--accent-dim:rgba(204,32,32,.12)}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,-apple-system,Segoe UI,system-ui,sans-serif;line-height:1.6}
+  main{max-width:820px;margin:0 auto;padding:48px 28px 80px}
+  header a.back{color:var(--muted);text-decoration:none;font-size:14px;letter-spacing:.04em;text-transform:uppercase;font-weight:700}
+  header a.back:hover{color:var(--accent)}
+  h1{font-size:38px;font-weight:800;color:var(--accent);margin:14px 0 6px;letter-spacing:-.01em}
+  .sub{color:var(--muted);font-size:16px;margin-bottom:32px}
+  .card{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin:10px 0;text-decoration:none;color:var(--text);transition:.12s ease-out;font-size:15px;gap:10px}
+  .card:hover{border-color:var(--accent);background:var(--accent-dim);transform:translateY(-1px)}
+  .card .head{display:flex;align-items:center;flex:1;min-width:0}
+  .card .locale{font-weight:700;letter-spacing:.04em;font-size:13px;color:var(--accent);text-transform:uppercase;display:inline-block;min-width:72px}
+  .card .ctx{color:var(--muted);font-size:13px;margin-left:10px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .card .arrow{color:var(--accent);font-weight:700;flex-shrink:0}
+  section.about{margin-top:42px;padding-top:24px;border-top:1px solid var(--border);color:var(--muted);font-size:14px}
+  section.about p{margin:8px 0}
+  section.about a{color:var(--accent);text-decoration:none}
+  section.about a:hover{text-decoration:underline}
+  code{background:var(--surface);border:1px solid var(--border);padding:1px 6px;border-radius:4px;font-family:JetBrains Mono,SFMono-Regular,Consolas,monospace;font-size:12px}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <a class="back" href="../">← Pixel Round</a>
+    <h1>Classroom lesson plans</h1>
+    <p class="sub">Four-period instructional sequence for grade-12 / final-year high school classes. Each locale is <em>adapted</em>, not translated: every plan reflects its country's curriculum, national exam, dominant pedagogical tradition and visual culture. Includes captured figures, four-period sequence, evaluation rubric and adaptations for low-resource classrooms.</p>
+  </header>
+
+  <a class="card" href="Plano_de_Aula_en-US.pdf"><span class="head"><span class="locale">en-US</span><span class="ctx">USA · Grade 12 · Common Core · AP / SAT context</span></span><span class="arrow">→</span></a>
+  <a class="card" href="Plano_de_Aula_es-ES.pdf"><span class="head"><span class="locale">es-ES</span><span class="ctx">España · 2.º Bachillerato · LOMLOE · EvAU</span></span><span class="arrow">→</span></a>
+  <a class="card" href="Plano_de_Aula_pt-BR.pdf"><span class="head"><span class="locale">pt-BR</span><span class="ctx">Brasil · 3.º ano EM · BNCC · ENEM · OBMEP</span></span><span class="arrow">→</span></a>
+  <a class="card" href="Plano_de_Aula_fr-FR.pdf"><span class="head"><span class="locale">fr-FR</span><span class="ctx">France · Terminale · BO · Bac · Grand Oral</span></span><span class="arrow">→</span></a>
+  <a class="card" href="Plano_de_Aula_de-DE.pdf"><span class="head"><span class="locale">de-DE</span><span class="ctx">Deutschland · Q2/12. Jg. · KMK · Abitur</span></span><span class="arrow">→</span></a>
+  <a class="card" href="Plano_de_Aula_zh-CN.pdf"><span class="head"><span class="locale">zh-CN</span><span class="ctx">中国 · 高三 · 课标 (2017修订) · 高考</span></span><span class="arrow">→</span></a>
+  <a class="card" href="Plano_de_Aula_ja-JP.pdf"><span class="head"><span class="locale">ja-JP</span><span class="ctx">日本 · 高校3年 · 学習指導要領 · 共通テスト</span></span><span class="arrow">→</span></a>
+  <a class="card" href="Plano_de_Aula_ru-RU.pdf"><span class="head"><span class="locale">ru-RU</span><span class="ctx">Россия · 11-й класс · ФГОС СОО · ЕГЭ</span></span><span class="arrow">→</span></a>
+  <a class="card" href="Plano_de_Aula_ko-KR.pdf"><span class="head"><span class="locale">ko-KR</span><span class="ctx">대한민국 · 고3 · 2022 개정 교육과정 · 수능</span></span><span class="arrow">→</span></a>
+
+  <section class="about">
+    <p><strong>Rebuilding any locale:</strong> <code>cd docs_aula &amp;&amp; xelatex Plano_de_Aula_&lt;locale&gt;.tex</code> (two passes for TOC + cross-refs). Requires XeLaTeX with <code>tcolorbox</code>, <code>needspace</code>, <code>subcaption</code>.</p>
+    <p>The pt-BR plan is the reference implementation: integrates 16 figures captured from the app, cross-references, colored links, BNCC habilities, regional crosswalk for SEDUC-SP / SEEDUC-RJ / SEE-MG / SEDUC-CE / SEDUC-AM. Other locales are adapted to their own contexts, not literal translations of the Brazilian plan.</p>
+    <p><a href="../docs_math/">Math companion documents →</a></p>
+    <p>© 2026 Vinícius Rodrigues de Souza. All Rights Reserved.</p>
+  </section>
+</main>
+</body>
+</html>

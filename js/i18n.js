@@ -246,6 +246,11 @@ const TR = {
           { h: 'License', p: 'All Rights Reserved on code &amp; design — see <code>LICENSE</code>. Third-party attributions in <code>NOTICE.md</code>.' },
           { h: 'Source',  p: 'Repository: <code>github.com/ViniSouza128/pixel-round</code>.' },
         ]},
+        { h3: '7. Documents', items: [
+          { h: 'Math companion (PDF)',     p: 'In-depth derivation of equations, algorithms, voxelization, cuts and shading. <a href="docs_math/Pixel_Round_Math_en-US.pdf" target="_blank" rel="noopener">Open Pixel_Round_Math_en-US.pdf →</a>' },
+          { h: 'Classroom lesson plan (PDF)', p: 'Four-period instructional sequence aligned to the Common Core State Standards. <a href="docs_aula/Plano_de_Aula_en-US.pdf" target="_blank" rel="noopener">Open Plano_de_Aula_en-US.pdf →</a>' },
+          { h: 'All locales',              p: 'Both documents are available in 9 languages: <a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> and <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>.' },
+        ]},
       ],
     },
   },
@@ -374,6 +379,11 @@ const TR = {
         { h3: '6. Licencia y créditos', items: [
           { h: 'Licencia',  p: 'Todos los derechos reservados sobre código y diseño — ver <code>LICENSE</code>. Atribuciones de terceros en <code>NOTICE.md</code>.' },
           { h: 'Código',    p: 'Repositorio: <code>github.com/ViniSouza128/pixel-round</code>.' },
+        ]},
+        { h3: '7. Documentos', items: [
+          { h: 'Documento matemático (PDF)',  p: 'Desarrollo en profundidad de ecuaciones, algoritmos, voxelización, cortes y sombreado. <a href="docs_math/Pixel_Round_Math_es-ES.pdf" target="_blank" rel="noopener">Abrir Pixel_Round_Math_es-ES.pdf →</a>' },
+          { h: 'Situación de aprendizaje (PDF)', p: 'Secuencia de cuatro sesiones alineada a la LOMLOE (2.º de Bachillerato). <a href="docs_aula/Plano_de_Aula_es-ES.pdf" target="_blank" rel="noopener">Abrir Plano_de_Aula_es-ES.pdf →</a>' },
+          { h: 'Todos los idiomas',           p: 'Ambos documentos están disponibles en 9 idiomas: <a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> y <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>.' },
         ]},
       ],
     },
@@ -504,6 +514,11 @@ const TR = {
           { h: 'Licença', p: 'Todos os direitos reservados sobre código e design — veja <code>LICENSE</code>. Atribuições de terceiros em <code>NOTICE.md</code>.' },
           { h: 'Código',  p: 'Repositório: <code>github.com/ViniSouza128/pixel-round</code>.' },
         ]},
+        { h3: '7. Documentos', items: [
+          { h: 'Documento matemático (PDF)', p: 'Desenvolvimento completo das equações, algoritmos, voxelização, cortes e sombreamento. <a href="docs_math/Pixel_Round_Math_pt-BR.pdf" target="_blank" rel="noopener">Abrir Pixel_Round_Math_pt-BR.pdf →</a>' },
+          { h: 'Plano de aula (PDF)',        p: 'Sequência didática de quatro aulas para o 3.º ano do Ensino Médio, alinhada à BNCC. <a href="docs_aula/Plano_de_Aula_pt-BR.pdf" target="_blank" rel="noopener">Abrir Plano_de_Aula_pt-BR.pdf →</a>' },
+          { h: 'Outros idiomas',             p: 'Ambos os documentos estão disponíveis em 9 idiomas: <a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> e <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>.' },
+        ]},
       ],
     },
   },
@@ -632,6 +647,11 @@ const TR = {
         { h3: '6. Licence & crédits', items: [
           { h: 'Licence', p: 'Tous droits réservés sur le code et le design — voir <code>LICENSE</code>. Attributions tierces dans <code>NOTICE.md</code>.' },
           { h: 'Source',  p: 'Dépôt : <code>github.com/ViniSouza128/pixel-round</code>.' },
+        ]},
+        { h3: '7. Documents', items: [
+          { h: 'Document mathématique (PDF)', p: 'Développement complet des équations, des algorithmes, de la voxelisation, des coupes et de l\'ombrage. <a href="docs_math/Pixel_Round_Math_fr-FR.pdf" target="_blank" rel="noopener">Ouvrir Pixel_Round_Math_fr-FR.pdf →</a>' },
+          { h: 'Séquence pédagogique (PDF)',  p: 'Séance de quatre cours pour la classe de Terminale, spécialité Mathématiques. <a href="docs_aula/Plano_de_Aula_fr-FR.pdf" target="_blank" rel="noopener">Ouvrir Plano_de_Aula_fr-FR.pdf →</a>' },
+          { h: 'Autres langues',              p: 'Les deux documents sont disponibles en 9 langues : <a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> et <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>.' },
         ]},
       ],
     },
@@ -762,6 +782,11 @@ const TR = {
           { h: 'Lizenz', p: 'Alle Rechte vorbehalten für Code und Design — siehe <code>LICENSE</code>. Drittanbieter-Hinweise in <code>NOTICE.md</code>.' },
           { h: 'Quelle', p: 'Repository: <code>github.com/ViniSouza128/pixel-round</code>.' },
         ]},
+        { h3: '7. Dokumente', items: [
+          { h: 'Mathematischer Begleittext (PDF)', p: 'Ausführliche Herleitung der Gleichungen, Algorithmen, Voxelisierung, Schnitte und Schattierung. <a href="docs_math/Pixel_Round_Math_de-DE.pdf" target="_blank" rel="noopener">Pixel_Round_Math_de-DE.pdf öffnen →</a>' },
+          { h: 'Unterrichtssequenz (PDF)',         p: 'Vier Doppelstunden für die gymnasiale Oberstufe (Q2). <a href="docs_aula/Plano_de_Aula_de-DE.pdf" target="_blank" rel="noopener">Plano_de_Aula_de-DE.pdf öffnen →</a>' },
+          { h: 'Alle Sprachen',                    p: 'Beide Dokumente liegen in 9 Sprachen vor: <a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> und <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>.' },
+        ]},
       ],
     },
   },
@@ -890,6 +915,11 @@ const TR = {
         { h3: '6. 许可与致谢', items: [
           { h: '许可', p: '代码和设计保留所有权利 — 见 <code>LICENSE</code>。第三方归属见 <code>NOTICE.md</code>。' },
           { h: '源码', p: '仓库：<code>github.com/ViniSouza128/pixel-round</code>。' },
+        ]},
+        { h3: '7. 文档', items: [
+          { h: '数学技术文档 (PDF)', p: '完整推导方程、三种算法、体素化、切割与着色。<a href="docs_math/Pixel_Round_Math_zh-CN.pdf" target="_blank" rel="noopener">打开 Pixel_Round_Math_zh-CN.pdf →</a>' },
+          { h: '教学设计 (PDF)',     p: '面向普通高中三年级（高三）数学的四课时教学设计。<a href="docs_aula/Plano_de_Aula_zh-CN.pdf" target="_blank" rel="noopener">打开 Plano_de_Aula_zh-CN.pdf →</a>' },
+          { h: '其他语言版本',       p: '两份文档均提供 9 种语言：<a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> 与 <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>。' },
         ]},
       ],
     },
@@ -1020,6 +1050,11 @@ const TR = {
           { h: 'ライセンス', p: 'コードとデザインの全著作権を保有 — <code>LICENSE</code> を参照。サードパーティの帰属は <code>NOTICE.md</code> に。' },
           { h: 'ソース',     p: 'リポジトリ：<code>github.com/ViniSouza128/pixel-round</code>。' },
         ]},
+        { h3: '7. ドキュメント', items: [
+          { h: '数学解説 (PDF)', p: '方程式・3アルゴリズム・ボクセル化・切断・シェーディングの詳細な導出。<a href="docs_math/Pixel_Round_Math_ja-JP.pdf" target="_blank" rel="noopener">Pixel_Round_Math_ja-JP.pdf を開く →</a>' },
+          { h: '学習指導案 (PDF)', p: '高等学校第3学年数学のための4単位時間の学習指導案。<a href="docs_aula/Plano_de_Aula_ja-JP.pdf" target="_blank" rel="noopener">Plano_de_Aula_ja-JP.pdf を開く →</a>' },
+          { h: '他の言語',       p: 'どちらの文書も9言語で利用可能：<a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> と <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>。' },
+        ]},
       ],
     },
   },
@@ -1149,6 +1184,11 @@ const TR = {
           { h: 'Лицензия', p: 'Все права на код и дизайн защищены — см. <code>LICENSE</code>. Сторонние упоминания в <code>NOTICE.md</code>.' },
           { h: 'Источник', p: 'Репозиторий: <code>github.com/ViniSouza128/pixel-round</code>.' },
         ]},
+        { h3: '7. Документы', items: [
+          { h: 'Математическое сопровождение (PDF)', p: 'Подробный вывод уравнений, трёх алгоритмов, вокселизации, сечений и затенения. <a href="docs_math/Pixel_Round_Math_ru-RU.pdf" target="_blank" rel="noopener">Открыть Pixel_Round_Math_ru-RU.pdf →</a>' },
+          { h: 'Технологическая карта урока (PDF)',  p: 'Четыре урока для 11 класса средней общеобразовательной школы. <a href="docs_aula/Plano_de_Aula_ru-RU.pdf" target="_blank" rel="noopener">Открыть Plano_de_Aula_ru-RU.pdf →</a>' },
+          { h: 'Другие языки',                       p: 'Оба документа доступны на 9 языках: <a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> и <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>.' },
+        ]},
       ],
     },
   },
@@ -1277,6 +1317,11 @@ const TR = {
         { h3: '6. 라이선스 & 크레딧', items: [
           { h: '라이선스', p: '코드 및 디자인의 모든 권리 보유 — <code>LICENSE</code> 참조. 타사 저작권은 <code>NOTICE.md</code>에 있습니다.' },
           { h: '소스',     p: '저장소: <code>github.com/ViniSouza128/pixel-round</code>.' },
+        ]},
+        { h3: '7. 문서', items: [
+          { h: '수학 기술 문서 (PDF)', p: '방정식, 세 가지 알고리즘, 복셀화, 절단, 음영 처리의 상세한 유도. <a href="docs_math/Pixel_Round_Math_ko-KR.pdf" target="_blank" rel="noopener">Pixel_Round_Math_ko-KR.pdf 열기 →</a>' },
+          { h: '수업 지도안 (PDF)',    p: '고등학교 3학년 수학과를 위한 4차시 수업 지도안. <a href="docs_aula/Plano_de_Aula_ko-KR.pdf" target="_blank" rel="noopener">Plano_de_Aula_ko-KR.pdf 열기 →</a>' },
+          { h: '다른 언어',            p: '두 문서 모두 9개 언어로 제공됩니다: <a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> 및 <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>.' },
         ]},
       ],
     },
