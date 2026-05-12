@@ -36,7 +36,17 @@
 \usepackage{csquotes}
 \usepackage{tcolorbox}
 \tcbuselibrary{skins,breakable}
-\usepackage[hidelinks,bookmarks=true,bookmarksopen=true,
+\usepackage{needspace}                   % evita orfas em caixas didaticas
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}                       % [H] = "exatamente aqui, sem float"
+
+\raggedbottom                            % paginas terminam onde o texto termina
+\usepackage[colorlinks=true,
+            linkcolor=linkc,
+            urlcolor=linkc,
+            citecolor=linkc,
+            bookmarks=true,bookmarksopen=true,
             pdftitle={Pixel Round — Situación de aprendizaje (es-ES)},
             pdfauthor={Vinícius Rodrigues de Souza}]{hyperref}
 
@@ -46,8 +56,13 @@
 \definecolor{muted}{HTML}{4E4E58}
 \definecolor{bg}{HTML}{FBF6E9}
 \definecolor{rule}{HTML}{D8D1BC}
+\definecolor{linkc}{HTML}{8A0F0F}             % links: tom mais escuro do accent
 
 \color{ink}
+
+% Penalidades altas contra orfas / viuvas globalmente
+\widowpenalty=10000
+\clubpenalty=10000
 
 % ---------- Estilo de secciones ----------------------------------------------
 \titleformat{\section}
@@ -77,7 +92,8 @@
   colback=bg, colframe=rule, boxrule=0.4pt, arc=2pt,
   left=10pt,right=10pt,top=8pt,bottom=8pt,
   before skip=8pt, after skip=8pt,
-  fontupper=\color{accent}, breakable
+  fontupper=\color{accent}, breakable,
+  before={\par\needspace{4\baselineskip}}
 }
 
 \newtcolorbox{actividad}[1][Actividad]{
@@ -85,6 +101,7 @@
   colback=bg, colframe=accent, boxrule=0.6pt, arc=4pt,
   left=12pt,right=12pt,top=10pt,bottom=10pt,
   before skip=12pt, after skip=12pt,
+  before={\par\needspace{14\baselineskip}},
   attach boxed title to top left={xshift=10pt,yshift=-8pt},
   boxed title style={colback=accent,colframe=accent,boxrule=0pt,arc=2pt},
   coltitle=white, fonttitle=\sffamily\bfseries\small,
@@ -96,6 +113,7 @@
   colback=bg!50!white, colframe=rule, boxrule=0.4pt, arc=2pt,
   left=10pt,right=10pt,top=8pt,bottom=8pt,
   before skip=8pt, after skip=8pt,
+  before={\par\needspace{6\baselineskip}},
   attach boxed title to top left={xshift=10pt,yshift=-7pt},
   boxed title style={colback=muted,colframe=muted,boxrule=0pt,arc=2pt},
   coltitle=white, fonttitle=\sffamily\bfseries\footnotesize,
@@ -107,6 +125,7 @@
   colback=bg!70!white, colframe=accent!60!ink, boxrule=0.4pt, arc=2pt,
   left=10pt,right=10pt,top=6pt,bottom=6pt,
   before skip=6pt, after skip=6pt,
+  before={\par\needspace{4\baselineskip}},
   attach boxed title to top left={xshift=10pt,yshift=-6pt},
   boxed title style={colback=accent!60!ink,colframe=accent!60!ink,boxrule=0pt,arc=2pt},
   coltitle=white, fonttitle=\sffamily\bfseries\footnotesize,
@@ -120,6 +139,17 @@
 \newcommand{\code}[1]{\texttt{\small #1}}
 \newcommand{\acc}[1]{\textcolor{accent}{\textbf{#1}}}
 \newcommand{\tiempo}[1]{\textnormal{\footnotesize\color{bg!90!white}\textsf{#1}}}
+
+% Configuracao de legendas
+\captionsetup{font=small, labelfont={bf,color=accent}, textfont={color=muted}, justification=centering}
+\captionsetup[sub]{font=footnotesize, labelfont={bf,color=accent!75!ink}, textfont={color=muted}}
+
+% Espacamento das figuras
+\setlength{\textfloatsep}{14pt plus 2pt minus 2pt}
+\setlength{\floatsep}{14pt plus 2pt minus 2pt}
+\setlength{\intextsep}{14pt plus 2pt minus 2pt}
+
+\graphicspath{{img/}}
 
 \begin{document}
 
@@ -147,7 +177,16 @@
     finita de píxeles.
   \end{minipage}
   \vspace{0.9cm}\\
+    \vspace{1.4cm}
+  \begin{minipage}{0.78\textwidth}
+    \centering
+    \includegraphics[width=0.55\linewidth]{fig07_3d_sphere_d12.png}\\[0.6em]
+    {\sffamily\footnotesize\color{muted}Esfera de diámetro 12 voxelizada por Pixel Round.}
+  \end{minipage}
+  \vspace{1.0cm}\\
   {\color{rule}\rule{0.6\textwidth}{0.6pt}\par}
+  \vspace{1.0cm}
+{\color{rule}\rule{0.6\textwidth}{0.6pt}\par}
   \vspace{1.8cm}
   \begin{minipage}{0.82\textwidth}
     \centering\sffamily\small\color{muted}
@@ -537,6 +576,24 @@ Se pinta la celda si $\left(\dfrac{n_x - c_x}{r_x}\right)^{\!2} + \left(\dfrac{n
 
 \textbf{Resultado esperado.} Euclídeo se aproxima por debajo del $1\%$; umbral sobreestima en un pocos por ciento; Bresenham queda en posición intermedia. Puesta en común.
 \end{actividad}
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.31\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig01_2d_d20_euclidean.png}
+  \caption{\emph{Euclídeo}}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.31\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig02_2d_d20_bresenham.png}
+  \caption{\emph{Bresenham}}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.31\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig03_2d_d20_threshold.png}
+  \caption{\emph{Umbral}}
+\end{subfigure}
+\caption{Misma circunferencia de diámetro 20 en los tres algoritmos. Con diámetros mayores las diferencias son más sutiles que en diámetros pequeños.}
+\label{fig:comp-d20}
+\end{figure}
+
 
 % =============================================================================
 \subsection{Sesión 3 --- ``De la elipse al elipsoide: la tercera dimensión''}
@@ -563,6 +620,20 @@ $\displaystyle a_x^2 + a_y^2 + a_z^2 \leq 1,\quad a_\xi = \dfrac{\xi + \tfrac{1}
 
 \textbf{Demostración.} Cambiar Pixel Round al modo 3D, alternar entre Esfera y Elipsoide, rotar con el ratón, observar la estructura de vóxeles.
 \end{actividad}
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.42\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig07_3d_sphere_d12.png}
+  \caption{Esfera $D = 12$ ($r_x = r_y = r_z = 6$).}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.42\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig08_3d_ellipsoid.png}
+  \caption{Elipsoide $W = 20, H = 10, D = 12$.}
+\end{subfigure}
+\caption{Voxelización 3D. Cada cubo es un vóxel cuya coordenada de centro se prueba contra la ecuación implícita.}
+\label{fig:3d-shapes}
+\end{figure}
+
 
 \begin{actividad}[3.2 --- Volumen continuo \emph{vs.} discreto \quad\tiempo{15 min}]
 El volumen continuo del elipsoide es resultado clásico del cálculo integral:
@@ -600,6 +671,24 @@ $\begin{array}{lcl}
 
 \textbf{Discusión dirigida.} \emph{``¿Por qué el corte diagonal tiene amplitud $D_x + D_y$ y no $D_x$? ¿Dónde está la hipotenusa?''} Conducir al reconocimiento de que $x + y$ asume valores entre $0$ y $D_x + D_y$ en la caja rectangular.
 \end{actividad}
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.31\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig09_3d_cut_y50.png}
+  \caption{Corte Y al 50\% ($y \geq 5$ descartado)}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.31\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig10_3d_cut_x50.png}
+  \caption{Corte X al 50\% ($x \geq 10$ descartado)}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.31\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig11_3d_cut_diag50.png}
+  \caption{Corte diagonal ($x + y \geq 15$ descartado)}
+\end{subfigure}
+\caption{Tres cortes planos en el mismo elipsoide ($W = 20, H = 10, D = 12$), preservando cada uno el 50\% del volumen. Note el patrón escalonado del corte diagonal.}
+\label{fig:cortes}
+\end{figure}
+
 
 \begin{actividad}[3.4 --- Conexión con el patrimonio cultural \quad\tiempo{10 min}]
 \emph{Conexión con la competencia clave CCEC4 (Conciencia y expresiones culturales).}
