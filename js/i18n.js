@@ -4,7 +4,7 @@
 
    ## Multi-locale system
 
-   Seven locales ship in this file (≈3.7 billion native speakers combined):
+   Nine locales ship in this file (≈5.0 billion native speakers combined):
      en-US  English (US)         — base / fallback for missing keys
      es-ES  Español              — ~500 M speakers
      pt-BR  Português (Brasil)   — ~210 M speakers
@@ -12,6 +12,8 @@
      de-DE  Deutsch              — ~130 M speakers
      zh-CN  简体中文              — ~1.1 B speakers
      ja-JP  日本語                — ~125 M speakers
+     ru-RU  Русский              — ~150 M speakers
+     ko-KR  한국어                — ~77 M speakers
 
    ## How to add another locale
 
@@ -81,17 +83,19 @@
    LOCALE REGISTRY
    Ordered for the topbar cycle: English first (default), then the most
    widely-spoken locales. Users with many locales typically use the
-   Settings <select> for direct access rather than cycling — but with 7
+   Settings <select> for direct access rather than cycling — but with 9
    options the pill is still tolerable.
    ============================================================================ */
 const AVAILABLE_LOCALES = [
-  { code: 'en-US', label: 'EN',    name: 'English (US)',       htmlLang: 'en'    },
-  { code: 'es-ES', label: 'ES',    name: 'Español',            htmlLang: 'es'    },
+  { code: 'en-US', label: 'EN-US', name: 'English (US)',       htmlLang: 'en'    },
+  { code: 'es-ES', label: 'ES-ES', name: 'Español',            htmlLang: 'es'    },
   { code: 'pt-BR', label: 'PT-BR', name: 'Português (Brasil)', htmlLang: 'pt-BR' },
-  { code: 'fr-FR', label: 'FR',    name: 'Français',           htmlLang: 'fr'    },
-  { code: 'de-DE', label: 'DE',    name: 'Deutsch',            htmlLang: 'de'    },
-  { code: 'zh-CN', label: 'ZH',    name: '简体中文',             htmlLang: 'zh-CN' },
-  { code: 'ja-JP', label: 'JA',    name: '日本語',               htmlLang: 'ja'    },
+  { code: 'fr-FR', label: 'FR-FR', name: 'Français',           htmlLang: 'fr'    },
+  { code: 'de-DE', label: 'DE-DE', name: 'Deutsch',            htmlLang: 'de'    },
+  { code: 'zh-CN', label: 'ZH-CN', name: '简体中文',             htmlLang: 'zh-CN' },
+  { code: 'ja-JP', label: 'JA-JP', name: '日本語',               htmlLang: 'ja'    },
+  { code: 'ru-RU', label: 'RU-RU', name: 'Русский',             htmlLang: 'ru'    },
+  { code: 'ko-KR', label: 'KO-KR', name: '한국어',               htmlLang: 'ko'    },
 ];
 const DEFAULT_LOCALE = 'en-US';
 const STORAGE_KEY    = 'pr_locale';
@@ -1015,6 +1019,264 @@ const TR = {
         { h3: '6. ライセンスとクレジット', items: [
           { h: 'ライセンス', p: 'コードとデザインの全著作権を保有 — <code>LICENSE</code> を参照。サードパーティの帰属は <code>NOTICE.md</code> に。' },
           { h: 'ソース',     p: 'リポジトリ：<code>github.com/ViniSouza128/pixel-round</code>。' },
+        ]},
+      ],
+    },
+  },
+
+  /* ===========================================================================
+     ru-RU — Русский
+     ========================================================================== */
+  'ru-RU': {
+    doc_title:   'Pixel Round',
+    meta_desc:   'Pixel Round — пиксельно-точный генератор кругов, эллипсов, сфер и эллипсоидов. Vanilla JS + Canvas + three.js. Работает офлайн.',
+    brand:       'Pixel Round',
+    brand_aria:  'Домашняя страница Pixel Round',
+
+    lang_toggle_title: 'Сменить язык',
+    theme_title:       'Тема (T)',
+    info_title:        'Инфо',
+    settings_title:    'Настройки',
+    brand_title:       'Pixel Round',
+
+    mode_2d: '2D', mode_3d: '3D',
+    shape_circle:    'Круг',
+    shape_ellipse:   'Эллипс',
+    shape_sphere:    'Сфера',
+    shape_ellipsoid: 'Эллипсоид',
+
+    render_filled: 'Заливка',
+    render_thin:   'Тонкий',
+    render_thick:  'Толстый',
+
+    algo_euclidean: 'Евклидов',
+    algo_bresenham: 'Брезенхэм',
+    algo_threshold: 'Порог',
+
+    style_classic: 'Классик',
+    style_smooth:  'Плавный',
+    style_blocks:  'Блоки',
+
+    lbl_size:   'Размер',
+    lbl_width:  'Ширина',
+    lbl_height: 'Высота',
+    lbl_depth:  'Глубина',
+    lbl_cut:    'Срез',
+
+    title_grid:     'Сетка / Рёбра (G)',
+    title_download: 'Скачать PNG (D)',
+    title_center:   'Осевые линии (C)',
+    title_overlay:  'Идеальный контур',
+    title_zoom:     'Увеличить верхний левый квадрант',
+    title_infochip: 'Инфо-чип (I)',
+
+    chip_d:    'D',
+    chip_r:    'R',
+    chip_area: 'Площадь',
+    chip_vol:  'Объём',
+    chip_algo: 'Алго',
+    chip_style:'Стиль',
+
+    title_cut_x:    'Срез по оси X',
+    title_cut_y:    'Срез по оси Y',
+    title_cut_diag: 'Диагональный срез 45° (плоскость x+y)',
+
+    undo:        'Отменить',
+    redo:        'Повторить',
+    sounds_on:   'Звук включён',
+    sounds_off:  'Звук выключен',
+    grid_on:     'Сетка включена',
+    grid_off:    'Сетка выключена',
+    center_on:   'Центр включён',
+    center_off:  'Центр выключен',
+    edges_on:    'Рёбра включены',
+    edges_off:   'Рёбра выключены',
+    reset:       'Сброс',
+    png_saved:   'PNG сохранён',
+    lang_changed:'Язык: Русский',
+
+    settings_h2:         'Настройки',
+    settings_sub:        'Настройки сохраняются в браузере.',
+    setting_lang_lbl:    'Язык',
+    setting_lang_desc:   'Язык интерфейса',
+    setting_theme_lbl:   'Тема',
+    setting_theme_desc:  'Светлая или тёмная',
+    theme_light:         'Светлая',
+    theme_dark:          'Тёмная',
+    setting_sounds_lbl:  'Звуки',
+    setting_sounds_desc: 'Звуковой отклик на действия',
+    setting_grid_lbl:    'Сетка холста',
+    setting_grid_desc:   'Вспомогательные линии фона (весь холст)',
+    setting_center_lbl:  'Осевые линии',
+    setting_center_desc: 'Линии X/Y через центр фигуры',
+    setting_reset_lbl:   'Сброс',
+    setting_reset_desc:  'Восстановить все настройки по умолчанию',
+    btn_reset:           'Сбросить',
+
+    info: {
+      h2:  'Инфо',
+      sub: 'Пиксельно-точный генератор кругов, эллипсов, сфер и эллипсоидов.',
+      sections: [
+        { h3: '1. Что это', items: [
+          { p: 'Браузерный генератор кругов и эллипсов в пиксель-арте (2D) и воксельных сфер и эллипсоидов (3D). Вводите целые числа — получаете PNG. Без установки, без аккаунта, без бэкенда.' },
+        ]},
+        { h3: '2. Режимы и фигуры', items: [
+          { h: '2D · Круг',      p: 'Только <b>Размер</b>. Залитый, тонкий или толстый пиксельный круг.' },
+          { h: '2D · Эллипс',    p: '<b>Ширина</b> + <b>Высота</b> независимо. Те же режимы отрисовки.' },
+          { h: '3D · Сфера',     p: 'Только <b>Размер</b>. Изометрическая воксельная сфера. <b>Срез</b> по X, Y или ⟋ разрезает фигуру.' },
+          { h: '3D · Эллипсоид', p: '<b>Ширина</b> + <b>Высота</b> + <b>Глубина</b> независимо. <b>Срез</b> по выбранной оси.' },
+        ]},
+        { h3: '3. Алгоритмы (только 2D)', items: [
+          { h: 'Евклидов',  p: 'Тест расстояния в центре пикселя. Самый плавный контур.' },
+          { h: 'Брезенхэм', p: 'Классический алгоритм средней точки. Ступенчатый вид пиксель-арта.' },
+          { h: 'Порог',     p: 'Тест покрытия угла. Более «блочный» силуэт — заполняется любая ячейка с углом внутри.' },
+        ]},
+        { h3: '4. Управление', items: [
+          { h: 'Режим и фигура',       p: 'Кнопки <b>2D / 3D</b> и <b>Круг / Эллипс</b> (или <b>Сфера / Эллипсоид</b> в 3D) сверху — ЕДИНСТВЕННЫЙ способ переключения.' },
+          { h: 'Срез (3D)',            p: 'Переключатель <b>X / Y / ⟋</b> выбирает ось среза. <b>⟋</b> — диагональ 45° в плоскости x+y. Смена оси автоматически восстанавливает фигуру — одновременно режет только одна ось. Максимум слайдера масштабируется под выбранную ось.' },
+          { h: 'Щипок и поворот',      p: 'Два пальца на холсте — зум. В 3D средняя точка пальцев также вращает фигуру. Колёсико мыши — зум в 3D; перетаскивание — поворот.' },
+          { h: 'Сетка и рёбра',        p: 'Кнопка сетки в верхнем левом углу холста переключает сетку ячеек в 2D и наложение рёбер на воксел в 3D (по умолчанию ВКЛ).' },
+          { h: 'Язык',                 p: 'Кнопка <b>язык</b> справа в топбаре (и выбор в Настройках) переключает язык интерфейса между доступными. Выбор сохраняется между перезагрузками (единственная сохраняемая настройка).' },
+          { h: 'Отменить / Повторить', p: 'Каждое изменение фигуры (режим, форма, отрисовка, алгоритм, стиль 3D, слайдеры, срез, ось, сброс) записывается. <span class="key">Ctrl+Z</span> отменяет; <span class="key">Ctrl+Y</span>, <span class="key">Ctrl+Shift+Z</span> и <span class="key">Ctrl+Alt+Z</span> — повтор. Визуальные переключатели (камера, рёбра, тема, звук, сетка) не отслеживаются.' },
+          { h: 'Клавиши',              p: '<span class="key">G</span> Сетка &nbsp; <span class="key">C</span> Центр &nbsp; <span class="key">D</span> Скачать &nbsp; <span class="key">T</span> Тема &nbsp; <span class="key">I</span> Инфо-чип &nbsp; <span class="key">M</span> 2D/3D &nbsp; <span class="key">S</span> Звук &nbsp; <span class="key">Ctrl+Z</span> Отменить &nbsp; <span class="key">Ctrl+Y</span> Повторить' },
+        ]},
+        { h3: '5. Технологии', items: [
+          { h: 'Стек',    p: 'Vanilla JavaScript + Canvas 2D + three.js. Без фреймворка, без сборки.' },
+          { h: 'Офлайн',  p: 'Устанавливается как PWA. После первой загрузки сеть не нужна. Только язык сохраняется в <code>localStorage</code>.' },
+          { h: 'Экспорт', p: 'PNG с акцентным цветом на прозрачном фоне. 2D экспортируется в ~2048px по главной оси.' },
+        ]},
+        { h3: '6. Лицензия и авторы', items: [
+          { h: 'Лицензия', p: 'Все права на код и дизайн защищены — см. <code>LICENSE</code>. Сторонние упоминания в <code>NOTICE.md</code>.' },
+          { h: 'Источник', p: 'Репозиторий: <code>github.com/ViniSouza128/pixel-round</code>.' },
+        ]},
+      ],
+    },
+  },
+
+  /* ===========================================================================
+     ko-KR — 한국어
+     ========================================================================== */
+  'ko-KR': {
+    doc_title:   'Pixel Round',
+    meta_desc:   'Pixel Round — 원, 타원, 구, 타원체를 위한 픽셀 정밀 생성기. 바닐라 JS + Canvas + three.js. 오프라인 작동.',
+    brand:       'Pixel Round',
+    brand_aria:  'Pixel Round 홈',
+
+    lang_toggle_title: '언어 변경',
+    theme_title:       '테마 (T)',
+    info_title:        '정보',
+    settings_title:    '설정',
+    brand_title:       'Pixel Round',
+
+    mode_2d: '2D', mode_3d: '3D',
+    shape_circle:    '원',
+    shape_ellipse:   '타원',
+    shape_sphere:    '구',
+    shape_ellipsoid: '타원체',
+
+    render_filled: '채우기',
+    render_thin:   '얇게',
+    render_thick:  '굵게',
+
+    algo_euclidean: '유클리드',
+    algo_bresenham: '브레젠험',
+    algo_threshold: '임계값',
+
+    style_classic: '클래식',
+    style_smooth:  '부드럽게',
+    style_blocks:  '블록',
+
+    lbl_size:   '크기',
+    lbl_width:  '너비',
+    lbl_height: '높이',
+    lbl_depth:  '깊이',
+    lbl_cut:    '자르기',
+
+    title_grid:     '격자 / 모서리 (G)',
+    title_download: 'PNG 다운로드 (D)',
+    title_center:   '중심 가이드 (C)',
+    title_overlay:  '완벽한 오버레이',
+    title_zoom:     '왼쪽 상단 사분면 확대',
+    title_infochip: '정보 칩 (I)',
+
+    chip_d:    'D',
+    chip_r:    'R',
+    chip_area: '넓이',
+    chip_vol:  '부피',
+    chip_algo: '알고',
+    chip_style:'스타일',
+
+    title_cut_x:    'X축으로 자르기',
+    title_cut_y:    'Y축으로 자르기',
+    title_cut_diag: '45° 대각선 자르기 (x+y 평면)',
+
+    undo:        '실행 취소',
+    redo:        '다시 실행',
+    sounds_on:   '소리 켜짐',
+    sounds_off:  '소리 꺼짐',
+    grid_on:     '격자 켜짐',
+    grid_off:    '격자 꺼짐',
+    center_on:   '중심 켜짐',
+    center_off:  '중심 꺼짐',
+    edges_on:    '모서리 켜짐',
+    edges_off:   '모서리 꺼짐',
+    reset:       '초기화',
+    png_saved:   'PNG 저장됨',
+    lang_changed:'언어: 한국어',
+
+    settings_h2:         '설정',
+    settings_sub:        '설정은 브라우저에 저장됩니다.',
+    setting_lang_lbl:    '언어',
+    setting_lang_desc:   '인터페이스 언어',
+    setting_theme_lbl:   '테마',
+    setting_theme_desc:  '밝거나 어둡게',
+    theme_light:         '밝게',
+    theme_dark:          '어둡게',
+    setting_sounds_lbl:  '소리',
+    setting_sounds_desc: '인터랙션 소리 피드백',
+    setting_grid_lbl:    '캔버스 격자',
+    setting_grid_desc:   '배경 보조선 (전체 캔버스)',
+    setting_center_lbl:  '중심 가이드',
+    setting_center_desc: '도형 중심을 통과하는 X/Y 선',
+    setting_reset_lbl:   '초기화',
+    setting_reset_desc:  '모든 설정을 기본값으로 복원',
+    btn_reset:           '초기화',
+
+    info: {
+      h2:  '정보',
+      sub: '원, 타원, 구, 타원체를 위한 픽셀 정밀 생성기.',
+      sections: [
+        { h3: '1. 무엇인가', items: [
+          { p: '픽셀 아트 원과 타원(2D), 복셀 구와 타원체(3D)를 생성하는 브라우저 기반 도구. 정수 치수를 입력하면 PNG가 출력됩니다. 설치 불필요, 계정 불필요, 백엔드 불필요.' },
+        ]},
+        { h3: '2. 모드 & 도형', items: [
+          { h: '2D · 원',     p: '<b>크기</b>만 사용. 채우기, 얇게 또는 굵게 픽셀 원.' },
+          { h: '2D · 타원',   p: '<b>너비</b> + <b>높이</b> 독립적. 동일한 렌더 모드 세트.' },
+          { h: '3D · 구',     p: '<b>크기</b>만 사용. 등축 복셀 구. <b>자르기</b> X, Y 또는 ⟋로 도형을 절단.' },
+          { h: '3D · 타원체', p: '<b>너비</b> + <b>높이</b> + <b>깊이</b> 독립적. 선택한 축으로 <b>자르기</b>.' },
+        ]},
+        { h3: '3. 알고리즘 (2D 전용)', items: [
+          { h: '유클리드', p: '픽셀 중심에서 거리 테스트. 가장 부드러운 윤곽.' },
+          { h: '브레젠험', p: '고전적인 정수 중점 알고리즘. 픽셀 아트 계단 형태.' },
+          { h: '임계값',   p: '모서리 커버리지 테스트. 더 두꺼운 실루엣 — 내부에 모서리가 있는 모든 셀이 채워짐.' },
+        ]},
+        { h3: '4. 조작', items: [
+          { h: '모드 & 도형',           p: '상단의 <b>2D / 3D</b> 및 <b>원 / 타원</b>(3D에서는 <b>구 / 타원체</b>) 토글이 유일한 전환 방법입니다.' },
+          { h: '자르기 (3D)',           p: '<b>X / Y / ⟋</b> 토글로 자르기 축을 선택. <b>⟋</b>는 x+y 평면의 45° 대각선. 축 전환 시 도형이 자동으로 복원됩니다 — 한 번에 한 축만 자릅니다. 슬라이더 최대값이 선택된 축에 맞게 조정됩니다.' },
+          { h: '핀치 & 회전',           p: '캔버스에 두 손가락으로 확대/축소. 3D에서는 손가락 중점이 도형을 회전시킵니다. 3D에서 마우스 휠로 줌, 클릭 드래그로 회전.' },
+          { h: '격자 & 모서리',         p: '캔버스 왼쪽 상단의 격자 버튼은 2D에서는 셀 격자를, 3D에서는 복셀별 모서리 오버레이를 전환합니다(기본값 켜짐).' },
+          { h: '언어',                  p: '상단 바 오른쪽의 <b>언어</b> 버튼(및 설정의 선택기)으로 지원되는 언어 간에 인터페이스를 전환합니다. 선택 사항은 새로 고침 후에도 유지됩니다(유일하게 지속되는 설정).' },
+          { h: '실행 취소 / 다시 실행', p: '도형을 변경하는 모든 편집(모드, 도형, 렌더, 알고리즘, 3D 스타일, 슬라이더, 자르기, 축, 초기화)이 기록됩니다. <span class="key">Ctrl+Z</span>로 실행 취소; <span class="key">Ctrl+Y</span>, <span class="key">Ctrl+Shift+Z</span>, <span class="key">Ctrl+Alt+Z</span>로 다시 실행. 시각적 토글(카메라, 모서리, 테마, 소리, 격자)은 추적되지 않습니다.' },
+          { h: '키보드',                p: '<span class="key">G</span> 격자 &nbsp; <span class="key">C</span> 중심 &nbsp; <span class="key">D</span> 다운로드 &nbsp; <span class="key">T</span> 테마 &nbsp; <span class="key">I</span> 정보 칩 &nbsp; <span class="key">M</span> 2D/3D &nbsp; <span class="key">S</span> 소리 &nbsp; <span class="key">Ctrl+Z</span> 실행 취소 &nbsp; <span class="key">Ctrl+Y</span> 다시 실행' },
+        ]},
+        { h3: '5. 기술', items: [
+          { h: '스택',   p: '바닐라 JavaScript + Canvas 2D + three.js. 프레임워크 없음, 빌드 단계 없음.' },
+          { h: '오프라인', p: 'PWA로 설치 가능. 로드 후 네트워크 불필요. 언어만 <code>localStorage</code>에 저장됩니다.' },
+          { h: '출력',   p: '투명 배경에 강조 색상 PNG. 2D는 주축에서 ~2048px로 내보냅니다.' },
+        ]},
+        { h3: '6. 라이선스 & 크레딧', items: [
+          { h: '라이선스', p: '코드 및 디자인의 모든 권리 보유 — <code>LICENSE</code> 참조. 타사 저작권은 <code>NOTICE.md</code>에 있습니다.' },
+          { h: '소스',     p: '저장소: <code>github.com/ViniSouza128/pixel-round</code>.' },
         ]},
       ],
     },

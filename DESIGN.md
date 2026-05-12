@@ -238,7 +238,7 @@ Synthesized via WebAudio (`js/audio.js`). All sine waves, gain ≤.035.
 ## 14. Internationalisation (i18n)
 
 `js/i18n.js` is the single source of truth for every user-facing
-string. Seven locales ship out of the box:
+string. Nine locales ship out of the box:
 
 | Code   | Language              | Audience       |
 |--------|-----------------------|----------------|
@@ -249,6 +249,8 @@ string. Seven locales ship out of the box:
 | de-DE  | Deutsch               | ~130 M speakers |
 | zh-CN  | 简体中文              | ~1.1 B speakers |
 | ja-JP  | 日本語                | ~125 M speakers |
+| ru-RU  | Русский               | ~150 M speakers |
+| ko-KR  | 한국어                | ~77 M speakers  |
 
 `en-US` is the canonical key set — every other locale must mirror
 exactly those keys. Missing keys fall back to English silently;
@@ -265,7 +267,7 @@ stay visible during development).
   `[data-i18n]` / `[data-i18n-title]` / `[data-i18n-aria]` node, the
   info-chip labels (Area / Algo in 2D vs Vol / Style in 3D), the
   Info page tree, and the Settings locale `<select>`.
-- Topbar pill `[data-act="lang"]` cycles locales in order.
+- Topbar pill `[data-act="lang"]` shows the XX-XX locale code (e.g. EN-US, PT-BR, ZH-CN) and cycles locales in order.
 - Locale is the **only** preference that survives a reload —
   everything else is session-only. Resetting the language to English
   on every visit would be hostile, so this exception is intentional.

@@ -55,7 +55,7 @@ block-by-block into Minecraft.
 
 ## Languages
 
-Seven locales ship out of the box (~3.7 billion native speakers
+Nine locales ship out of the box (~5.0 billion native speakers
 combined):
 
 | Locale | Language               | Native name           |
@@ -67,6 +67,8 @@ combined):
 | `de-DE`| German                 | Deutsch               |
 | `zh-CN`| Chinese (Simplified)   | 简体中文               |
 | `ja-JP`| Japanese               | 日本語                 |
+| `ru-RU`| Russian                | Русский               |
+| `ko-KR`| Korean                 | 한국어                 |
 
 Switch via the locale pill in the topbar (cycles) or the picker in
 Settings (direct). The choice is auto-detected from
