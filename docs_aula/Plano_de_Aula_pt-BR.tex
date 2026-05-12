@@ -41,6 +41,12 @@
 \usepackage{subcaption}
 \usepackage{float}                    % [H] = "exatamente aqui, sem float"
 
+\raggedbottom                         % paginas terminam onde o texto termina
+                                      % (em vez de scrartcl/flushbottom esticar
+                                      % verticalmente para preencher a pagina,
+                                      % criando gaps quando uma figura [H]
+                                      % e' empurrada para a proxima pagina)
+
 % ---------- Paleta cromatica (mesma do projeto) ------------------------------
 \definecolor{accent}{HTML}{CC2020}
 \definecolor{ink}{HTML}{1F1F23}
@@ -101,7 +107,7 @@
   colback=bg, colframe=accent, boxrule=0.6pt, arc=4pt,
   left=12pt,right=12pt,top=10pt,bottom=10pt,
   before skip=12pt, after skip=12pt,
-  before={\par\needspace{14\baselineskip}},\n  pad at break*=6pt,
+  before={\par\needspace{14\baselineskip}},
   attach boxed title to top left={xshift=10pt,yshift=-8pt},
   boxed title style={colback=accent,colframe=accent,boxrule=0pt,arc=2pt},
   coltitle=white, fonttitle=\sffamily\bfseries\small,
@@ -1038,7 +1044,7 @@ Sequência recomendada para a demonstração inicial (Atividade~1.3) e para a fa
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.65\textwidth]{fig04_2d_ellipse_24x12.png}
+\includegraphics[width=0.5\textwidth]{fig04_2d_ellipse_24x12.png}
 \caption{Elipse $W = 24, H = 12$ no Pixel Round. Note como as células ao longo do eixo maior são mais espaçadas que ao longo do eixo menor --- reflexo direto dos semi-eixos diferentes.}
 \label{fig:elipse}
 \end{figure}
@@ -1057,19 +1063,19 @@ Sequência recomendada para a demonstração inicial (Atividade~1.3) e para a fa
 
 \begin{figure}[H]
 \centering
-\begin{subfigure}[t]{0.31\linewidth}\centering
+\begin{subfigure}[t]{0.27\linewidth}\centering
   \includegraphics[width=\linewidth]{fig08_3d_ellipsoid.png}
-  \caption{\emph{Clássico} (contraste forte)}
+  \caption{\emph{Clássico}}
 \end{subfigure}\hfill
-\begin{subfigure}[t]{0.31\linewidth}\centering
+\begin{subfigure}[t]{0.27\linewidth}\centering
   \includegraphics[width=\linewidth]{fig12_3d_style_smooth.png}
-  \caption{\emph{Suave} (contraste reduzido)}
+  \caption{\emph{Suave}}
 \end{subfigure}\hfill
-\begin{subfigure}[t]{0.31\linewidth}\centering
+\begin{subfigure}[t]{0.27\linewidth}\centering
   \includegraphics[width=\linewidth]{fig13_3d_style_blocks.png}
-  \caption{\emph{Blocos} (com sulcos)}
+  \caption{\emph{Blocos}}
 \end{subfigure}
-\caption{Três estilos de sombreamento 3D para o mesmo elipsóide. \emph{Clássico} marca bem a luz e a sombra; \emph{Suave} dá um aspecto mais uniforme; \emph{Blocos} introduz uma reentrância geométrica nas faces, útil para visualizar a estrutura cúbica.}
+\caption{Três estilos de sombreamento 3D para o mesmo elipsóide. \emph{Clássico} marca bem luz e sombra; \emph{Suave} reduz o contraste para um aspecto mais uniforme; \emph{Blocos} introduz reentrância geométrica nas faces, útil para visualizar a estrutura cúbica.}
 \label{fig:styles}
 \end{figure}
 
