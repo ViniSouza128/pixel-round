@@ -1,0 +1,860 @@
+% !TEX program = xelatex
+% =============================================================================
+% Pixel Round — 教学设计 (zh-CN)
+% 适用于普通高中三年级（高三）数学课堂
+% 视觉风格沿用 docs_math/Pixel_Round_Math_zh-CN.pdf
+% 编译方式：xelatex Plano_de_Aula_zh-CN.tex   （编译两次以生成目录和交叉引用）
+% =============================================================================
+\documentclass[12pt,a4paper]{scrartcl}
+
+% ---------- 字体（中文使用 Microsoft YaHei，西文使用 Latin Modern） ------------
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\setCJKmainfont{Microsoft YaHei}[Scale=1.05]
+\setCJKsansfont{Microsoft YaHei}[Scale=1.05]
+\setmainfont{Latin Modern Roman}[Scale=1.05]
+\setsansfont{Latin Modern Sans}[Scale=1.05]
+\setmonofont{Latin Modern Mono}[Scale=1.00]
+\usepackage{unicode-math}
+\setmathfont{Latin Modern Math}[Scale=1.05]
+
+% ---------- 排版包 -----------------------------------------------------------
+\usepackage{amsmath}
+\usepackage{mathtools}
+
+\usepackage[a4paper,top=2.8cm,bottom=2.8cm,left=2.6cm,right=2.6cm,
+            headheight=16pt]{geometry}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage[hidelinks,bookmarks=true,bookmarksopen=true,
+            pdftitle={Pixel Round — 教学设计 (zh-CN)},
+            pdfauthor={Vinicius Souza}]{hyperref}
+
+% ---------- 配色 -------------------------------------------------------------
+\definecolor{accent}{HTML}{CC2020}
+\definecolor{ink}{HTML}{1F1F23}
+\definecolor{muted}{HTML}{4E4E58}
+\definecolor{bg}{HTML}{FBF6E9}
+\definecolor{rule}{HTML}{D8D1BC}
+
+\color{ink}
+
+% ---------- 标题样式 ---------------------------------------------------------
+\titleformat{\section}
+  {\sffamily\Large\bfseries\color{accent}}{\thesection.}{0.6em}{}
+\titleformat{\subsection}
+  {\sffamily\large\bfseries\color{accent!85!ink}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}
+  {\sffamily\normalsize\bfseries\color{muted}}{\thesubsubsection}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.2\baselineskip}{0.6\baselineskip}
+\titlespacing*{\subsection}{0pt}{0.8\baselineskip}{0.3\baselineskip}
+\titlespacing*{\subsubsection}{0pt}{0.6\baselineskip}{0.2\baselineskip}
+
+% ---------- 页眉页脚 ---------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily\bfseries\color{accent}PIXEL ROUND}
+\fancyhead[R]{\small\sffamily\color{muted}教学设计 --- 高三数学}
+\fancyfoot[L]{\small\sffamily\color{muted}Pixel Round --- 教师用资料}
+\fancyfoot[R]{\small\sffamily\color{muted}第 \thepage{} 页}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\headrule}{{\color{rule}\hrule height \headrulewidth}}
+\renewcommand{\footrule}{{\color{rule}\vskip-\footrulewidth\hrule height \footrulewidth\vskip-\footrulewidth}}
+
+% ---------- 教学方框 ---------------------------------------------------------
+\newtcolorbox{gongshi}{
+  colback=bg, colframe=rule, boxrule=0.4pt, arc=2pt,
+  left=10pt,right=10pt,top=8pt,bottom=8pt,
+  before skip=8pt, after skip=8pt,
+  fontupper=\color{accent}, breakable
+}
+
+\newtcolorbox{huodong}[1][教学活动]{
+  enhanced, breakable,
+  colback=bg, colframe=accent, boxrule=0.6pt, arc=4pt,
+  left=12pt,right=12pt,top=10pt,bottom=10pt,
+  before skip=12pt, after skip=12pt,
+  attach boxed title to top left={xshift=10pt,yshift=-8pt},
+  boxed title style={colback=accent,colframe=accent,boxrule=0pt,arc=2pt},
+  coltitle=white, fonttitle=\sffamily\bfseries\small,
+  title=#1
+}
+
+\newtcolorbox{shuoming}[1][教学说明]{
+  enhanced, breakable,
+  colback=bg!50!white, colframe=rule, boxrule=0.4pt, arc=2pt,
+  left=10pt,right=10pt,top=8pt,bottom=8pt,
+  before skip=8pt, after skip=8pt,
+  attach boxed title to top left={xshift=10pt,yshift=-7pt},
+  boxed title style={colback=muted,colframe=muted,boxrule=0pt,arc=2pt},
+  coltitle=white, fonttitle=\sffamily\bfseries\footnotesize,
+  title=#1
+}
+
+\newtcolorbox{suyang}[1][核心素养]{
+  enhanced, breakable,
+  colback=bg!70!white, colframe=accent!60!ink, boxrule=0.4pt, arc=2pt,
+  left=10pt,right=10pt,top=6pt,bottom=6pt,
+  before skip=6pt, after skip=6pt,
+  attach boxed title to top left={xshift=10pt,yshift=-6pt},
+  boxed title style={colback=accent!60!ink,colframe=accent!60!ink,boxrule=0pt,arc=2pt},
+  coltitle=white, fonttitle=\sffamily\bfseries\footnotesize,
+  title=#1
+}
+
+\setlength{\parskip}{0.75em}
+\setlength{\parindent}{0pt}
+\linespread{1.20}
+
+\newcommand{\code}[1]{\texttt{\small #1}}
+\newcommand{\acc}[1]{\textcolor{accent}{\textbf{#1}}}
+\newcommand{\shijian}[1]{\textbf{\small\color{muted}\textsf{#1}}}
+
+\begin{document}
+
+% =============================================================================
+% 封面
+% =============================================================================
+\begin{titlepage}
+  \centering
+  \vspace*{3.2cm}
+  {\sffamily\bfseries\fontsize{56}{60}\selectfont \color{accent} Pixel Round\par}
+  \vspace{0.7cm}
+  {\sffamily\LARGE\color{muted} 教学设计\par}
+  \vspace{0.25cm}
+  {\sffamily\Large\color{muted} 普通高中三年级（高三）数学\par}
+  \vspace{1.4cm}
+  {\color{rule}\rule{0.6\textwidth}{0.6pt}\par}
+  \vspace{0.9cm}
+  \begin{minipage}{0.84\textwidth}
+    \centering\color{ink}\large
+    本教学设计为四个课时的教学序列，把
+    \emph{Pixel Round} 这款开源软件引入中国普通高中三年级的
+    数学课堂，围绕一个核心问题展开：如何在有限的像素方格上
+    表示一条连续曲线？设计依据《普通高中数学课程标准
+    （2017年版2020年修订）》，整合数学抽象、逻辑推理、
+    数学建模、直观想象、数学运算与数据分析等核心素养。
+  \end{minipage}
+  \vspace{0.9cm}\\
+  {\color{rule}\rule{0.6\textwidth}{0.6pt}\par}
+  \vspace{1.8cm}
+  \begin{minipage}{0.82\textwidth}
+    \centering\sffamily\small\color{muted}
+    \textbf{学科融合：}数学 $\cdot$ 信息技术 $\cdot$ 美术 $\cdot$ 物理 \\[0.4em]
+    \textbf{课程依据：}普通高中数学课程标准（2017 版 2020 修订）$\cdot$ 高中信息技术课程标准
+  \end{minipage}
+\end{titlepage}
+
+% =============================================================================
+% 目录
+% =============================================================================
+\renewcommand{\contentsname}{\color{accent}目\quad 录}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =============================================================================
+\section{教学概况}
+
+\begin{center}
+\begin{tabular}{@{}p{0.30\textwidth}p{0.64\textwidth}@{}}
+\toprule
+\textbf{学科} & 数学（必修与选择性必修内容）；可与信息技术学科联合实施。 \\
+\addlinespace[2pt]
+\textbf{年级} & 普通高中三年级（高三）。可调整用于高二、信息技术选修班。 \\
+\addlinespace[2pt]
+\textbf{学校类型} & 普通高中（公办为主）。乡村中学与城市重点中学的差异适配方案见附录~\ref{ap:adapt}。 \\
+\addlinespace[2pt]
+\textbf{课时安排} & 4 课时，每课时 40--45 分钟（共 160--180 分钟）。亦可压缩为两个 90 分钟的双课时，方案见 §\ref{sec:fenceng}。 \\
+\addlinespace[2pt]
+\textbf{核心资源} & Pixel Round --- 免费浏览器应用，无需注册、无需账号、无需服务器、支持离线运行（PWA）。 \\
+\addlinespace[2pt]
+\textbf{课标对应} & 选择性必修第一册“空间向量与立体几何”、必修第一册“函数”；数学建模与算法初步。 \\
+\addlinespace[2pt]
+\textbf{学科融合} & 信息技术（算法与编程，Python 实现）；美术（数字图像创作）；物理（声波、加法合成）。 \\
+\addlinespace[2pt]
+\textbf{学生先备知识} & 平面直角坐标系；圆的方程；柱体、锥体、球体的体积公式；函数与不等式；百分比与误差。 \\
+\addlinespace[2pt]
+\textbf{教师备课要求} & 用 15 分钟自行探索 Pixel Round；阅读 \texttt{docs\_math/Pixel\_Round\_Math\_zh-CN.pdf}。 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{shuoming}[关于实施环境的说明]
+本设计充分考虑中国普通高中的实际情况：城乡学校在硬件配置上差距显著，部分学校有完善的多媒体教室、平板教学车与“班班通”工程，另有部分学校仅有传统黑板和粉笔。Pixel Round 可在任何近十年生产的笔记本电脑或学生自带手机的浏览器中运行，不需联网（首次访问后可永久离线使用），不收集任何个人信息，符合《中华人民共和国个人信息保护法》对未成年人数据保护的相关规定。对于完全无信息化设备的课堂，本设计在附录~\ref{ap:adapt} 提供 \emph{全纸质替代方案}，确保教学不受硬件限制。
+\end{shuoming}
+
+% =============================================================================
+\section{设计理念与依据}
+
+像素艺术与体素艺术深刻嵌入当代高中生的视觉文化经验中。从《我的世界》（Minecraft）到米哈游的《原神》《星穹铁道》，从腾讯系大型手游到 B 站独立游戏创作社区，像素与体素的视觉语言无处不在。把这种日常视觉经验作为 \acc{数学研究对象}，意味着把熟悉的图像转化为真正的数学问题：计算机只能开启与关闭方格，它如何决定开启哪些方格才能呈现一条圆滑的曲线？
+
+本设计的理论支点有三：
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item \acc{基于六大核心素养的整体教学}。根据《普通高中数学课程标准（2017 版 2020 修订）》，本设计明确指向 \emph{数学抽象}、\emph{逻辑推理}、\emph{数学建模}、\emph{直观想象}、\emph{数学运算}、\emph{数据分析} 六大核心素养，按课时合理分布。
+  \item \acc{大单元教学} 与 \acc{深度学习}。把“在离散网格上表示连续曲线”这一问题作为大单元的核心驱动问题，避免将算法、方程、立体几何等分散讲授，强调知识之间的内在结构与方法之间的相互联系。
+  \item \acc{“双减”政策下的提质增效}。本设计强调课堂内的探究与建构，作业精简，鼓励学生在课堂内完成主要的认知任务，符合教育部 2021 年颁布的“双减”精神，减轻课外补课负担。
+\end{itemize}
+
+\begin{shuoming}[文化与历史维度]
+中国古代数学家对圆的研究有着深厚的传统。\emph{刘徽} 在《九章算术》注（公元 263 年）中提出 \acc{割圆术}，用内接正多边形逐步逼近圆面积；\emph{祖冲之} 在公元 5 世纪将 $\pi$ 计算到 7 位精度，这一记录在世界范围内保持了近千年。割圆术与本节课所讨论的“离散逼近连续”在思想上具有内在一致性：都是以可计算的离散对象逼近不可直接计算的连续对象。教师可在第一课时的引入环节自然提及这一渊源，唤起学生的文化认同。
+\end{shuoming}
+
+% =============================================================================
+\section{教学目标}
+
+\subsection{知识与技能}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item 掌握椭圆的隐式方程 $(x/r_x)^2 + (y/r_y)^2 = 1$，理解圆是其特殊情形（$r_x = r_y$）；
+  \item 理解三种像素归属判定算法（欧几里得、Bresenham 中点法、阈值法）的数学定义与差异；
+  \item 把二维椭圆方程推广到三维空间，得到椭球面方程；
+  \item 把三维体的平面截面理解为关于体素坐标的 \emph{线性不等式}。
+\end{itemize}
+
+\subsection{过程与方法}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item 能自主使用 Pixel Round 软件，在二维与三维模式下完成图形生成与 PNG 导出；
+  \item 能在坐标纸上按照规定的判定规则手工绘制离散圆，并与软件输出进行对比；
+  \item 能通过统计像素数目计算离散面积，并与连续面积 $\pi r_x r_y$ 比较，求相对误差；
+  \item 能综合圆、椭圆、球、椭球设计一幅原创像素／体素作品，并用数学语言阐释设计选择。
+\end{itemize}
+
+\subsection{情感、态度与价值观}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item 体会同一连续对象在离散空间中存在多种合理的表示方式，培养包容多元的数学观；
+  \item 在小组合作中提升沟通、协作、批判性反思能力；
+  \item 通过对中国古代数学（刘徽、祖冲之）的回顾，增强文化认同与民族自信。
+\end{itemize}
+
+% =============================================================================
+\section{核心素养指向}
+
+依据《普通高中数学课程标准（2017 版 2020 修订）》，本设计明确指向六大核心素养，按课时不同有所侧重：
+
+\begin{suyang}[数学抽象]
+学生从“计算机如何画圆”这一具体问题中抽象出 \emph{连续与离散的对偶关系}，并以椭圆隐式方程的形式精确表达。\emph{侧重课时：1, 3}。
+\end{suyang}
+
+\begin{suyang}[逻辑推理]
+学生分析三种算法的判定逻辑差异，并通过例题验证 Bresenham 决策参数的整数性质。\emph{侧重课时：2}。
+\end{suyang}
+
+\begin{suyang}[数学建模]
+学生把“设计一幅像素艺术作品”这一开放任务转化为关于半轴、算法、截面的具体数学描述，并通过软件验证模型。\emph{侧重课时：4}。
+\end{suyang}
+
+\begin{suyang}[直观想象]
+学生借助 Pixel Round 的三维可视化，建立椭球、平面截面、八分对称的空间直观；通过实物坐标纸与软件输出对照，形成连续—离散的视觉直观。\emph{贯穿所有课时}。
+\end{suyang}
+
+\begin{suyang}[数学运算]
+学生在第二、第三课时反复进行椭圆方程求解、平方和判定、面积体积估算、相对误差计算。\emph{侧重课时：2, 3}。
+\end{suyang}
+
+\begin{suyang}[数据分析]
+学生比较三种算法的离散面积，用相对误差量化它们与理想值的偏离，得出有依据的结论。\emph{侧重课时：2 的最后一个活动}。
+\end{suyang}
+
+% =============================================================================
+\section{教学重点与难点}
+
+\subsection{教学重点}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item 椭圆与椭球的隐式方程，作为像素归属判定的数学基础；
+  \item 三种算法（欧几里得、Bresenham、阈值）的判定条件及其几何含义；
+  \item 平面截面作为线性不等式的代数表达。
+\end{itemize}
+
+\subsection{教学难点}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Bresenham 算法决策参数的推导（属于难点，可按学情选讲）；
+  \item 离散面积／体积与连续面积／体积之间收敛性的认识；
+  \item 在小组合作中用数学语言进行美学辩护。
+\end{itemize}
+
+\subsection{突破策略}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item 在第一课时引入手绘活动，让学生在动手中体验“没有唯一正确答案”的认知冲突；
+  \item 在第二课时使用大量直观图示与逐步演示，由具体到一般地构建 Bresenham 算法的形象；
+  \item 在第四课时通过开放性项目和教师巡回辅导，引导学生将美学直觉转化为数学表达。
+\end{itemize}
+
+% =============================================================================
+\section{学情分析}
+
+高三学生具备以下优势与挑战：
+
+\textbf{优势：} 已完成必修一至必修五、选择性必修一的主要内容学习；熟悉坐标系、圆与椭圆的方程；具备初步的算法意识（信息技术课已涉及 Python 基本语法）；视觉文化经验丰富，对像素艺术与游戏有强烈兴趣。
+
+\textbf{挑战：} 高考压力大，对“非高考型”活动易产生抵触；个体差异显著，部分学生数学运算能力薄弱；部分学校对“双减”后课内主战场的要求尚在适应中；多媒体设备分布不均。
+
+\textbf{应对策略：} 本设计将高考重要考点（椭圆方程、立体几何体积公式、向量法、不等式）作为内容支柱，并通过 \emph{相对误差} 等概念贯穿数据分析素养，与高考能力要求紧密对接，避免“为玩而玩”的印象。
+
+% =============================================================================
+\section{教学资源}
+
+\subsection{信息化资源}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Pixel Round（每生或每两人一台设备）；
+  \item 多媒体投影或交互式电子白板；
+  \item 计算机房 \emph{或} 平板教学车 \emph{或} 学生自带智能手机（BYOD）。
+\end{itemize}
+
+\subsection{传统教具}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item 坐标纸（5\,mm 方格）每生 2 张；
+  \item 铅笔、橡皮、30\,cm 直尺；
+  \item 彩色铅笔或马克笔（推荐使用项目主色 \texttt{\#CC2020} 红与黑）；
+  \item 印制的练习单（附录~\ref{ap:lianxi}）；
+  \item 黑板或白板。
+\end{itemize}
+
+\subsection{Pixel Round 部署方式}
+
+按便利程度排序：
+
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item \textbf{教师托管} 于 GitHub Pages、校园网或个人云空间。通过二维码分发链接。
+  \item \textbf{本地副本} 复制项目文件至各机房电脑，用 \texttt{file://} 直接打开 \texttt{index.html}。
+  \item \textbf{学生手机离线运行}：通过 PWA 模式预先缓存于浏览器，课堂上无需联网。
+\end{enumerate}
+
+% =============================================================================
+\section{分层教学与无障碍设计}\label{sec:fenceng}
+
+每一活动均提供 \acc{至少两种切入路径} 与 \acc{两种结果展示方式}，体现“面向全体、关注差异”的教学理念。
+
+\subsection{学习困难学生}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item 活动 1.2 给予额外时间（15 分钟替代 10 分钟）；
+  \item 提供预先标注圆心的坐标纸；
+  \item 最终项目（活动 4.3）的辩护可选口头、书面或录音三种方式。
+\end{itemize}
+
+\subsection{学有余力学生}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item 拓展任务：通过对中点 $(1,\, R - \tfrac{1}{2})$ 代入 $F(x, y) = x^2 + y^2 - R^2$ 推导 Bresenham 决策参数 $d_0 = 1 - R$；
+  \item 探究任务：估计离散面积与 $\pi r^2$ 之间的收敛速度，得到 $O(r^{2/3})$（高斯圆格点问题，Huxley 2003）；
+  \item 编程任务：用 20 行 Python 实现欧几里得算法，作为信息技术课的延伸作业。
+\end{itemize}
+
+\subsection{双课时压缩方案}
+若学校采用 90 分钟连堂制（如部分实验校或选修课），课时 1+2 合并为第一连堂，课时 3+4 合并为第二连堂，中间留 10 分钟休息。
+
+\subsection{线上与混合教学}
+Pixel Round 的 Web 性质完美适配腾讯会议、钉钉课堂、希沃白板等远程教学场景。教师共享屏幕，学生在自有设备同步操作。坐标纸作业可拍照上传至班级群或学校的在线学习平台（如智慧课堂、希沃班级优化大师）。
+
+% =============================================================================
+\section{教学过程}
+
+教学过程采用 \acc{五环节教学法}：\emph{情境导入 → 自主探究 → 合作展示 → 精讲点拨 → 巩固提升}，与“以学生为中心”的课程改革精神一致。每一课时根据内容特点对环节加以伸缩。
+
+% =============================================================================
+\subsection{第一课时 ---\quad “电脑用方块画圆，可能吗？”}\label{keshi1}
+
+\subsubsection*{课时目标}
+明确离散光栅化作为一个真实数学问题；激活已学圆方程；初次接触 Pixel Round。
+
+\medskip
+
+\begin{huodong}[1.1 ---\quad 情境导入 \quad\shijian{8 分钟}]
+\textbf{方式：}\emph{独立思考 → 同桌交流 → 集体分享}。 \\[0.4em]
+\textbf{步骤：}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.2em,topsep=0.3em,nosep]
+  \item 投影展示三幅经典像素图：\emph{超级马里奥} 的蘑菇、初代宝可梦、谷歌“怀旧”涂鸦。
+  \item 提问：\emph{“仔细观察。这三幅图有什么共同点？它们与圆规画出的圆有什么区别？”}
+  \item 学生独立写下答案（1 分钟），与同桌交流（2 分钟）。
+  \item 集体反馈，教师在黑板上记录关键观察，引导得出：\emph{“电脑只能开启或关闭方格 ---\, 它如何选择哪些方格？”}
+\end{enumerate}
+\end{huodong}
+
+\begin{huodong}[1.2 ---\quad 自主探究 \quad\shijian{12 分钟}]
+\textbf{方式：}手工绘制与形式定义对照。 \\[0.4em]
+\textbf{材料：}坐标纸、铅笔。 \\[0.4em]
+\textbf{步骤：}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.2em,topsep=0.3em,nosep]
+  \item 每生取半张坐标纸，划出 $11 \times 11$ 方格区域并标记中心。
+  \item 任务：\emph{“涂出直径为 10 的最佳圆。4 分钟，不允许用橡皮。”}
+  \item 时间到后，3--4 名学生在黑板预先画好的方格区上重现自己的画法。
+  \item 教师引导观察：\emph{“大家画的一样吗？为什么不一样？谁是对的？”}
+  \item 总结：没有唯一答案。每位同学隐式地采用了不同的 \acc{判定准则}。
+\end{enumerate}
+\end{huodong}
+
+\begin{huodong}[1.3 ---\quad 精讲点拨 \quad\shijian{15 分钟}]
+\textbf{方式：}教师讲解 + 学生笔记。
+
+以原点为圆心、半径为 $r$ 的圆的隐式方程：
+
+\begin{gongshi}
+\centering
+$\displaystyle x^2 + y^2 \;=\; r^2$
+\end{gongshi}
+
+圆内部点满足 $x^2 + y^2 < r^2$。推广到半轴为 $r_x, r_y$ 的椭圆：
+
+\begin{gongshi}
+\centering
+$\displaystyle \left(\dfrac{x}{r_x}\right)^{\!2} + \left(\dfrac{y}{r_y}\right)^{\!2} \;=\; 1$
+\end{gongshi}
+
+在像素网格上，问题是：哪些 \acc{方格} 属于内部？Pixel Round 提供三种回答：
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item \acc{欧几里得}：方格中心 $(i + \tfrac{1}{2},\, j + \tfrac{1}{2})$ 是否在内部？
+  \item \acc{Bresenham}：1965 年提出的经典算法，仅使用整数运算。
+  \item \acc{阈值}：方格的某个 \emph{角点} 是否在内部？
+\end{itemize}
+
+\textbf{现场演示：}教师打开 Pixel Round，设置直径为 10，依次切换三种算法，每种停留 30 秒。强调：\emph{三种方法都数学上正确，只是依据的判定准则不同。}
+\end{huodong}
+
+\begin{huodong}[1.4 ---\quad 巩固提升 \quad\shijian{10 分钟}]
+\textbf{任务：}\emph{“回到坐标纸。按 \acc{严格的} 欧几里得准则重画直径为 10 的圆：仅当方格中心 $(i + 0.5,\, j + 0.5)$ 距圆心不超过 5 时才填涂。”}
+
+完成后，与 Pixel Round 欧几里得模式下直径 10 的输出对照。\emph{两者应完全一致。}
+
+\textbf{出门小问题（2 分钟）：}\emph{“用一句话说明：方格‘在圆内部’具体是什么意思？”}
+\end{huodong}
+
+\subsubsection*{课后练习（选做）}
+对直径为 8 和 14 重复活动 1.4。下节课带来两张图。
+
+% =============================================================================
+\subsection{第二课时 ---\quad “三种算法，三个图形”}
+
+\subsubsection*{课时目标}
+深入分析三种算法各自的数学定义；定量比较三者结果。
+
+\begin{huodong}[2.1 ---\quad 旧识激活 \quad\shijian{5 分钟}]
+快速回收课后练习，观察学生作品差异，宣布本节课目标：\emph{“今天我们用显微镜看每一种算法，揭示 Bresenham 为何被誉为计算机科学的瑰宝。”}
+\end{huodong}
+
+\begin{huodong}[2.2 ---\quad 欧几里得算法 \quad\shijian{10 分钟}]
+对方格 $(i, j)$，计算归一化偏移：
+
+\begin{gongshi}
+\centering
+$\displaystyle d_x = \dfrac{i + \tfrac{1}{2} - c_x}{r_x},\qquad d_y = \dfrac{j + \tfrac{1}{2} - c_y}{r_y}$
+\end{gongshi}
+
+方格被填涂当且仅当 $d_x^{\,2} + d_y^{\,2} \leq 1$。
+
+\textbf{黑板演算：}取 $c_x = c_y = 5$，$r_x = r_y = 5$，方格 $(2, 1)$。得 $d_x = -0.5$，$d_y = -0.7$，$d_x^2 + d_y^2 = 0.74 \leq 1$。方格 \emph{在内部}。
+
+\textbf{学生独立完成：}方格 $(0, 0)$ 是否在内部？（答案：$1.62 > 1$，\acc{不在}。）
+\end{huodong}
+
+\begin{huodong}[2.3 ---\quad Bresenham 算法 \quad\shijian{15 分钟}]
+\textbf{历史背景：}Jack Bresenham 1965 年于 IBM 发表此算法。当时一次浮点乘法可达数百微秒。他的贡献是：仅用 \emph{整数加法与比较} 即可绘制圆。
+
+\textbf{中国语境：}1965 年也是中国 \emph{109 丙机} 研制完成的年代（中科院计算所），中国的计算机科学正在起步。算法的整数化思想，对于资源有限的早期计算机时代具有普适意义。
+
+从 $(x = 0,\, y = R)$、$d_0 = 1 - R$ 出发，在 $0$--$45°$ 八分之一弧上每一步：
+
+\begin{gongshi}
+\centering
+$\begin{cases}
+\text{若 } d < 0: & \text{下一像素 } (x{+}1,\, y),\; d \mathrel{+}= 2x+3 \\
+\text{若 } d \geq 0: & \text{下一像素 } (x{+}1,\, y{-}1),\; d \mathrel{+}= 2(x-y)+5
+\end{cases}$
+\end{gongshi}
+
+\textbf{逐步演示：}在黑板上对 $R = 5$ 逐步追踪 $x$、$y$、$d$。其余七个八分弧由 $D_4$ 对称性导出。
+
+\textbf{分层提示：}若学生在决策参数代数上遇到困难，可仅以\emph{规则}形式介绍而不深究推导；完整推导见 \texttt{Pixel\_Round\_Math\_zh-CN.pdf} §5。
+\end{huodong}
+
+\begin{huodong}[2.4 ---\quad 阈值算法 \quad\shijian{8 分钟}]
+对每个方格 $(i, j)$，求距形心最近的方格角点：
+
+\begin{gongshi}
+\centering
+$\displaystyle n_x = \mathrm{clamp}(c_x,\, i,\, i{+}1),\qquad n_y = \mathrm{clamp}(c_y,\, j,\, j{+}1)$
+\end{gongshi}
+
+方格被填涂当 $\left(\dfrac{n_x - c_x}{r_x}\right)^{\!2} + \left(\dfrac{n_y - c_y}{r_y}\right)^{\!2} \leq 0.94$。
+
+\textbf{为何是 $0.94$ 而非 $1$？}经验上当阈值为 $1$ 时，四个基本方向（东、南、西、北）会出现单像素“刺”。略小的阈值可去除这一伪影。\emph{这是一种基于视觉观察的工程决策} ---\, 提醒学生：纯数学并非总能给出最终答案。
+\end{huodong}
+
+\begin{huodong}[2.5 ---\quad 量化比较 \quad\shijian{7 分钟}]
+\textbf{两人一组合作：}在 Pixel Round 中：
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em,nosep]
+  \item 设置直径 16，模式 \emph{填充}；
+  \item 启用信息标签，记录三种算法各自的离散面积；
+  \item 计算连续面积 $\pi r^2 = 64\pi \approx 201.06$；
+  \item 对每种算法计算相对误差 $\dfrac{|S_{\text{离散}} - S_{\text{连续}}|}{S_{\text{连续}}} \times 100\%$；
+  \item 把三种算法按误差由小到大排序。
+\end{enumerate}
+
+\textbf{预期结果：}欧几里得通常误差小于 $1\%$；阈值高估若干个百分点；Bresenham 介于两者之间。集体反馈。
+\end{huodong}
+
+% =============================================================================
+\subsection{第三课时 ---\quad “从椭圆到椭球：跨入三维”}
+
+\subsubsection*{课时目标}
+把椭圆方程推广至三维；引入体素与离散体积；理解平面截面作为线性不等式。
+
+\begin{huodong}[3.1 ---\quad 二维到三维 \quad\shijian{15 分钟}]
+增加第三维 $z$。椭圆方程自然推广为：
+
+\begin{gongshi}
+\centering
+$\displaystyle \left(\dfrac{x}{r_x}\right)^{\!2} + \left(\dfrac{y}{r_y}\right)^{\!2} + \left(\dfrac{z}{r_z}\right)^{\!2} \;=\; 1$
+\end{gongshi}
+
+当 $r_x = r_y = r_z = r$，回到 \acc{球面} $x^2 + y^2 + z^2 = r^2$。
+
+\textbf{术语：}三维网格的方格称为 \emph{体素}（voxel，\emph{volume element}）。判定准则与二维相同，加入 $z$ 维度：
+
+\begin{gongshi}
+\centering
+$\displaystyle a_x^2 + a_y^2 + a_z^2 \leq 1,\quad a_\xi = \dfrac{\xi + \tfrac{1}{2} - c_\xi}{r_\xi}$
+\end{gongshi}
+
+\textbf{演示：}将 Pixel Round 切换为 3D 模式，在球与椭球之间切换，鼠标拖动旋转，对比三种渲染样式（\emph{Classic, Smooth, Blocks}）。
+\end{huodong}
+
+\begin{huodong}[3.2 ---\quad 连续体积与离散体积 \quad\shijian{15 分钟}]
+椭球的连续体积是积分学经典结果：
+
+\begin{gongshi}
+\centering
+$\displaystyle V \;=\; \dfrac{4}{3}\,\pi\, r_x\, r_y\, r_z$
+\end{gongshi}
+
+当 $r_x = r_y = r_z = r$，$V = \tfrac{4}{3}\pi r^3$。这一公式在高考立体几何题中频繁出现。
+
+\textbf{两人合作：}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em,nosep]
+  \item 计算直径 12（$r = 6$）球的连续体积：$V = \tfrac{4}{3}\pi \cdot 216 \approx 904.78$；
+  \item 在 Pixel Round 中生成 $D = 12$ 球（填充模式），读取离散体积；
+  \item 计算相对误差。
+\end{enumerate}
+
+\textbf{讨论：}$V_{\text{离散}}/V_{\text{连续}} \to 1$（当 $D \to \infty$）。直径较小时偏差明显 ---\, 这是数学上的正确事实：离散化本身改变了计数。可与刘徽“割圆术”的逼近思想相互印证。
+\end{huodong}
+
+\begin{huodong}[3.3 ---\quad 截面与线性不等式 \quad\shijian{8 分钟}]
+Pixel Round 可用三个平面切割立体。每一切割是一个 \acc{线性不等式}：
+
+\begin{gongshi}
+\centering
+$\begin{array}{lcl}
+\text{X 轴：} & x \geq \mathit{cut} & \Rightarrow \text{体素被舍弃} \\
+\text{Y 轴：} & y \geq \mathit{cut} & \Rightarrow \text{体素被舍弃} \\
+\text{对角线：} & x + y \geq \mathit{cut} & \Rightarrow \text{体素被舍弃}
+\end{array}$
+\end{gongshi}
+
+\textbf{演示：}沿 Y 轴切球至 50\%，再沿 X 轴切至 50\%，最后切换至对角线 50\%。
+
+\textbf{引导提问：}\emph{“对角切割的滑块为什么范围是 $0$ 到 $D_x + D_y$，而不是 $D_x$？方程的哪部分告诉我们这一点？”}
+\end{huodong}
+
+\begin{huodong}[3.4 ---\quad 中国数学史回响 \quad\shijian{7 分钟}]
+\emph{回到刘徽与祖冲之的圆周率工作。}
+
+教师在黑板上呈现 \emph{割圆术} 的图示：内接正多边形从 6 边、12 边、24 边、...\, 不断加倍，逼近圆面积。
+
+\textbf{讨论：}\emph{“刘徽 1700 多年前在做与我们今天相同的事 ---\, 用可计算的离散对象逼近不可直接计算的连续对象。当代计算机用的方格（像素）与刘徽用的多边形，思想上是同一回事。Pixel Round 中三种算法的差异，恰对应于选择多边形的不同方式。”}
+
+\textbf{文化拓展：}这是一个理想的 \emph{研究性学习} 起点，可由学有余力的学生在课后撰写小论文，参加学校的“数学文化节”或市级数学建模竞赛。
+\end{huodong}
+
+% =============================================================================
+\subsection{第四课时 ---\quad “项目实战：原创像素／体素作品与数学辩护”}
+
+\subsubsection*{课时目标}
+综合运用本单元全部知识进行原创设计；通过数学语言的辩护进行表现性评价。
+
+\begin{huodong}[4.1 ---\quad 项目布置 \quad\shijian{5 分钟}]
+\textbf{任务：}\emph{“两人或三人为一组，制作一幅像素艺术或体素艺术作品，至少综合使用 Pixel Round 生成的三种形体（圆、椭圆、球、椭球）。可以是人物、图标、动物、徽标 ---\, 自选。完成后每组上台展示，并用 \acc{数学语言} 辩护设计选择：为什么选这种算法？为什么这样的比例？为什么这样的截面？”}
+
+\textbf{分组：}教师课前按异质性原则预分。1 分钟入座。
+\end{huodong}
+
+\begin{huodong}[4.2 ---\quad 项目实施 \quad\shijian{25 分钟}]
+\textbf{每组材料：}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em,nosep]
+  \item 一台运行 Pixel Round 的设备；
+  \item 坐标纸、铅笔、马克笔以备草稿；
+  \item 任务卡（附录~\ref{ap:lianxi} 练习 5）写有三道必答题。
+\end{itemize}
+
+\textbf{内部阶段：}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em,nosep]
+  \item \shijian{5 分钟} 头脑风暴，草图。
+  \item \shijian{12 分钟} 在 Pixel Round 内完成主要构件，分块导出 PNG。
+  \item \shijian{4 分钟} 整合（在坐标纸上用马克笔重画，或在 PPT/演示软件中拼合）。
+  \item \shijian{4 分钟} 在任务卡上书写数学辩护。
+\end{enumerate}
+
+\textbf{教师巡回：}走访各组，提出引导性问题 ---\, \emph{“为什么选这种算法？这条截面用不等式怎么写？”}
+\end{huodong}
+
+\begin{huodong}[4.3 ---\quad 展示与综合 \quad\shijian{15 分钟}]
+每组 2 分钟，展示作品并回答三道必答题中的 \emph{至少一道}。
+
+\textbf{最低要求：}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item 至少指出一种数学图形；
+  \item 命名所选算法并陈述（哪怕是\emph{事后}的）选择理由；
+  \item 若有 3D 截面，须用不等式描述。
+\end{itemize}
+
+\textbf{教师总结（3 分钟）：}回到本单元的核心命题 ---\, \emph{“在离散网格上，同一条连续曲线允许多种表示；选择一种是一项数学决策。”} 宣布形成性评价的提交方式。
+\end{huodong}
+
+% =============================================================================
+\section{教学评价}
+
+评价体系结合 \acc{诊断性评价}、\acc{形成性评价} 与 \acc{表现性评价}，与新课程改革倡导的“以评促学”相一致。
+
+\subsection{诊断性评价}
+在第一课时活动 1.2 中开展。教师走动观察，识别坐标系、圆方程、面积计数等先备知识的薄弱学生。
+
+\subsection{形成性评价}
+分散于四节课：观察小组讨论、个体回答、活动 1.4 的对照、活动 2.5 的计算、活动 3.2 的体积比较。
+
+\subsection{表现性评价}
+两项产出：
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.2em,topsep=0.3em,nosep]
+  \item \textbf{练习单}（附录~\ref{ap:lianxi}），5 道题，第四课时结束后提交。
+  \item \textbf{项目作品}（活动 4.2）附带数学辩护卡。
+\end{enumerate}
+
+\subsection{评价量规}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.21\textwidth}XX@{}}
+\toprule
+\textbf{评价维度} & \textbf{优秀（A，85--100）} & \textbf{合格（B--C，60--84）／不合格（D，0--59）} \\
+\midrule
+\textbf{数学知识} & 能熟练运用椭圆／椭球方程；准确区分三种算法及其效果。 & 能用圆方程但难以推广到椭圆；混淆算法。 \\
+\addlinespace[3pt]
+\textbf{软件运用} & 自主操作 Pixel Round 2D／3D；可导出；切换算法熟练。 & 频繁求助；只能操作 2D。 \\
+\addlinespace[3pt]
+\textbf{语言表达} & 用数学术语（算法、体素、截面、不等式）展开辩护。 & 仅作美学描述；缺少数学语言。 \\
+\addlinespace[3pt]
+\textbf{合作精神} & 在小组中积极贡献；参与全班讨论。 & 独立工作；少有贡献。 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{学期评价建议占比}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item 练习单：40\%；
+  \item 项目作品与展示：50\%；
+  \item 过程观察：10\%。
+\end{itemize}
+
+% =============================================================================
+\section{学科融合与拓展}
+
+\subsection{与信息技术学科}
+Bresenham 算法是任何算法课程的经典案例。第二课时 2.3 可与信息技术教师协同实施，进一步用 Python 实现算法（约 25 行代码），并讨论时间复杂度（$O(R)$）。
+
+\subsection{与美术学科}
+像素艺术是数字时代的重要艺术语言。Pixel Round 提供了罕见的 \acc{数学与艺术同一对象的入口}：一幅画作 \emph{同时} 是方程与构图。建议：与美术教师联合开展“数学之美 / 艺术之精”主题展览，作品张贴于校园文化墙或上传至校园公众号。
+
+\subsection{与物理学科}
+Pixel Round 的音效层采用纯正弦波的加法合成。所选频率近似 \acc{十二平均律}（每个半音的频率比为 $2^{1/12} \approx 1.0595$）。与物理课程“机械波”“声学”单元自然衔接。
+
+\subsection{与历史 \& 数学文化}
+课时 3.4 已涉及刘徽与祖冲之。教师可进一步引导有兴趣的学生写小论文，题材如：\emph{“从割圆术到像素：离散逼近的两千年”}、\emph{“东方与西方的圆：相同的数学，不同的文化”}。这是高三研究性学习与综合素质评价的优秀素材。
+
+% =============================================================================
+\section{参考文献}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.2em,topsep=0.3em]
+  \item Bresenham, J. E. Algorithm for computer control of a digital plotter. \emph{IBM Systems Journal}, 卷 4, 期 1, 页 25--30, 1965.
+  \item 教育部. \emph{普通高中数学课程标准（2017 年版 2020 年修订）}. 北京：人民教育出版社, 2020.
+  \item 教育部. \emph{关于进一步减轻义务教育阶段学生作业负担和校外培训负担的意见}（“双减”意见）. 2021.
+  \item 教育部. \emph{普通高中信息技术课程标准（2017 年版 2020 年修订）}. 北京：人民教育出版社, 2020.
+  \item 刘徽（注）. \emph{九章算术注}（约公元 263 年）. 收入：钱宝琮校点《算经十书》, 中华书局, 1963.
+  \item 史宁中. \emph{数学基本思想 18 讲}. 北京师范大学出版社, 2016.
+  \item 史宁中. \emph{学生发展核心素养与数学素养}. \emph{数学教育学报}, 2017(4): 1--4.
+  \item 章建跃. \emph{数学教育研究}. 北京师范大学出版社, 2017.
+  \item 张奠宙. \emph{中国数学教育的进展与挑战}. 高等教育出版社, 2018.
+  \item 顾沛主编. \emph{数学文化与数学方法论}. 高等教育出版社, 2008.
+  \item Lakatos, I.（拉卡托斯）. \emph{证明与反驳：数学发现的逻辑}. 上海译文出版社, 1987.
+  \item Pólya, G.（波利亚）. \emph{怎样解题：数学思维的新方法}. 上海科技教育出版社, 2007.
+  \item Pixel Round 配套技术文档：\texttt{docs\_math/Pixel\_Round\_Math\_zh-CN.pdf}.
+\end{itemize}
+
+\newpage
+% =============================================================================
+% 附录
+% =============================================================================
+\appendix
+\renewcommand{\thesection}{\Alph{section}}
+\setcounter{section}{0}
+
+\section{Pixel Round 演示脚本}\label{ap:yanshi}
+
+为活动 1.3 提供的演示流程，亦可供教师自学使用。总时长 15 分钟。
+
+\subsection{开启与 2D 模式}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item 打开 Pixel Round。指出顶栏、画布区、控制区。
+  \item 确认 \acc{2D / 圆} 模式。
+  \item 将 Size 滑块设为 10，观察图形。
+  \item 启用画布角的信息标签。朗读：“直径 10，半径 5，面积 …，算法 欧几里得”。
+  \item 依次切换三个算法标签：\acc{欧几里得 / Bresenham / 阈值}，每个停留 30 秒。
+\end{enumerate}
+
+\subsection{椭圆}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item 切换形状为 \acc{椭圆}。出现 \emph{宽度} 与 \emph{高度} 两个滑块。
+  \item 设置 $W = 16$，$H = 8$。
+  \item 讨论：\emph{“此图形方程为 $(x/8)^2 + (y/4)^2 = 1$。为什么 $x$ 除以 8，而 $y$ 除以 4？”}
+\end{enumerate}
+
+\subsection{3D 模式}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item 切换至 \acc{3D / 球}，$D = 12$。
+  \item 鼠标拖动旋转。
+  \item 启用信息标签：记录体积。
+  \item 切换至 \acc{椭球}，$W = 20, H = 10, D = 10$。
+  \item 演示 Y 轴切割滑块至 50\%。
+  \item 切换至对角线轴。讨论斜切面。
+\end{enumerate}
+
+\subsection{导出}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item 使用画布角的下载按钮。
+  \item 保存 PNG。
+  \item 注意：导出图像高分辨率，可用于打印、投影或嵌入作业。
+\end{enumerate}
+
+% =============================================================================
+\newpage
+\section{练习单}\label{ap:lianxi}
+
+\textbf{要求：}独立完成。可借助 Pixel Round 验证，\emph{但数学说明为必答}。手写或打印皆可。
+
+\subsection*{练习 1 ---\quad 圆的方程}
+\textbf{题目：}圆心在原点 $(0, 0)$，半径 $r = 7$。对下列各点，判定其在圆 \emph{内、外、上}。说明理由。
+\begin{enumerate}[label=\alph*),leftmargin=1.5em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item $(3, 4)$ \hfill \emph{答案：}在内（$25 < 49$）。
+  \item $(5, 5)$ \hfill \emph{答案：}在外（$50 > 49$，$\sqrt{50} \approx 7.07$）。
+  \item $(0, 7)$ \hfill \emph{答案：}在上。
+  \item $(-7, 0)$ \hfill \emph{答案：}在上。
+\end{enumerate}
+
+\subsection*{练习 2 ---\quad 欧几里得判定}
+\textbf{题目：}圆心 $(5, 5)$，半径 $5$。对方格 $(i, j) = (1, 3)$ 应用欧几里得准则：是否填涂？
+
+\emph{答案：}方格中心 $(1.5, 3.5)$，到圆心距离 $\sqrt{14.5} \approx 3.81 < 5$，\acc{填涂}。
+
+\subsection*{练习 3 ---\quad 离散与连续面积}
+\textbf{题目：}在 Pixel Round 中生成欧几里得直径 20 的圆。记录离散面积。计算 $\pi r^2$。计算相对误差。对阈值算法重复。比较。
+
+\emph{答案：}$S_{\text{连续}} = 100\pi \approx 314.16$。欧几里得误差通常 $< 2\%$。阈值高估 $5\%$--$8\%$。
+
+\subsection*{练习 4 ---\quad 椭球体积与切割}
+\textbf{题目：}椭球半轴 $r_x = 4$、$r_y = 6$、$r_z = 3$。
+\begin{enumerate}[label=\alph*),leftmargin=1.5em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item 求连续体积。
+  \item 在 $Y$ 轴方向切去 $50\%$ 高度后，剩余体积？
+  \item 把该切割表示为关于 $y$ 坐标的不等式。
+\end{enumerate}
+
+\emph{答案：}
+(a) $V = \tfrac{4}{3}\pi \cdot 4 \cdot 6 \cdot 3 = 96\pi \approx 301.59$；
+(b) 对称性，$\approx 150.80$；
+(c) $y < \mathit{cut}$，$\mathit{cut} = 0.5 \cdot D_y = 6$。
+
+\subsection*{练习 5 ---\quad 项目辩护卡}
+\textbf{题目：}完成小组原创作品后，作答：
+\begin{enumerate}[label=(\arabic*),leftmargin=1.7em,itemsep=0.15em,topsep=0.2em,nosep]
+  \item 列出使用的几何形体（圆、椭圆、球、椭球）及其参数。
+  \item 主要形体使用了哪种算法？为什么？该算法产生了哪种另外两种无法产生的视觉效果？
+  \item 是否使用了 3D 截面？若有，用不等式描述 \emph{其中一项}。
+\end{enumerate}
+
+% =============================================================================
+\newpage
+\section{无信息化条件下的替代方案}\label{ap:adapt}
+
+针对硬件条件有限的学校（如部分中西部、农村或边远学校），本方案允许整个教学序列 \emph{完全用纸面材料完成}。教学内容核心保持不变，仅载体改变。
+
+\subsection{各课时替代措施}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.16\textwidth}p{0.36\textwidth}X@{}}
+\toprule
+\textbf{课时} & \textbf{原活动} & \textbf{纸面替代} \\
+\midrule
+1 & Pixel Round 演示（1.3） & 教师在课前于大幅坐标纸上手工绘制三种算法对应的 $D = 10$ 圆，贴于黑板上对照。 \\
+\addlinespace[3pt]
+2 & 软件量化比较（2.5） & 发放三幅 $D = 16$ 预绘圆图（教师课前在 Pixel Round 中生成并打印），让学生手工计数比较。 \\
+\addlinespace[3pt]
+3 & 3D 球的生成（3.1, 3.2） & 发放球的 \emph{逐层切片} 图（每个 $z$ 一张坐标纸图），学生通过堆叠想象三维。 \\
+\addlinespace[3pt]
+4 & Pixel Round 中创作（4.2） & \emph{完全} 用坐标纸与彩铅／马克笔创作。数学辩护（4.3）不变。 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{准备物品（一次性）}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item A3 大坐标纸 1 张（$30 \times 30$ 方格，教师手绘），贴于黑板或墙面。
+  \item 每生 4 张 A4 坐标纸（5\,mm 方格）。
+  \item 三幅预绘圆对照图，教师课前在 Pixel Round 中生成，导出为 PNG 后送学校文印中心打印。
+\end{itemize}
+
+\subsection{城乡差异下的实施建议}
+
+中国教育资源在地区间存在显著差异。本设计为不同情境提供差异化建议：
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item \textbf{重点城市重点中学}（北京、上海、杭州、深圳等）：可加深第二课时 Bresenham 推导，并扩展至高斯圆格点问题的研究性学习。
+  \item \textbf{普通城市中学}：按设计主线实施，强化与高考立体几何专题的衔接。
+  \item \textbf{县城与农村中学}：采用本附录的纸面替代方案，结合一台教师演示电脑（投影）即可完整完成；强化对刘徽“割圆术”文化的呼应。
+\end{itemize}
+
+% =============================================================================
+\newpage
+\section{教师术语速查}\label{ap:glos}
+
+\begin{itemize}[leftmargin=1.4em,itemsep=0.3em,topsep=0.3em]
+  \item \acc{算法（algorithm）} ---\, 解决问题的有限、明确的指令序列。Pixel Round 的三种算法是同一问题（哪些方格被填涂）的三种不同流程。
+  \item \acc{Bresenham 算法} ---\, 1965 年 Jack Bresenham 在 IBM 发表，用于直线绘制；后被 Pitteway、Kappel 推广至椭圆。其特征是仅用整数运算。
+  \item \acc{Canvas（画布）} ---\, 提供浏览器 2D 或 3D 绘图区域的 HTML 元素。
+  \item \acc{隐式方程} ---\, 形如 $F(x, y) = 0$ 的方程，曲线被定义为某函数的零点集合。椭圆为 $(x/r_x)^2 + (y/r_y)^2 - 1 = 0$。
+  \item \acc{像素（pixel）} ---\, picture element 的缩写。数字图像的最小单元，对应网格中 $1 \times 1$ 的方格。
+  \item \acc{PWA（Progressive Web App）} ---\, 可安装于设备并离线运行的网页应用。Pixel Round 即是。
+  \item \acc{光栅化} ---\, 把连续几何描述转化为像素（2D）或体素（3D）矩阵的过程。
+  \item \acc{半轴} ---\, 椭圆中心到沿对应坐标轴方向上的顶点的距离。圆是 $r_x = r_y$ 的特殊情形。
+  \item \acc{十二平均律} ---\, 把八度平均分为 12 个半音。相邻半音的频率比为 $\sqrt[12]{2} \approx 1.0595$。是现代西方与中国当代音乐的基础。
+  \item \acc{体素（voxel）} ---\, volume element 的缩写。三维网格中的 $1 \times 1 \times 1$ 立方单元。
+  \item \acc{WebGL} ---\, 浏览器内的 3D 图形 API。Pixel Round 通过 \emph{three.js} 调用。
+\end{itemize}
+
+\vspace{2em}
+\begin{center}
+\color{muted}\small\sffamily
+--- 教学设计完 ---
+\end{center}
+
+\end{document}

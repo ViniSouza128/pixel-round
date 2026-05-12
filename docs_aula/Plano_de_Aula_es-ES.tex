@@ -1,0 +1,913 @@
+% !TEX program = xelatex
+% =============================================================================
+% Pixel Round — Situación de aprendizaje (es-ES)
+% Adaptada al 2.º de Bachillerato en centros públicos de España (LOMLOE)
+% Identidad gráfica alineada con docs_math/Pixel_Round_Math_es-ES.pdf
+% Compilación: xelatex Plano_de_Aula_es-ES.tex  (dos pasadas para TOC + refs)
+% =============================================================================
+\documentclass[12pt,a4paper]{scrartcl}
+
+% ---------- Idioma y tipografía ----------------------------------------------
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{spanish}
+\PolyglossiaSetup{spanish}{indentfirst=false}
+\setmainfont{Latin Modern Roman}[Scale=1.08]
+\setsansfont{Latin Modern Sans}[Scale=1.08]
+\setmonofont{Latin Modern Mono}[Scale=1.00]
+\usepackage{unicode-math}
+\setmathfont{Latin Modern Math}[Scale=1.08]
+
+% ---------- Paquetes ---------------------------------------------------------
+\usepackage{amsmath}
+\usepackage{mathtools}
+
+\usepackage[a4paper,top=2.8cm,bottom=2.8cm,left=2.6cm,right=2.6cm,
+            headheight=16pt]{geometry}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage[hidelinks,bookmarks=true,bookmarksopen=true,
+            pdftitle={Pixel Round — Situación de aprendizaje (es-ES)},
+            pdfauthor={Vinicius Souza}]{hyperref}
+
+% ---------- Paleta cromática del proyecto ------------------------------------
+\definecolor{accent}{HTML}{CC2020}
+\definecolor{ink}{HTML}{1F1F23}
+\definecolor{muted}{HTML}{4E4E58}
+\definecolor{bg}{HTML}{FBF6E9}
+\definecolor{rule}{HTML}{D8D1BC}
+
+\color{ink}
+
+% ---------- Estilo de secciones ----------------------------------------------
+\titleformat{\section}
+  {\sffamily\Large\bfseries\color{accent}}{\thesection.}{0.6em}{}
+\titleformat{\subsection}
+  {\sffamily\large\bfseries\color{accent!85!ink}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}
+  {\sffamily\normalsize\bfseries\color{muted}}{\thesubsubsection}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.2\baselineskip}{0.6\baselineskip}
+\titlespacing*{\subsection}{0pt}{0.8\baselineskip}{0.3\baselineskip}
+\titlespacing*{\subsubsection}{0pt}{0.6\baselineskip}{0.2\baselineskip}
+
+% ---------- Cabecera y pie ---------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily\bfseries\color{accent}PIXEL ROUND}
+\fancyhead[R]{\small\sffamily\color{muted}Situación de aprendizaje --- 2.º Bachillerato}
+\fancyfoot[L]{\small\sffamily\color{muted}Pixel Round --- Material docente}
+\fancyfoot[R]{\small\sffamily\color{muted}Página \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\headrule}{{\color{rule}\hrule height \headrulewidth}}
+\renewcommand{\footrule}{{\color{rule}\vskip-\footrulewidth\hrule height \footrulewidth\vskip-\footrulewidth}}
+
+% ---------- Cajas didácticas -------------------------------------------------
+\newtcolorbox{formula}{
+  colback=bg, colframe=rule, boxrule=0.4pt, arc=2pt,
+  left=10pt,right=10pt,top=8pt,bottom=8pt,
+  before skip=8pt, after skip=8pt,
+  fontupper=\color{accent}, breakable
+}
+
+\newtcolorbox{actividad}[1][Actividad]{
+  enhanced, breakable,
+  colback=bg, colframe=accent, boxrule=0.6pt, arc=4pt,
+  left=12pt,right=12pt,top=10pt,bottom=10pt,
+  before skip=12pt, after skip=12pt,
+  attach boxed title to top left={xshift=10pt,yshift=-8pt},
+  boxed title style={colback=accent,colframe=accent,boxrule=0pt,arc=2pt},
+  coltitle=white, fonttitle=\sffamily\bfseries\small,
+  title=#1
+}
+
+\newtcolorbox{nota}[1][Nota didáctica]{
+  enhanced, breakable,
+  colback=bg!50!white, colframe=rule, boxrule=0.4pt, arc=2pt,
+  left=10pt,right=10pt,top=8pt,bottom=8pt,
+  before skip=8pt, after skip=8pt,
+  attach boxed title to top left={xshift=10pt,yshift=-7pt},
+  boxed title style={colback=muted,colframe=muted,boxrule=0pt,arc=2pt},
+  coltitle=white, fonttitle=\sffamily\bfseries\footnotesize,
+  title=#1
+}
+
+\newtcolorbox{competencia}[1][LOMLOE]{
+  enhanced, breakable,
+  colback=bg!70!white, colframe=accent!60!ink, boxrule=0.4pt, arc=2pt,
+  left=10pt,right=10pt,top=6pt,bottom=6pt,
+  before skip=6pt, after skip=6pt,
+  attach boxed title to top left={xshift=10pt,yshift=-6pt},
+  boxed title style={colback=accent!60!ink,colframe=accent!60!ink,boxrule=0pt,arc=2pt},
+  coltitle=white, fonttitle=\sffamily\bfseries\footnotesize,
+  title=#1
+}
+
+\setlength{\parskip}{0.75em}
+\setlength{\parindent}{0pt}
+\linespread{1.10}
+
+\newcommand{\code}[1]{\texttt{\small #1}}
+\newcommand{\acc}[1]{\textcolor{accent}{\textbf{#1}}}
+\newcommand{\tiempo}[1]{\textbf{\small\color{muted}\textsf{#1}}}
+
+\begin{document}
+
+% =============================================================================
+% PORTADA
+% =============================================================================
+\begin{titlepage}
+  \centering
+  \vspace*{3.2cm}
+  {\sffamily\bfseries\fontsize{56}{60}\selectfont \color{accent} Pixel Round\par}
+  \vspace{0.7cm}
+  {\sffamily\LARGE\color{muted} Situación de aprendizaje\par}
+  \vspace{0.25cm}
+  {\sffamily\Large\color{muted} 2.º de Bachillerato --- Matemáticas\par}
+  \vspace{1.4cm}
+  {\color{rule}\rule{0.6\textwidth}{0.6pt}\par}
+  \vspace{0.9cm}
+  \begin{minipage}{0.84\textwidth}
+    \centering\color{ink}\large
+    Situación de aprendizaje de cuatro sesiones diseñada para
+    centros públicos españoles bajo el marco normativo LOMLOE
+    (RD~243/2022). Articula geometría analítica, pensamiento
+    computacional y expresión artística en torno a un único
+    problema: representar una curva continua sobre una malla
+    finita de píxeles.
+  \end{minipage}
+  \vspace{0.9cm}\\
+  {\color{rule}\rule{0.6\textwidth}{0.6pt}\par}
+  \vspace{1.8cm}
+  \begin{minipage}{0.82\textwidth}
+    \centering\sffamily\small\color{muted}
+    \textbf{Áreas integradas:} Matemáticas $\cdot$ Tecnología y Digitalización $\cdot$ Dibujo Técnico $\cdot$ Educación Artística \\[0.4em]
+    \textbf{Marco normativo:} LOMLOE (Ley Orgánica 3/2020) $\cdot$ RD 243/2022 $\cdot$ adaptable a desarrollos curriculares autonómicos
+  \end{minipage}
+\end{titlepage}
+
+% =============================================================================
+% ÍNDICE
+% =============================================================================
+\renewcommand{\contentsname}{\color{accent}Índice}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =============================================================================
+\section{Identificación y contextualización}
+
+\begin{center}
+\begin{tabular}{@{}p{0.32\textwidth}p{0.62\textwidth}@{}}
+\toprule
+\textbf{Materia} & Matemáticas II (modalidad Ciencias y Tecnología). Adaptable a Matemáticas Aplicadas a las Ciencias Sociales II. \\
+\addlinespace[2pt]
+\textbf{Etapa y curso} & Bachillerato --- 2.º curso. Adaptable a 1.º de Bachillerato y a 4.º de la ESO. \\
+\addlinespace[2pt]
+\textbf{Modalidad} & Enseñanza presencial. Adaptaciones para enseñanza híbrida y a distancia en el Apéndice~\ref{ap:adapt}. \\
+\addlinespace[2pt]
+\textbf{Temporalización} & 4 sesiones de 55 minutos (220 min de aula). Variante por sesiones largas de 110 min descrita en §\ref{sec:adapt}. \\
+\addlinespace[2pt]
+\textbf{Recurso central} & Pixel Round: aplicación web gratuita, sin registro, sin servidor, ejecuta sin conexión como \emph{PWA}. \\
+\addlinespace[2pt]
+\textbf{Saberes básicos} & Bloque \emph{Sentido espacial} y \emph{Sentido algebraico} de Matemáticas II (RD 243/2022, anexo II). \\
+\addlinespace[2pt]
+\textbf{Conexiones interdisciplinares} & Tecnología y Digitalización; Dibujo Técnico II; Cultura Audiovisual II; Educación Plástica, Visual y Audiovisual. \\
+\addlinespace[2pt]
+\textbf{Conocimientos previos del alumnado} & Plano cartesiano; ecuación de la circunferencia; áreas y volúmenes elementales; concepto de función; razones y porcentajes. \\
+\addlinespace[2pt]
+\textbf{Preparación docente} & 15 minutos de exploración previa del Pixel Round; lectura del documento técnico \texttt{docs\_math/Pixel\_Round\_Math\_es-ES.pdf}. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{nota}[Realidad del aula pública española]
+La situación se diseña pensando en realidades habituales de los centros públicos: aulas con pizarra digital interactiva, dotación parcial de Chromebooks o tabletas (\emph{Programa Escuela Conectada}, \emph{Aulas Digitales Interactivas} en distintas comunidades autónomas), conectividad estable pero filtrada, alumnado con NEAE (necesidades específicas de apoyo educativo) integrado en el aula ordinaria. La aplicación funciona en cualquier dispositivo con navegador moderno, no exige cuenta de usuario y respeta la normativa de protección de datos (RGPD): no envía información a ningún servidor. Existe un \emph{itinerario íntegramente analógico} sin ordenador descrito en el Apéndice~\ref{ap:adapt}.
+\end{nota}
+
+% =============================================================================
+\section{Justificación pedagógica}
+
+El recurso al \emph{pixel art} como artefacto didáctico responde a tres exigencias contemporáneas que recogen tanto el RD 243/2022 como la matriz de salida del Bachillerato: la \acc{integración entre conocimiento matemático y cultura digital}, la \acc{contextualización del saber abstracto en situaciones significativas} para el alumnado y la preparación para los descriptores operativos del perfil de salida vinculados a las competencias STEM.
+
+El alumnado de 2.º de Bachillerato vive culturalmente saturado de imaginería \emph{pixel-art} y \emph{voxel-art}: videojuegos (Minecraft, Stardew Valley, Hollow Knight), iconografía de redes sociales, ilustración independiente. Tomar ese consumo cotidiano como punto de partida transforma una experiencia visual familiar en \emph{problema matemático genuino}: ¿cómo describe el ordenador, que solo dispone de celdas cuadradas, una curva analíticamente definida sobre $\mathbb{R}$? Este movimiento didáctico opera en el espíritu de la \acc{educación matemática crítica} de Ole Skovsmose (escenarios de investigación) y de la \acc{modelización matemática} entendida como proceso de ida y vuelta entre realidad y formalización (Blum, Niss).
+
+La presencia del \emph{software} cumple una función epistémica concreta. No \emph{sustituye} al álgebra, sino que \emph{materializa} la diferencia entre formulaciones matemáticas competidoras. Los tres algoritmos disponibles --- euclídeo, Bresenham y de umbral --- corresponden a tres definiciones matemáticamente distintas del mismo objeto (la circunferencia discreta) y producen dibujos visiblemente diferentes. El alumnado constata, con la mirada, que \emph{la definición importa}: experiencia que Lakatos describió como \emph{pruebas y refutaciones}, trasladada aquí al aula de Bachillerato.
+
+Hay además una dimensión de \acc{equidad}. Pixel Round no exige registro, no recoge datos personales, ejecuta sin conexión, ocupa menos de 1\,MB y funciona en cualquier dispositivo. Esto lo hace compatible con la infraestructura real de los centros públicos españoles, donde la dotación tecnológica es desigual entre comunidades autónomas e incluso entre centros de la misma localidad.
+
+\begin{nota}[Marcos teóricos movilizados]
+La situación se inspira en cinco tradiciones convergentes: la \emph{resolución de problemas} de Pólya (1945) como hilo metodológico; la \emph{teoría socioconstructivista} de Vygotski (1934), particularmente en el trabajo en parejas y tríos durante todas las sesiones; el \emph{aprendizaje basado en proyectos} (ABP) en la sesión final; el \emph{Diseño Universal para el Aprendizaje} (DUA, CAST 2.2) que estructura los itinerarios alternativos; y la \emph{evaluación competencial y formativa} en la línea de Neus Sanmartí.
+\end{nota}
+
+% =============================================================================
+\section{Objetivos}
+
+\subsection{Comprensión perdurable}
+
+El alumnado entenderá que \acc{representar un objeto matemático continuo sobre una malla discreta es, en sí mismo, una decisión matemática} con múltiples respuestas defendibles, cada una formalizable como un criterio preciso de pertenencia para las celdas.
+
+\subsection{Objetivos cognitivos}
+
+Al finalizar las cuatro sesiones, el alumnado podrá:
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item escribir la ecuación implícita de una elipse de semiejes $r_x$ y $r_y$ y reconocer la circunferencia como caso particular ($r_x = r_y$);
+  \item enunciar tres criterios diferentes de pertenencia de celdas (euclídeo, punto medio de Bresenham, cobertura de esquina) y predecir, cualitativamente, en qué se diferencian sus resultados;
+  \item generalizar la ecuación 2D a la ecuación del elipsoide en $\mathbb{R}^3$;
+  \item interpretar un corte planar de un sólido tridimensional como una \emph{desigualdad lineal} aplicada a las coordenadas de los vóxeles.
+\end{itemize}
+
+\subsection{Objetivos procedimentales}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Manejar Pixel Round con autonomía en modos 2D y 3D; exportar imágenes en formato PNG.
+  \item Dibujar a mano, sobre papel cuadriculado, la aproximación discreta de una circunferencia aplicando un criterio explícito y contrastarla con la salida del \emph{software}.
+  \item Calcular el área discreta de una elipse por recuento de celdas y compararla con el área continua $\pi r_x r_y$, expresando la discrepancia como error relativo.
+  \item Componer una figura original combinando círculos, elipses, esferas y elipsoides con justificación matemática de las elecciones.
+\end{itemize}
+
+\subsection{Objetivos actitudinales}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Colaborar de forma productiva en pareja o trío en las actividades prácticas.
+  \item Argumentar matemáticamente la defensa de una decisión estética, sosteniéndola con propiedades formales.
+  \item Reconocer que un mismo problema real puede admitir más de una respuesta técnicamente correcta.
+\end{itemize}
+
+% =============================================================================
+\section{Competencias específicas y criterios de evaluación}
+
+La situación moviliza \acc{cuatro competencias específicas} de Matemáticas~II (RD 243/2022, anexo II) y conecta con varias competencias clave del perfil de salida.
+
+\begin{competencia}[Competencia específica 2]
+Utilizar el razonamiento, la \acc{demostración}, la abstracción y la generalización ante situaciones diversas, planteando o resolviendo problemas y elaborando conclusiones argumentadas matemáticamente.
+\end{competencia}
+
+\begin{competencia}[Competencia específica 4]
+Utilizar el \acc{pensamiento computacional} de forma eficaz, modificando, creando y generalizando algoritmos que resuelvan problemas mediante el uso de las matemáticas.
+\end{competencia}
+
+\begin{competencia}[Competencia específica 5]
+Establecer, investigar y utilizar \acc{conexiones} entre las diferentes ideas matemáticas y entre las matemáticas y otras áreas del conocimiento.
+\end{competencia}
+
+\begin{competencia}[Competencia específica 6]
+Representar conceptos, procedimientos e información matemáticos, seleccionando y aplicando \acc{diferentes registros y herramientas}, incluidas las digitales, para hacer visibles las ideas y estructuras matemáticas.
+\end{competencia}
+
+\medskip
+Competencias clave del \emph{perfil de salida} con descriptores operativos directamente trabajados:
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item \acc{STEM1, STEM2, STEM3:} formular y resolver problemas con herramientas matemáticas; modelizar.
+  \item \acc{CD1, CD2:} desarrollar y emplear estrategias para localizar, seleccionar, gestionar y crear contenido digital.
+  \item \acc{CCEC4:} contribuir al patrimonio cultural mediante producciones artísticas con uso de las TIC.
+\end{itemize}
+
+\subsection{Criterios de evaluación seleccionados}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item \textbf{2.1.} Comprobar la validez de conjeturas matemáticas estudiando patrones, propiedades y relaciones a través del razonamiento, la argumentación o la demostración.
+  \item \textbf{4.1.} Interpretar, modelizar y resolver situaciones problematizadas mediante esquemas, ecuaciones y otras herramientas matemáticas, valorando su utilidad para resolver problemas de la ciencia y la tecnología.
+  \item \textbf{6.1.} Representar ideas matemáticas, estructuras y relaciones utilizando distintos lenguajes y herramientas digitales.
+\end{itemize}
+
+% =============================================================================
+\section{Saberes básicos}
+
+\subsection{Sentido espacial}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Plano cartesiano $\mathbb{R}^2$ y espacio $\mathbb{R}^3$. Coordenadas; punto medio; distancia entre puntos.
+  \item Ecuación reducida de la circunferencia: $x^2 + y^2 = r^2$.
+  \item Ecuación implícita general de la elipse: $\left(x/r_x\right)^2 + \left(y/r_y\right)^2 = 1$.
+  \item Ecuación de la esfera y del elipsoide en $\mathbb{R}^3$.
+  \item Posiciones relativas de planos y superficies cuádricas: cortes y secciones.
+\end{itemize}
+
+\subsection{Sentido algebraico y pensamiento computacional}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Desigualdades lineales y cuadráticas en el plano y en el espacio.
+  \item Algoritmos como secuencias finitas y deterministas. Coste computacional cualitativo.
+  \item Aritmética entera versus aritmética en punto flotante: implicaciones de rendimiento.
+\end{itemize}
+
+\subsection{Sentido de la medida}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Área del círculo y volumen de la esfera. Generalización al elipsoide: $V = \tfrac{4}{3}\pi r_x r_y r_z$.
+  \item Medida de conteo discreta como aproximación a la integral de Riemann.
+  \item Error relativo en el cómputo de áreas y volúmenes aproximados.
+\end{itemize}
+
+\subsection{Sentido socioafectivo}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Argumentación matemática como herramienta de comunicación con iguales.
+  \item Aceptación de la pluralidad de soluciones técnicamente válidas.
+  \item Ciudadanía digital: licencias de \emph{software} y respeto a la creación ajena.
+\end{itemize}
+
+% =============================================================================
+\section{Conocimientos previos}
+
+La situación presupone que el alumnado tiene contacto anterior con:
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Plano cartesiano y localización de puntos en $\mathbb{R}^2$ y $\mathbb{R}^3$.
+  \item Ecuación de la circunferencia (contenido de 1.º de Bachillerato).
+  \item Áreas de polígonos regulares; volúmenes de prisma y cilindro (ESO).
+  \item Concepto de función: dominio, recorrido, gráfica.
+  \item Razones, porcentajes y proporciones.
+\end{itemize}
+
+Si la clase muestra carencias en alguno de estos puntos --- realidad frecuente tras la pandemia ---, la Sesión~1 dispone de un momento de \emph{nivelación diagnóstica} (10 min) descrito en §\ref{sesion1}.
+
+% =============================================================================
+\section{Recursos y materiales}
+
+\subsection{Recursos digitales}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Pixel Round (un dispositivo por alumno o por pareja);
+  \item Pizarra digital interactiva o proyector con HDMI;
+  \item Dotación de Chromebooks/tabletas del aula, \emph{o} dispositivos personales (BYOD), \emph{o} traslado al aula de informática del centro.
+\end{itemize}
+
+\subsection{Recursos analógicos}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Hojas de papel cuadriculado (cuadrícula de 1\,cm), 2 por alumno;
+  \item Lapicero, goma, regla de 30\,cm;
+  \item Lápices de colores o rotuladores (preferentemente rojo \texttt{\#CC2020} y negro, paleta del proyecto);
+  \item Ficha de ejercicios impresa (Apéndice~\ref{ap:ejer});
+  \item Pizarra tradicional o velleda como apoyo.
+\end{itemize}
+
+\subsection{Despliegue del Pixel Round}
+
+Tres vías de acceso, en orden de preferencia:
+
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item \textbf{Servido por el profesorado} en GitHub Pages, Netlify o el servidor del centro. URL distribuida mediante código QR proyectado.
+  \item \textbf{Copia local} en cada dispositivo (descarga del proyecto y apertura de \texttt{index.html} con \texttt{file://}).
+  \item \textbf{Modo PWA} sin conexión: una apertura en línea instala la aplicación en el navegador.
+\end{enumerate}
+
+% =============================================================================
+\section{Atención a la diversidad y diseño universal}\label{sec:adapt}
+
+La situación se construye de modo que cada actividad ofrezca al menos \acc{dos vías de entrada} y \acc{dos formas de demostración}. Cumple así con los principios del Diseño Universal para el Aprendizaje y permite atender al alumnado con NEAE en el aula ordinaria.
+
+\subsection{Alumnado con NEAE asociadas a dificultades de aprendizaje}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Tiempo ampliado en la Actividad~1.2 (dibujo manual): 15 min en lugar de 10.
+  \item Hojas cuadriculadas con el centro de la circunferencia pre-marcado.
+  \item Opción de redactar la defensa final (Actividad~4.3) a mano o digitalmente; alternativa de defensa oral grabada.
+\end{itemize}
+
+\subsection{Alumnado con altas capacidades}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Reto adicional: deducir el parámetro inicial $d_0 = 1 - R$ del algoritmo de Bresenham evaluando $F(x, y) = x^2 + y^2 - R^2$ en el punto medio $(1,\, R - \tfrac{1}{2})$.
+  \item Investigación: estimar la tasa de convergencia entre área discreta y $\pi r^2$ cuando $r \to \infty$ (resultado de teoría de números: $O(r^{2/3})$).
+  \item Programación: implementar el algoritmo euclídeo en 20 líneas de Python o JavaScript.
+\end{itemize}
+
+\subsection{Alumnado con dificultades en lengua académica}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Vocabulario técnico clave (\emph{algoritmo, vóxel, punto medio, sección}) pre-enseñado y colocado en un mural visible;
+  \item Las fórmulas matemáticas son lingüísticamente neutras: cualquier afirmación puede verificarse visualmente en Pixel Round;
+  \item Estructuras de oración para la defensa final: \emph{``He elegido el algoritmo \rule{2em}{0.4pt} porque \rule{2em}{0.4pt}.''}
+\end{itemize}
+
+\subsection{Variante de sesiones largas (110 min)}
+En centros con horario de sesiones largas (modalidades de bachillerato bilingüe, secciones internacionales, ciertos institutos de innovación), las cuatro sesiones se comprimen en dos: Sesiones 1+2 en un primer bloque, 3+4 en el segundo, con descanso obligatorio a mitad.
+
+\subsection{Enseñanza híbrida y a distancia}
+La naturaleza \emph{web} del Pixel Round permite mantener la situación intacta en formato no presencial. El profesorado comparte pantalla; el alumnado sigue en su dispositivo. Las actividades sobre papel cuadriculado se fotografían y se entregan por la plataforma del centro (Educamos, Educamadrid, eDixgal, etc.).
+
+% =============================================================================
+\section{Secuencia didáctica}
+
+La secuencia se articula según el modelo de \acc{tres momentos didácticos} (movilización inicial --- desarrollo --- síntesis) inspirado en Sanmartí (\emph{Evaluar para aprender}) y compatible con el ciclo 5E (\emph{engage, explore, explain, elaborate, evaluate}).
+
+% =============================================================================
+\subsection{Sesión 1 --- ``¿Cómo dibuja un ordenador un círculo con cuadraditos?''}\label{sesion1}
+
+\subsubsection*{Objetivo de la sesión}
+Establecer el problema central de la rasterización discreta como cuestión matemática genuina, movilizar la ecuación de la circunferencia, presentar el Pixel Round.
+
+\medskip
+
+\begin{actividad}[1.1 --- Movilización inicial \quad\tiempo{10 min}]
+\textbf{Estrategia:} \emph{piensa--comenta--comparte}. \\[0.4em]
+\textbf{Procedimiento:}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.2em,topsep=0.3em,nosep]
+  \item Proyectar tres \emph{sprites} clásicos de \emph{pixel art}: una seta de \emph{Super Mario}, un Pokémon de primera generación y el logotipo de Google en versión retro.
+  \item Pregunta al grupo: \emph{``¿Qué tienen en común esos tres dibujos? ¿Qué los distingue de un círculo dibujado con compás?''}
+  \item Cada alumno o alumna anota individualmente su respuesta (1 min) y la comenta con la pareja (2 min).
+  \item Puesta en común dirigida por el profesorado. Llevar la conversación al núcleo: \emph{``el ordenador solo enciende cuadraditos --- ¿cómo elige cuáles?''}
+\end{enumerate}
+\end{actividad}
+
+\begin{actividad}[1.2 --- Problematización \quad\tiempo{15 min}]
+\textbf{Estrategia:} dibujo manual contrastado con la definición formal. \\[0.4em]
+\textbf{Material:} papel cuadriculado, lápiz. \\[0.4em]
+\textbf{Procedimiento:}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.2em,topsep=0.3em,nosep]
+  \item Cada estudiante recibe media hoja de papel cuadriculado y delimita una región $11 \times 11$ celdas marcando el centro.
+  \item Consigna: \emph{``Pintad el mejor círculo que sepáis con diámetro 10 (radio 5). Cuatro minutos.''}
+  \item Al terminar el tiempo, tres o cuatro voluntarios reproducen su dibujo en la pizarra sobre una cuadrícula a tamaño aula.
+  \item Observación dirigida: \emph{``¿Habéis dibujado todos lo mismo? ¿Por qué no? ¿Quién tiene razón?''}
+  \item Sistematizar: no existe \emph{una única} respuesta. Cada uno adoptó implícitamente un \acc{criterio} distinto.
+\end{enumerate}
+\end{actividad}
+
+\begin{actividad}[1.3 --- Sistematización \quad\tiempo{15 min}]
+\textbf{Estrategia:} exposición dialogada apoyada en la pizarra. \\[0.4em]
+\textbf{Contenido:}
+
+La ecuación implícita de la circunferencia de radio $r$ centrada en el origen es
+
+\begin{formula}
+\centering
+$\displaystyle x^2 + y^2 \;=\; r^2$
+\end{formula}
+
+Los puntos del \emph{interior} satisfacen $x^2 + y^2 < r^2$. La generalización a la elipse de semiejes $r_x, r_y$:
+
+\begin{formula}
+\centering
+$\displaystyle \left(\dfrac{x}{r_x}\right)^{\!2} + \left(\dfrac{y}{r_y}\right)^{\!2} \;=\; 1$
+\end{formula}
+
+En una malla de píxeles, el problema es decidir qué \acc{celdas} pertenecen al interior. Decisiones distintas generan dibujos distintos. Pixel Round implementa \emph{tres} criterios:
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item \acc{Euclídeo}: ¿está el centro de la celda $(i + \tfrac{1}{2},\, j + \tfrac{1}{2})$ en el interior?
+  \item \acc{Bresenham}: algoritmo histórico de 1965, solo aritmética entera.
+  \item \acc{Umbral}: ¿alguna \emph{esquina} de la celda está en el interior?
+\end{itemize}
+
+\textbf{Demostración en directo.} El profesorado abre Pixel Round, fija el diámetro 10, alterna entre los tres algoritmos durante 30 segundos cada uno. Subrayar: las tres figuras son \emph{matemáticamente correctas} bajo criterios distintos.
+\end{actividad}
+
+\begin{actividad}[1.4 --- Síntesis \quad\tiempo{10 min}]
+\textbf{Consigna:} \emph{``Volved al papel. Redibujad el círculo de diámetro 10 aplicando \acc{rigurosamente} el criterio euclídeo: rellenar la celda si y solo si su centro $(i + 0.5,\, j + 0.5)$ está a distancia menor o igual que 5 del centro de la circunferencia.''}
+
+Al terminar, contrastar con la salida de Pixel Round en modo euclídeo, diámetro 10. \emph{Han de coincidir.}
+
+\textbf{Ticket de salida (2 min):} \emph{``En una frase, ¿qué significa que una celda esté ``dentro'' de la circunferencia?''}
+\end{actividad}
+
+\subsubsection*{Tarea opcional para casa}
+Repetir el ejercicio 1.4 con diámetros 8 y 14. Traer los dos dibujos a la siguiente sesión.
+
+% =============================================================================
+\subsection{Sesión 2 --- ``Tres algoritmos, tres dibujos''}
+
+\subsubsection*{Objetivo de la sesión}
+Profundizar en el análisis de cada algoritmo como definición matemática propia y compararlos cuantitativamente.
+
+\begin{actividad}[2.1 --- Retomar \quad\tiempo{5 min}]
+Recoger la tarea, observar variaciones entre alumnos, anunciar el objetivo: \emph{``Hoy miramos cada algoritmo con lupa y entendemos por qué Bresenham se considera una joya de la informática.''}
+\end{actividad}
+
+\begin{actividad}[2.2 --- Algoritmo euclídeo \quad\tiempo{10 min}]
+Reformulación. Para una celda $(i, j)$, calcular las coordenadas normalizadas
+
+\begin{formula}
+\centering
+$\displaystyle d_x = \dfrac{i + \tfrac{1}{2} - c_x}{r_x},\qquad d_y = \dfrac{j + \tfrac{1}{2} - c_y}{r_y}$
+\end{formula}
+
+La celda se pinta si y solo si $d_x^{\,2} + d_y^{\,2} \leq 1$.
+
+\textbf{En pizarra.} Resolver explícitamente el caso $c_x = c_y = 5$, $r_x = r_y = 5$, celda $(2, 1)$. Resulta $d_x = -0{,}5$, $d_y = -0{,}7$, así $d_x^2 + d_y^2 = 0{,}74 \leq 1$. Celda \emph{dentro}.
+
+\textbf{Cálculo individual.} Cada alumno verifica la celda $(0, 0)$. (Respuesta: $d_x = -0{,}9$, $d_y = -0{,}9$, suma $= 1{,}62 > 1$: \acc{fuera}.)
+\end{actividad}
+
+\begin{actividad}[2.3 --- Algoritmo de Bresenham \quad\tiempo{15 min}]
+\textbf{Contexto histórico.} Jack Bresenham publicó el algoritmo en 1965 trabajando en IBM. En aquella época, una sola multiplicación en punto flotante podía costar centenas de microsegundos. Su aportación: dibujar usando \emph{únicamente} sumas y comparaciones de enteros.
+
+Partiendo de $(x = 0,\, y = R)$ con $d_0 = 1 - R$, en cada paso del octante $0$--$45°$:
+
+\begin{formula}
+\centering
+$\begin{cases}
+\text{si } d < 0: & \text{siguiente: } (x{+}1,\, y),\; d \mathrel{+}= 2x+3 \\
+\text{si } d \geq 0: & \text{siguiente: } (x{+}1,\, y{-}1),\; d \mathrel{+}= 2(x-y)+5
+\end{cases}$
+\end{formula}
+
+\textbf{Trazado en pizarra.} Recorrer paso a paso el caso $R = 5$, tabulando $x$, $y$, $d$. Los siete octantes restantes se obtienen por simetría.
+
+\textbf{Nota metodológica.} Si el alumnado muestra dificultad con el álgebra del parámetro $d$, presentar el algoritmo como una \emph{regla} sin demostración formal. La derivación completa figura en \texttt{Pixel\_Round\_Math\_es-ES.pdf}, §5.
+\end{actividad}
+
+\begin{actividad}[2.4 --- Algoritmo de umbral \quad\tiempo{10 min}]
+Para cada celda $(i, j)$, hallar la esquina más cercana al centro de la forma:
+
+\begin{formula}
+\centering
+$\displaystyle n_x = \mathrm{clamp}(c_x,\, i,\, i{+}1),\qquad n_y = \mathrm{clamp}(c_y,\, j,\, j{+}1)$
+\end{formula}
+
+Se pinta la celda si $\left(\dfrac{n_x - c_x}{r_x}\right)^{\!2} + \left(\dfrac{n_y - c_y}{r_y}\right)^{\!2} \leq 0{,}94$.
+
+\textbf{¿Por qué $0{,}94$ y no $1$?} Empíricamente, con $1$ aparecen \emph{púas} de 1 píxel en los puntos cardinales. El umbral ligeramente inferior las elimina. \emph{Esta es una decisión de ingeniería tomada por inspección visual} --- ejemplo importante de que la matemática pura no siempre dicta la última palabra.
+\end{actividad}
+
+\begin{actividad}[2.5 --- Comparación cuantitativa \quad\tiempo{10 min}]
+\textbf{Trabajo por parejas.} En Pixel Round:
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em,nosep]
+  \item Fijar diámetro 16, modo \emph{Relleno}.
+  \item Activar el \emph{chip} de información. Anotar el área discreta para cada uno de los tres algoritmos.
+  \item Calcular el área continua: $\pi r^2 = 64\pi \approx 201{,}06$.
+  \item Para cada algoritmo, calcular el error relativo: $\dfrac{|A_{\text{disc}} - A_{\text{cont}}|}{A_{\text{cont}}} \times 100\%$.
+  \item Ordenar los tres algoritmos del más cercano al más alejado del ideal.
+\end{enumerate}
+
+\textbf{Resultado esperado.} Euclídeo se aproxima por debajo del $1\%$; umbral sobreestima en un pocos por ciento; Bresenham queda en posición intermedia. Puesta en común.
+\end{actividad}
+
+% =============================================================================
+\subsection{Sesión 3 --- ``De la elipse al elipsoide: la tercera dimensión''}
+
+\subsubsection*{Objetivo de la sesión}
+Generalizar la ecuación de la elipse al elipsoide; introducir vóxeles y volumen discreto; comprender los cortes planares.
+
+\begin{actividad}[3.1 --- De 2D a 3D \quad\tiempo{15 min}]
+Añadir una tercera coordenada $z$ al plano cartesiano. La ecuación de la elipse se generaliza directamente:
+
+\begin{formula}
+\centering
+$\displaystyle \left(\dfrac{x}{r_x}\right)^{\!2} + \left(\dfrac{y}{r_y}\right)^{\!2} + \left(\dfrac{z}{r_z}\right)^{\!2} \;=\; 1$
+\end{formula}
+
+Cuando $r_x = r_y = r_z = r$, se recupera la \acc{esfera} $x^2 + y^2 + z^2 = r^2$.
+
+\textbf{Vóxeles:} la celda de una malla 3D se denomina \emph{vóxel} (\emph{volume element}). El criterio de pertenencia es idéntico al 2D, ampliado con la coordenada $z$:
+
+\begin{formula}
+\centering
+$\displaystyle a_x^2 + a_y^2 + a_z^2 \leq 1,\quad a_\xi = \dfrac{\xi + \tfrac{1}{2} - c_\xi}{r_\xi}$
+\end{formula}
+
+\textbf{Demostración.} Cambiar Pixel Round al modo 3D, alternar entre Esfera y Elipsoide, rotar con el ratón, observar la estructura de vóxeles.
+\end{actividad}
+
+\begin{actividad}[3.2 --- Volumen continuo \emph{vs.} discreto \quad\tiempo{15 min}]
+El volumen continuo del elipsoide es resultado clásico del cálculo integral:
+
+\begin{formula}
+\centering
+$\displaystyle V \;=\; \dfrac{4}{3}\,\pi\, r_x\, r_y\, r_z$
+\end{formula}
+
+Cuando $r_x = r_y = r_z = r$, $V = \tfrac{4}{3}\pi r^3$. Este es contenido recurrente en las pruebas de EvAU (modelos de Geometría Métrica de Andalucía, Madrid, Castilla y León, etc.).
+
+\textbf{Actividad por parejas:}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em,nosep]
+  \item Calcular el volumen continuo de una esfera de diámetro 12 ($r = 6$): $V = \tfrac{4}{3}\pi \cdot 216 \approx 904{,}78$.
+  \item En Pixel Round, generar la esfera $D = 12$, modo \emph{Relleno}, activar el \emph{chip} de información, anotar el volumen discreto.
+  \item Calcular el error relativo, como en la sesión anterior.
+\end{enumerate}
+
+\textbf{Comentario.} El cociente $\text{volumen discreto}/\text{volumen continuo} \to 1$ cuando $D \to \infty$. Para $D$ pequeño hay discrepancia sensible --- y es matemáticamente correcto: la discretización \emph{de hecho} altera el recuento.
+\end{actividad}
+
+\begin{actividad}[3.3 --- Cortes planares \quad\tiempo{10 min}]
+Pixel Round permite cortar el elipsoide por tres planos. Cada corte es una \acc{desigualdad lineal} aplicada al centro del vóxel:
+
+\begin{formula}
+\centering
+$\begin{array}{lcl}
+\text{Eje X:} & x \geq \mathit{cut} & \Rightarrow \text{vóxel descartado} \\
+\text{Eje Y:} & y \geq \mathit{cut} & \Rightarrow \text{vóxel descartado} \\
+\text{Diagonal:} & x + y \geq \mathit{cut} & \Rightarrow \text{vóxel descartado}
+\end{array}$
+\end{formula}
+
+\textbf{Demostración.} Cortar una esfera en el eje Y al 50\%; después al 50\% en el eje X. Mostrar la diagonal al 50\% y observar que produce un corte a $45°$ en el plano $xy$.
+
+\textbf{Discusión dirigida.} \emph{``¿Por qué el corte diagonal tiene amplitud $D_x + D_y$ y no $D_x$? ¿Dónde está la hipotenusa?''} Conducir al reconocimiento de que $x + y$ asume valores entre $0$ y $D_x + D_y$ en la caja rectangular.
+\end{actividad}
+
+\begin{actividad}[3.4 --- Conexión con el patrimonio cultural \quad\tiempo{10 min}]
+\emph{Conexión con la competencia clave CCEC4 (Conciencia y expresiones culturales).}
+
+Proyectar tres imágenes:
+\begin{itemize}[leftmargin=1.3em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item Mosaico romano de la villa de Itálica (Santiponce, Sevilla): círculos teselados.
+  \item Rosetón gótico de la catedral de León: simetría radial y subdivisión.
+  \item Sagrada Familia (Gaudí): paraboloides hiperbólicos y formas cuádricas.
+\end{itemize}
+
+\textbf{Discusión:} \emph{``Los romanos teselaban círculos con piedras cuadradas hace dos mil años. ¿Qué algoritmo habrían usado? ¿Cambia el problema cuando las piedras son de tres centímetros en lugar de un píxel?''}
+
+Esta articulación cumple una función simbólica: el alumnado constata que el problema de la rasterización discreta antecede al ordenador y forma parte del patrimonio cultural español.
+\end{actividad}
+
+% =============================================================================
+\subsection{Sesión 4 --- ``Proyecto final: pixel art autoral con defensa matemática''}
+
+\subsubsection*{Objetivo de la sesión}
+Movilizar todo el contenido en un producto autoral, evaluando el aprendizaje mediante la defensa argumentada de las decisiones matemáticas.
+
+\begin{actividad}[4.1 --- Presentación del reto \quad\tiempo{5 min}]
+\textbf{Consigna:} \emph{``En parejas o tríos, produciréis una imagen de \emph{pixel art} o \emph{voxel art} que combine al menos tres figuras generadas por Pixel Round (círculos, elipses, esferas o elipsoides). Puede ser un personaje, un icono, un animal, un logotipo --- vosotros decidís. Al final, cada grupo presentará la obra explicando \acc{matemáticamente} las decisiones: ¿por qué ese algoritmo? ¿por qué esa proporción? ¿por qué ese corte?''}
+
+\textbf{Formación de grupos:} preasignados, con criterios de heterogeneidad. 1 minuto para sentarse en posición de trabajo.
+\end{actividad}
+
+\begin{actividad}[4.2 --- Producción \quad\tiempo{30 min}]
+\textbf{Material por grupo:}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em,nosep]
+  \item Acceso al Pixel Round;
+  \item Papel cuadriculado, lápiz y rotuladores para bocetos;
+  \item Hoja-guía con las tres preguntas obligatorias (Apéndice~\ref{ap:ejer}, ejercicio 5).
+\end{itemize}
+
+\textbf{Fases internas:}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em,nosep]
+  \item \tiempo{5 min} lluvia de ideas y boceto en papel.
+  \item \tiempo{15 min} producción en Pixel Round y exportación parcial en PNG.
+  \item \tiempo{5 min} montaje final (puede ser en papel cuadriculado replicando la exportación, o en presentación digital).
+  \item \tiempo{5 min} redacción de la justificación matemática en la hoja-guía.
+\end{enumerate}
+
+\textbf{Acompañamiento docente:} circular entre los grupos haciendo preguntas mediadoras --- \emph{``¿Por qué habéis elegido ese algoritmo? ¿Cómo describiríais ese corte mediante una desigualdad?''}
+\end{actividad}
+
+\begin{actividad}[4.3 --- Defensa y síntesis colectiva \quad\tiempo{15 min}]
+Cada grupo dispone de 2 minutos para presentar la obra y responder a \emph{al menos una} de las tres cuestiones matemáticas exigidas.
+
+\textbf{Criterios mínimos de la defensa:}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item identificar al menos una figura matemática presente;
+  \item nombrar el algoritmo elegido y justificar (aun \emph{a posteriori}) por qué se adecua al efecto pretendido;
+  \item si hay corte 3D, describirlo como desigualdad.
+\end{itemize}
+
+\textbf{Síntesis final del profesorado (3 min):} retomar la idea central --- \emph{``en una malla discreta, una misma curva continua admite múltiples representaciones; elegir una es tomar una decisión matemática''}. Anunciar la evaluación sumativa.
+\end{actividad}
+
+% =============================================================================
+\section{Evaluación}
+
+La evaluación es \acc{competencial, formativa y continua}, en línea con el RD 243/2022 y con las aportaciones de Neus Sanmartí (\emph{Evaluar para aprender}, 2007).
+
+\subsection{Evaluación diagnóstica}
+Sesión~1, Actividad~1.2. Permite al profesorado identificar carencias en plano cartesiano, ecuación de la circunferencia y recuento.
+
+\subsection{Evaluación formativa}
+Distribuida en las cuatro sesiones: observación de la participación, calidad de las respuestas en los \emph{piensa--comenta--comparte}, corrección \emph{en tiempo real} de los cálculos en 2.5 y 3.2.
+
+\subsection{Evaluación sumativa}
+Compuesta por dos entregas:
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.2em,topsep=0.3em,nosep]
+  \item \textbf{Ficha de ejercicios} (Apéndice~\ref{ap:ejer}), 5 ítems, entrega al final de la Sesión~4.
+  \item \textbf{Proyecto final} (Actividad~4.2) con la hoja-guía cumplimentada.
+\end{enumerate}
+
+\subsection{Rúbrica de evaluación}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.20\textwidth}XX@{}}
+\toprule
+\textbf{Dimensión} & \textbf{Logrado (8--10)} & \textbf{En progreso (5--7) / Insuficiente (0--4)} \\
+\midrule
+\textbf{Conceptos matemáticos} & Aplica correctamente la ecuación implícita de la elipse/elipsoide; reconoce los tres criterios algorítmicos y sus diferencias. & Aplica la ecuación básica de la circunferencia pero se confunde con la generalización a la elipse / no distingue los algoritmos. \\
+\addlinespace[3pt]
+\textbf{Uso del software} & Maneja Pixel Round con autonomía en 2D y 3D; exporta imágenes; alterna algoritmos y estilos. & Necesita ayuda frecuente; opera solo en 2D. \\
+\addlinespace[3pt]
+\textbf{Argumentación} & Justifica matemáticamente las decisiones del proyecto final; usa vocabulario técnico apropiado (\emph{algoritmo, vóxel, corte, desigualdad}). & Justifica solo estéticamente; vocabulario ausente. \\
+\addlinespace[3pt]
+\textbf{Cooperación} & Trabaja productivamente en pareja o trío; contribuye al debate. & Trabaja en solitario; contribución mínima. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Peso en la calificación trimestral (orientativo)}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item Ficha de ejercicios: 40\%.
+  \item Proyecto final y defensa: 50\%.
+  \item Observación procesual (participación): 10\%.
+\end{itemize}
+
+% =============================================================================
+\section{Conexiones interdisciplinares y con el entorno}
+
+\subsection{Con Dibujo Técnico II}
+La equivalencia entre la ecuación implícita de la elipse y su construcción por hilos y chinchetas (método del jardinero) ofrece un puente directo. El profesorado de Dibujo Técnico puede coplanificar una sesión sobre cónicas y sus construcciones clásicas.
+
+\subsection{Con Tecnología y Digitalización}
+El algoritmo de Bresenham es referencia clásica en cualquier curso de pensamiento computacional. La sesión 2.3 puede impartirse al alimón con el profesorado de Tecnología, incluyendo además una implementación en Python.
+
+\subsection{Con Educación Plástica, Visual y Audiovisual}
+La producción de \emph{pixel art} es tradicionalmente tratada como lenguaje plástico. Pixel Round ofrece la ocasión rara de articular Matemáticas y Arte sobre el mismo objeto: la figura \emph{es a la vez} ecuación y composición. Sugerencia: exposición conjunta de los trabajos del proyecto final en el hall del centro o en las redes sociales del IES.
+
+\subsection{Con Física (Ondas y acústica)}
+La capa sonora del Pixel Round utiliza síntesis aditiva de ondas senoidales. Las frecuencias elegidas aproximan notas musicales del \acc{temperamento igual de 12 tonos} (cada semitono multiplica la frecuencia por $2^{1/12} \approx 1{,}0595$). Articulación natural con los bloques de ondas y movimiento ondulatorio de Física de 2.º de Bachillerato.
+
+\subsection{Con Historia y Patrimonio}
+La rasterización de un círculo no comenzó con el ordenador: ya estaba presente en los mosaicos teselados romanos y en los azulejos andalusíes. Coplanificación posible con el profesorado de Historia del Arte (asignatura de la modalidad de Humanidades y Ciencias Sociales).
+
+% =============================================================================
+\section{Referencias}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.2em,topsep=0.3em]
+  \item BLUM, W.; NISS, M. Applied mathematical problem solving, modelling, applications, and links to other subjects. \emph{Educational Studies in Mathematics}, v. 22, p.~37--68, 1991.
+  \item BRESENHAM, J. E. Algorithm for computer control of a digital plotter. \emph{IBM Systems Journal}, v. 4, n. 1, p.~25--30, 1965.
+  \item CAST. \emph{Pautas sobre el Diseño Universal para el Aprendizaje, versión 2.2}. 2018. Disponible en \texttt{udlguidelines.cast.org/es}.
+  \item ESPAÑA. \emph{Ley Orgánica 3/2020, de 29 de diciembre} (LOMLOE). BOE n.º 340, 30 de diciembre de 2020.
+  \item ESPAÑA. \emph{Real Decreto 243/2022, de 5 de abril}, por el que se establecen la ordenación y las enseñanzas mínimas del Bachillerato. BOE n.º 82, 6 de abril de 2022.
+  \item LAKATOS, I. \emph{Pruebas y refutaciones: La lógica del descubrimiento matemático}. Madrid: Alianza, 1978.
+  \item PITTEWAY, M. L. V. Algorithm for drawing ellipses or hyperbolae with a digital plotter. \emph{The Computer Journal}, v. 10, n. 3, p.~282--289, 1967.
+  \item PÓLYA, G. \emph{Cómo plantear y resolver problemas}. México: Trillas, 1965 [orig. 1945].
+  \item SANMARTÍ, N. \emph{Evaluar para aprender}. Barcelona: Graó, 2007.
+  \item SKOVSMOSE, O. \emph{Hacia una filosofía de la educación matemática crítica}. Bogotá: Una empresa docente, 1999.
+  \item VYGOTSKI, L. S. \emph{Pensamiento y lenguaje}. Barcelona: Paidós, 1995 [orig. 1934].
+  \item Pixel Round --- documento técnico: \texttt{docs\_math/Pixel\_Round\_Math\_es-ES.pdf}.
+\end{itemize}
+
+\newpage
+% =============================================================================
+% APÉNDICES
+% =============================================================================
+\appendix
+\renewcommand{\thesection}{\Alph{section}}
+\setcounter{section}{0}
+
+\section{Guion de demostración en directo}\label{ap:guion}
+
+Secuencia recomendada para la demostración inicial (Actividad~1.3) y para la familiarización del profesorado. Duración: 15 minutos.
+
+\subsection{Apertura y modo 2D}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item Abrir Pixel Round. Identificar la barra superior, el lienzo central y los controles.
+  \item Confirmar el modo \acc{2D / Círculo}.
+  \item Ajustar el deslizador \emph{Size} a 10. Observar la figura.
+  \item Activar el \emph{Info chip} en la esquina del lienzo. Lectura en voz alta: ``Diámetro 10, Radio 5, Área \dots, Algoritmo Euclídeo''.
+  \item Alternar los algoritmos: \acc{Euclídeo / Bresenham / Umbral}. Pausa de 30 segundos en cada uno.
+\end{enumerate}
+
+\subsection{Elipse}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item Cambiar a \acc{Elipse}. Aparecen los deslizadores \emph{Anchura} y \emph{Altura}.
+  \item Fijar $W = 16$, $H = 8$. Observar la forma alargada.
+  \item Discusión: \emph{``La ecuación de esta forma es $(x/8)^2 + (y/4)^2 = 1$. ¿Por qué dividimos $x$ entre 8 y $y$ entre 4?''}
+\end{enumerate}
+
+\subsection{Modo 3D}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item Cambiar a \acc{3D / Esfera}, tamaño $D = 12$.
+  \item Arrastrar con el ratón para rotar.
+  \item Activar el \emph{Info chip}: anotar el volumen.
+  \item Cambiar a \acc{Elipsoide}, $W = 20, H = 10, D = 10$.
+  \item Demostrar el deslizador \emph{Corte} en el eje $Y$, 50\%. La mitad superior desaparece.
+  \item Alternar al eje diagonal $\swarrow$. Discutir el corte oblicuo.
+\end{enumerate}
+
+\subsection{Exportación}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item Mostrar el botón de descarga en la esquina del lienzo.
+  \item Demostrar el guardado como PNG.
+  \item Observar: el PNG sale en alta resolución, apto para imprimir, proyectar o incorporar a una composición multimedia.
+\end{enumerate}
+
+% =============================================================================
+\newpage
+\section{Ficha de ejercicios}\label{ap:ejer}
+
+\textbf{Instrucciones.} Responder individualmente. Se puede verificar en Pixel Round, \emph{pero la justificación matemática es obligatoria}. Entrega manuscrita o digital.
+
+\subsection*{Ejercicio 1 --- Ecuación de la circunferencia}
+\textbf{Enunciado.} Una circunferencia tiene centro en el origen $(0, 0)$ y radio $r = 7$. Determinar si cada punto está \emph{dentro}, \emph{fuera} o \emph{sobre} la circunferencia. Justificar.
+\begin{enumerate}[label=\alph*),leftmargin=1.5em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item $(3, 4)$ \hfill \emph{clave:} dentro ($9 + 16 = 25 < 49$).
+  \item $(5, 5)$ \hfill \emph{clave:} fuera ($25 + 25 = 50 > 49$, ya que $\sqrt{50} \approx 7{,}07$).
+  \item $(0, 7)$ \hfill \emph{clave:} sobre.
+  \item $(-7, 0)$ \hfill \emph{clave:} sobre.
+\end{enumerate}
+
+\subsection*{Ejercicio 2 --- Criterio euclídeo en una celda}
+\textbf{Enunciado.} Una circunferencia tiene centro en $(5, 5)$ y radio $5$. Aplicar el criterio euclídeo a la celda $(i, j) = (1, 3)$: ¿se pinta?
+
+\emph{Clave:} centro de la celda $(1{,}5,\, 3{,}5)$. Distancia al centro: $\sqrt{(5{-}1{,}5)^2 + (5{-}3{,}5)^2} = \sqrt{12{,}25 + 2{,}25} = \sqrt{14{,}5} \approx 3{,}81 < 5$. La celda se \acc{pinta}.
+
+\subsection*{Ejercicio 3 --- Área discreta \emph{vs.} continua}
+\textbf{Enunciado.} En Pixel Round, generar un círculo de diámetro $D = 20$ en algoritmo euclídeo. Anotar el área discreta. Calcular el área continua. Calcular el error relativo. Repetir con \emph{umbral}. Comparar.
+
+\emph{Clave esperada:} $A_{\text{cont}} = 100\pi \approx 314{,}16$. Euclídeo aproxima con error inferior al 2\%. Umbral sobreestima entre 5\% y 8\%.
+
+\subsection*{Ejercicio 4 --- Volumen del elipsoide y corte}
+\textbf{Enunciado.} Considérese un elipsoide con semiejes $r_x = 4$, $r_y = 6$, $r_z = 3$.
+\begin{enumerate}[label=\alph*),leftmargin=1.5em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item Calcular el volumen continuo.
+  \item Tras un corte en el eje $Y$ que conserva el 50\% de la altura, ¿cuál es el volumen restante?
+  \item Describir matemáticamente el corte como desigualdad sobre la coordenada $y$.
+\end{enumerate}
+
+\emph{Clave:}
+(a) $V = \tfrac{4}{3}\pi \cdot 4 \cdot 6 \cdot 3 = 96\pi \approx 301{,}59$.
+(b) Por simetría, $\approx 150{,}80$.
+(c) $y < \mathit{cut}$, con $\mathit{cut} = 0{,}5 \cdot D_y = 0{,}5 \cdot 12 = 6$.
+
+\subsection*{Ejercicio 5 --- Hoja-guía del proyecto final}
+\textbf{Enunciado.} Tras producir la imagen autoral en grupo, responder:
+\begin{enumerate}[label=(\arabic*),leftmargin=1.7em,itemsep=0.15em,topsep=0.2em,nosep]
+  \item Enumerar las figuras geométricas usadas (círculo, elipse, esfera, elipsoide) y sus parámetros.
+  \item Para la figura principal, ¿qué algoritmo se eligió? ¿Por qué? ¿Qué efecto visual produce que los otros dos no producirían?
+  \item ¿Hubo cortes 3D? Si sí, describir \emph{uno} como desigualdad.
+\end{enumerate}
+
+% =============================================================================
+\newpage
+\section{Adaptación para centros sin dotación digital}\label{ap:adapt}
+
+Esta adaptación permite aplicar la situación \emph{íntegramente en papel} cuando no haya acceso a ordenador para todo el alumnado. El eje conceptual permanece intacto; solo cambia el soporte.
+
+\subsection{Sustituciones por sesión}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.16\textwidth}p{0.36\textwidth}X@{}}
+\toprule
+\textbf{Sesión} & \textbf{Actividad original} & \textbf{Sustituto analógico} \\
+\midrule
+1 & Demostración en Pixel Round (1.3) & El profesorado dibuja a mano tres versiones de la circunferencia $D = 10$ en una cuadrícula pre-trazada a tamaño aula. \\
+\addlinespace[3pt]
+2 & Comparación cuantitativa (2.5) & Repartir fichas con las tres circunferencias $D = 16$ pre-dibujadas y pedir el recuento manual. \\
+\addlinespace[3pt]
+3 & Generación de la esfera (3.1, 3.2) & Repartir fichas con las \emph{rebanadas} de la esfera ($z = 0, 1, 2, \ldots$) sobre papel cuadriculado. El alumnado las apila mentalmente. \\
+\addlinespace[3pt]
+4 & Producción en Pixel Round (4.2) & Producción \emph{exclusivamente} en papel cuadriculado con lápices de colores. La defensa matemática (4.3) es idéntica. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Kit de preparación (de una sola vez)}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item Una hoja A3 con cuadrícula $30 \times 30$ trazada a regla, para uso en la pizarra o adherida a la pared.
+  \item Un juego por alumno de 4 hojas A4 cuadriculadas (5\,mm).
+  \item Una ficha de referencia con las tres circunferencias comparativas pre-impresas (generadas previamente en Pixel Round desde casa y enviadas a reprografía).
+\end{itemize}
+
+\subsection{Adaptaciones autonómicas del currículo}\label{ap:adapt-auton}
+
+Para centros en comunidades autónomas con desarrollos curriculares propios, la siguiente correspondencia conecta la situación con la normativa local:
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.18\textwidth}p{0.22\textwidth}X@{}}
+\toprule
+\textbf{C. Autónoma} & \textbf{Normativa} & \textbf{Bloque o saber básico equivalente} \\
+\midrule
+Andalucía & Instrucción de la Consejería de Desarrollo Educativo & Bloque \emph{Geometría} de Matemáticas II; saber básico ``Geometría analítica del espacio''. \\
+\addlinespace[3pt]
+Madrid & DECRETO 64/2022 & Bloque \emph{Geometría y medida}; saber básico ``Lugares geométricos y secciones cónicas''. \\
+\addlinespace[3pt]
+Catalunya & Decret 171/2022 & Bloc \emph{Mesura} i bloc \emph{Sentit espacial} de Matemàtiques II. \\
+\addlinespace[3pt]
+País Vasco & DECRETO 75/2023 & Bloque \emph{Sentido espacial} y \emph{Sentido socioafectivo}. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\textit{Nota.} La situación de aprendizaje no requiere modificación; solo se ajusta la tabla de alineación con la normativa local en la portada para auditorías y documentación oficial.
+
+% =============================================================================
+\newpage
+\section{Glosario técnico para el profesorado}\label{ap:glos}
+
+\begin{itemize}[leftmargin=1.4em,itemsep=0.3em,topsep=0.3em]
+  \item \acc{Algoritmo} --- secuencia finita y bien definida de instrucciones para resolver un problema. Los tres algoritmos de Pixel Round son procedimientos distintos para el mismo problema.
+  \item \acc{Bresenham (algoritmo de)} --- algoritmo publicado en 1965 por Jack Bresenham (IBM) para rectas, después extendido a circunferencias y, por Pitteway y Kappel, a elipses arbitrarias. Su marca distintiva: aritmética entera.
+  \item \acc{Ecuación implícita} --- ecuación de la forma $F(x, y) = 0$, en la que la curva es el conjunto de ceros de la función. Forma de la elipse: $(x/r_x)^2 + (y/r_y)^2 - 1 = 0$.
+  \item \acc{Lienzo (canvas)} --- elemento HTML que ofrece un espacio de dibujo 2D o 3D en el navegador.
+  \item \acc{Píxel} --- abreviación de \emph{picture element}. Unidad mínima de una imagen digital; ocupa una celda $1 \times 1$.
+  \item \acc{PWA --- Progressive Web App} --- aplicación web instalable en un dispositivo y operable sin conexión. Pixel Round es una PWA.
+  \item \acc{Rasterización} --- conversión de una descripción geométrica continua en una matriz de píxeles (2D) o vóxeles (3D).
+  \item \acc{Semieje} --- en una elipse de centro $C$, distancia de $C$ al extremo de la elipse en la dirección del eje correspondiente. La circunferencia es el caso particular $r_x = r_y$.
+  \item \acc{Temperamento igual de 12 tonos} --- división de la octava en 12 intervalos iguales. La razón entre dos semitonos consecutivos es $\sqrt[12]{2} \approx 1{,}0595$. Fundamento del sistema musical occidental moderno.
+  \item \acc{Vóxel} --- abreviación de \emph{volume element}. Generalización tridimensional del píxel: celda cúbica $1 \times 1 \times 1$.
+  \item \acc{WebGL} --- API de gráficos 3D en el navegador. Pixel Round la usa a través de \emph{three.js}.
+\end{itemize}
+
+\vspace{2em}
+\begin{center}
+\color{muted}\small\sffamily
+--- fin de la situación de aprendizaje ---
+\end{center}
+
+\end{document}

@@ -1,0 +1,874 @@
+% !TEX program = xelatex
+% =============================================================================
+% Pixel Round — 수업 지도안 (ko-KR)
+% 대한민국 고등학교 3학년 수학과 4차시 수업 설계 (2022 개정 교육과정 기준)
+% 시각 디자인은 docs_math/Pixel_Round_Math_ko-KR.pdf 와 동일
+% 컴파일: xelatex Plano_de_Aula_ko-KR.tex   (목차·참조를 위해 두 번 실행)
+% =============================================================================
+\documentclass[12pt,a4paper]{scrartcl}
+
+% ---------- 글꼴 (한글: 맑은 고딕, 영문: Latin Modern) ------------------------
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\setCJKmainfont{Malgun Gothic}[Scale=1.05]
+\setCJKsansfont{Malgun Gothic}[Scale=1.05]
+\setmainfont{Latin Modern Roman}[Scale=1.05]
+\setsansfont{Latin Modern Sans}[Scale=1.05]
+\setmonofont{Latin Modern Mono}[Scale=1.00]
+\usepackage{unicode-math}
+\setmathfont{Latin Modern Math}[Scale=1.05]
+
+% ---------- 패키지 -----------------------------------------------------------
+\usepackage{amsmath}
+\usepackage{mathtools}
+
+\usepackage[a4paper,top=2.8cm,bottom=2.8cm,left=2.6cm,right=2.6cm,
+            headheight=16pt]{geometry}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage[hidelinks,bookmarks=true,bookmarksopen=true,
+            pdftitle={Pixel Round — 수업 지도안 (ko-KR)},
+            pdfauthor={Vinicius Souza}]{hyperref}
+
+% ---------- 색상 -------------------------------------------------------------
+\definecolor{accent}{HTML}{CC2020}
+\definecolor{ink}{HTML}{1F1F23}
+\definecolor{muted}{HTML}{4E4E58}
+\definecolor{bg}{HTML}{FBF6E9}
+\definecolor{rule}{HTML}{D8D1BC}
+
+\color{ink}
+
+% ---------- 제목 스타일 ------------------------------------------------------
+\titleformat{\section}
+  {\sffamily\Large\bfseries\color{accent}}{\thesection.}{0.6em}{}
+\titleformat{\subsection}
+  {\sffamily\large\bfseries\color{accent!85!ink}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}
+  {\sffamily\normalsize\bfseries\color{muted}}{\thesubsubsection}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.2\baselineskip}{0.6\baselineskip}
+\titlespacing*{\subsection}{0pt}{0.8\baselineskip}{0.3\baselineskip}
+\titlespacing*{\subsubsection}{0pt}{0.6\baselineskip}{0.2\baselineskip}
+
+% ---------- 머리말·꼬리말 ----------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily\bfseries\color{accent}PIXEL ROUND}
+\fancyhead[R]{\small\sffamily\color{muted}수업 지도안 --- 고3 수학}
+\fancyfoot[L]{\small\sffamily\color{muted}Pixel Round --- 교사용 자료}
+\fancyfoot[R]{\small\sffamily\color{muted}\thepage{}쪽}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\headrule}{{\color{rule}\hrule height \headrulewidth}}
+\renewcommand{\footrule}{{\color{rule}\vskip-\footrulewidth\hrule height \footrulewidth\vskip-\footrulewidth}}
+
+% ---------- 교수학습 상자 ----------------------------------------------------
+\newtcolorbox{sik}{
+  colback=bg, colframe=rule, boxrule=0.4pt, arc=2pt,
+  left=10pt,right=10pt,top=8pt,bottom=8pt,
+  before skip=8pt, after skip=8pt,
+  fontupper=\color{accent}, breakable
+}
+
+\newtcolorbox{hwaldong}[1][학습 활동]{
+  enhanced, breakable,
+  colback=bg, colframe=accent, boxrule=0.6pt, arc=4pt,
+  left=12pt,right=12pt,top=10pt,bottom=10pt,
+  before skip=12pt, after skip=12pt,
+  attach boxed title to top left={xshift=10pt,yshift=-8pt},
+  boxed title style={colback=accent,colframe=accent,boxrule=0pt,arc=2pt},
+  coltitle=white, fonttitle=\sffamily\bfseries\small,
+  title=#1
+}
+
+\newtcolorbox{yuui}[1][지도상 유의점]{
+  enhanced, breakable,
+  colback=bg!50!white, colframe=rule, boxrule=0.4pt, arc=2pt,
+  left=10pt,right=10pt,top=8pt,bottom=8pt,
+  before skip=8pt, after skip=8pt,
+  attach boxed title to top left={xshift=10pt,yshift=-7pt},
+  boxed title style={colback=muted,colframe=muted,boxrule=0pt,arc=2pt},
+  coltitle=white, fonttitle=\sffamily\bfseries\footnotesize,
+  title=#1
+}
+
+\newtcolorbox{seongchwi}[1][2022 개정 교육과정]{
+  enhanced, breakable,
+  colback=bg!70!white, colframe=accent!60!ink, boxrule=0.4pt, arc=2pt,
+  left=10pt,right=10pt,top=6pt,bottom=6pt,
+  before skip=6pt, after skip=6pt,
+  attach boxed title to top left={xshift=10pt,yshift=-6pt},
+  boxed title style={colback=accent!60!ink,colframe=accent!60!ink,boxrule=0pt,arc=2pt},
+  coltitle=white, fonttitle=\sffamily\bfseries\footnotesize,
+  title=#1
+}
+
+\setlength{\parskip}{0.75em}
+\setlength{\parindent}{0pt}
+\linespread{1.20}
+
+\newcommand{\code}[1]{\texttt{\small #1}}
+\newcommand{\acc}[1]{\textcolor{accent}{\textbf{#1}}}
+\newcommand{\sigan}[1]{\textbf{\small\color{muted}\textsf{#1}}}
+
+\begin{document}
+
+% =============================================================================
+% 표지
+% =============================================================================
+\begin{titlepage}
+  \centering
+  \vspace*{3.2cm}
+  {\sffamily\bfseries\fontsize{56}{60}\selectfont \color{accent} Pixel Round\par}
+  \vspace{0.7cm}
+  {\sffamily\LARGE\color{muted} 수업 지도안\par}
+  \vspace{0.25cm}
+  {\sffamily\Large\color{muted} 고등학교 3학년 수학\par}
+  \vspace{1.4cm}
+  {\color{rule}\rule{0.6\textwidth}{0.6pt}\par}
+  \vspace{0.9cm}
+  \begin{minipage}{0.84\textwidth}
+    \centering\color{ink}\large
+    오픈소스 \emph{Pixel Round} 프로그램을 활용한 대한민국
+    고등학교 3학년 수학 수업의 4차시 단원 구성안. 연속적인
+    곡선을 유한한 픽셀 격자 위에 어떻게 표현할 것인가라는
+    하나의 본질적 질문을 중심으로 해석기하, 알고리즘적 사고,
+    예술적 표현을 통합적으로 다룬다. 2022 개정 교육과정의
+    수학과 ``기하'' 과목과 ``인공지능 수학'' 과목에 부합한다.
+  \end{minipage}
+  \vspace{0.9cm}\\
+  {\color{rule}\rule{0.6\textwidth}{0.6pt}\par}
+  \vspace{1.8cm}
+  \begin{minipage}{0.82\textwidth}
+    \centering\sffamily\small\color{muted}
+    \textbf{교과 융합:}수학 $\cdot$ 정보 $\cdot$ 미술 $\cdot$ 물리학 \\[0.4em]
+    \textbf{근거:}2022 개정 교육과정 (교육부 고시 제2022-33호) $\cdot$ 디지털 새싹 정책
+  \end{minipage}
+\end{titlepage}
+
+% =============================================================================
+% 목차
+% =============================================================================
+\renewcommand{\contentsname}{\color{accent}목\quad 차}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =============================================================================
+\section{단원 개요}
+
+\begin{center}
+\begin{tabular}{@{}p{0.28\textwidth}p{0.66\textwidth}@{}}
+\toprule
+\textbf{교과·과목} & 수학 (선택 중심: \emph{기하}, \emph{미적분}, \emph{인공지능 수학}). \\
+\addlinespace[2pt]
+\textbf{학년} & 고등학교 3학년. 고2 학생에게도 변형 적용 가능. \\
+\addlinespace[2pt]
+\textbf{학교 유형} & 일반계 공립 고등학교 중심. 특목고·자사고·특성화고를 위한 변형은 부록~\ref{ap:adapt} 참조. \\
+\addlinespace[2pt]
+\textbf{수업 시수} & 50분 × 4차시 (총 200분). 100분 블록 수업 변형은 §\ref{sec:bun} 참조. \\
+\addlinespace[2pt]
+\textbf{중심 자료} & Pixel Round --- 무료 웹 애플리케이션. 회원가입 불필요, 서버 불필요, PWA로 오프라인 동작. 개인정보를 일체 수집하지 않아 학교 디지털 기기에 안전하게 적용 가능. \\
+\addlinespace[2pt]
+\textbf{교육과정 연계} & 2022 개정 교육과정 수학과의 \emph{기하} (이차곡선, 공간도형), \emph{미적분} (입체의 부피), \emph{인공지능 수학} (행렬과 알고리즘). \\
+\addlinespace[2pt]
+\textbf{교과 융합} & 정보 (알고리즘과 Python), 미술 (디지털 매체 표현), 물리학 (파동과 소리). \\
+\addlinespace[2pt]
+\textbf{선수 학습} & 좌표평면과 좌표공간, 원의 방정식, 입체도형의 부피, 함수 개념, 비율과 백분율. \\
+\addlinespace[2pt]
+\textbf{교사 준비} & Pixel Round 직접 조작 15분; \texttt{docs\_math/Pixel\_Round\_Math\_ko-KR.pdf} 읽기. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{yuui}[실시 환경에 관한 고려]
+본 지도안은 대한민국 일반 고등학교의 실제 환경을 고려하여 설계되었다. 대부분의 학교는 \emph{디지털 새싹} 정책과 \emph{스마트 학교} 사업을 통해 1인 1태블릿 또는 1인 1크롬북 환경을 갖추고 있으며, 모든 교실에 디지털 칠판이 설치되어 있다. Pixel Round는 어떠한 회원 가입도 데이터 전송도 없이 동작하므로, \emph{개인정보 보호법} 및 학교생활기록부 작성·관리 지침의 데이터 보호 요건을 모두 충족한다. 디지털 기기 사용이 제한되거나 인터넷 환경이 불안정한 경우, 부록~\ref{ap:adapt}의 \emph{완전 종이 기반 대안} 으로 본 단원의 핵심 학습을 동일하게 수행할 수 있다.
+\end{yuui}
+
+% =============================================================================
+\section{단원 설정 이유}
+
+픽셀 아트와 복셀 아트는 현재 한국 청소년의 시각 문화에서 핵심적인 위치를 차지한다. 마인크래프트, 스타듀밸리, 한국 인디 게임 (예: \emph{스토리 오브 시즌즈}, \emph{메이플스토리}), 웹툰의 디지털 이미지 표현, 케이팝 뮤직비디오의 픽셀 효과까지, 학생들은 일상적으로 픽셀 격자 표현에 둘러싸여 있다. 본 단원은 이 일상의 시각 경험을 \acc{수학적 탐구의 대상} 으로 전환한다. 즉, 컴퓨터는 정사각형 셀만 켜고 끌 수 있는데, 어떻게 매끄러운 곡선을 표현하는가?
+
+본 지도안은 다음 세 가지 이론적 토대 위에 세워졌다.
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item \acc{2022 개정 교육과정의 6대 핵심 역량}. 자기관리 역량, 지식정보처리 역량, 창의적 사고 역량, 심미적 감성 역량, 협력적 소통 역량, 공동체 역량을 모두 자연스럽게 통합한다.
+  \item \acc{탐구형 수업} (질문 → 사고 → 모둠 토의 → 공유 → 정리)의 5단계 구조. 각 차시는 이 흐름을 변주하여 \emph{학생이 주도하는 학습}을 구현한다.
+  \item \acc{킬러 문항을 넘어선 사고력 중심 평가}. 교육부의 2023년 \emph{킬러 문항 배제} 방침과 그 이후의 수능 출제 방향 변화에 맞추어, 단편적 문제 풀이가 아니라 \emph{개념의 구조적 이해}를 평가의 핵심으로 둔다.
+\end{itemize}
+
+\begin{yuui}[수능 및 학종과의 관계]
+본 단원은 수능 직접 대비를 목적으로 하지 않지만, 다음과 같은 부수적 효과를 가진다. (1)~\emph{기하} 과목 ``이차곡선''과 ``공간도형''은 수능 \emph{기하} 영역의 핵심 출제 단원이다. (2)~\emph{미적분} 과목의 ``입체의 부피''는 수능 \emph{미적분} 영역에서 주기적으로 출제된다. (3)~프로젝트 결과물과 발표 영상은 \emph{학생부종합전형}의 \emph{교과학습발달상황} 세부능력 및 특기사항 (이른바 ``세특'')의 우수한 기록 사례가 된다. 특히 ``수학을 활용한 창의적 산출물''에 대한 기록은 자기소개서 폐지 이후 더욱 중요해진 학생부 항목이다.
+\end{yuui}
+
+% =============================================================================
+\section{단원의 학습 목표}
+
+\subsection{본질적 이해}
+
+학생은 \acc{연속적인 수학적 대상을 이산적 격자 위에 표현하는 것은 그 자체로 하나의 수학적 판단이며, 여러 가지 타당한 답이 존재할 수 있음} 을 이해한다. 또한 각각의 판단이 ``셀의 중심'', ``정수 알고리즘'', ``모서리 점 포함'' 등 정밀한 기준으로 형식화될 수 있음을 인식한다.
+
+\subsection{지식·이해}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item 장축·단축의 길이를 $r_x, r_y$로 하는 타원의 음함수 방정식 $(x/r_x)^2 + (y/r_y)^2 = 1$을 이해하고, 원이 $r_x = r_y$인 특수한 경우임을 안다.
+  \item 세 가지 픽셀 판정 알고리즘 (유클리드 거리, 브레젠험 중점법, 임계값법)의 수학적 정의와 차이를 안다.
+  \item 2차원 타원 방정식을 3차원 타원체 방정식으로 일반화한다.
+  \item 입체의 평면 절단을 복셀 좌표에 대한 \emph{일차 부등식}으로 해석한다.
+\end{itemize}
+
+\subsection{과정·기능}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Pixel Round를 2D와 3D 모두에서 자유롭게 조작하고 PNG 이미지로 내보낼 수 있다.
+  \item 모눈종이에 명시된 판정 규칙에 따라 손으로 이산 원을 그리고 소프트웨어 출력과 비교할 수 있다.
+  \item 셀 개수를 세어 타원의 이산 넓이를 구하고, 연속 넓이 $\pi r_x r_y$와 비교하여 상대 오차를 계산할 수 있다.
+  \item 원·타원·구·타원체를 결합한 창의적 픽셀 작품을 구성하고, 그 선택을 수학적 언어로 설명할 수 있다.
+\end{itemize}
+
+\subsection{가치·태도}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item 모둠 활동에서 타인의 의견을 존중하며 협력적으로 소통한다.
+  \item 미학적 선택을 수학적 근거로 변호할 수 있는 자신감을 기른다.
+  \item 동일한 현실 문제에 \emph{여러 가지 기술적으로 옳은 답}이 있을 수 있음을 받아들인다.
+\end{itemize}
+
+% =============================================================================
+\section{2022 개정 교육과정과의 연계}
+
+본 단원은 2022 개정 교육과정 \acc{수학과 ``기하''}, \acc{``미적분 II''}, \acc{``인공지능 수학''} 의 성취기준에 직접적으로 부합한다.
+
+\begin{seongchwi}[기하 --- 이차곡선]
+이차곡선 (타원, 쌍곡선, 포물선)의 방정식을 이해하고, 도형의 성질을 다양한 상황에 적용한다. \emph{본 단원에서는 타원이 핵심 대상}.
+\end{seongchwi}
+
+\begin{seongchwi}[미적분 II --- 입체의 부피]
+입체도형의 부피를 정적분을 이용하여 구할 수 있다. \emph{회전체로서의 타원체의 부피를 다룬다}.
+\end{seongchwi}
+
+\begin{seongchwi}[인공지능 수학 --- 행렬과 알고리즘]
+알고리즘을 수학적으로 표현하고 그 효율성을 비교한다. \emph{브레젠험 알고리즘의 정수 연산 효율성을 분석}.
+\end{seongchwi}
+
+\begin{seongchwi}[정보 --- 알고리즘과 프로그래밍]
+문제 해결을 위한 알고리즘을 설계하고 프로그래밍 언어로 구현한다. \emph{브레젠험을 Python 으로 구현 (선택)}.
+\end{seongchwi}
+
+\subsection{6대 핵심 역량과의 연결}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item \acc{지식정보처리 역량:}Pixel Round의 데이터를 분석하여 세 알고리즘의 차이를 정량화한다.
+  \item \acc{창의적 사고 역량:}최종 차시의 독창적 픽셀 작품 설계.
+  \item \acc{심미적 감성 역량:}미학과 수학의 융합 경험.
+  \item \acc{협력적 소통 역량:}모둠 활동, 발표, 수학적 변호.
+  \item \acc{자기관리 역량:}학습 과정의 자기 점검.
+  \item \acc{공동체 역량:}작품의 학교 공동 전시·공유.
+\end{itemize}
+
+% =============================================================================
+\section{학습 내용}
+
+\subsection{지식·이해 요소}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item 직교좌표계와 좌표공간. 셀의 중심과 모서리의 구분.
+  \item 원의 표준 방정식: $x^2 + y^2 = r^2$.
+  \item 타원의 음함수 방정식: $(x/r_x)^2 + (y/r_y)^2 = 1$.
+  \item 포함 부등식: 내부, 외부, 경계.
+  \item 좌표공간에서의 타원체와 구의 방정식.
+  \item 타원체의 부피: $V = \tfrac{4}{3}\pi r_x r_y r_z$.
+  \item 좌표공간의 평면을 일차 부등식으로 표현하기 (절단 연산).
+  \item 셀의 이웃 (2D 4-이웃, 3D 6-이웃).
+\end{itemize}
+
+\subsection{과정·기능 요소}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item 명시된 판정 규칙에 따라 모눈종이에 손으로 그리기.
+  \item Pixel Round 조작 (모드 전환, 슬라이더 조정, 알고리즘 선택, PNG 내보내기).
+  \item 셀 세기를 통한 이산 넓이와 연속 넓이의 비교.
+  \item 여러 기본 형태를 결합한 창의적 구성.
+\end{itemize}
+
+% =============================================================================
+\section{선수 학습 점검}
+
+본 단원은 다음 사전 지식을 전제한다:
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item 좌표평면과 좌표공간에서의 점의 표시 (수학 ``상'').
+  \item 원의 방정식 (수학 ``하'').
+  \item 다각형과 원의 넓이, 입체도형의 부피 (중학교 3학년 ~ 고등학교 1학년).
+  \item 함수 개념: 정의역, 치역, 그래프.
+  \item 비율과 백분율, 상대 오차 개념.
+\end{itemize}
+
+부족한 학생이 있는 경우, 1차시 도입 부분에 \emph{10분 진단 활동}을 배치할 수 있다 (§\ref{ch1} 참조).
+
+% =============================================================================
+\section{교수·학습 자료 및 환경}
+
+\subsection{디지털 자료}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Pixel Round (학생당 또는 짝당 1대);
+  \item 빔프로젝터 또는 전자칠판;
+  \item 학교 보급 노트북·태블릿·크롬북 \emph{또는} BYOD (학생 개인 스마트폰).
+\end{itemize}
+
+\subsection{비디지털 자료}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item 모눈종이 (1\,cm 격자), 학생당 2장;
+  \item 연필, 지우개, 30\,cm 자;
+  \item 색연필 또는 사인펜 (프로젝트 기본색인 빨강 \texttt{\#CC2020} 과 검정 권장);
+  \item 인쇄된 학습지 (부록~\ref{ap:hak});
+  \item 칠판 또는 화이트보드.
+\end{itemize}
+
+\subsection{Pixel Round 배포 방법}
+
+편의 순서대로:
+
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item \textbf{교사 호스팅}: GitHub Pages 또는 학교 서버에 게시. QR 코드로 학생에게 배포.
+  \item \textbf{로컬 사본}: 프로젝트 파일을 각 기기에 복사한 뒤 \texttt{file://}로 \texttt{index.html} 열기.
+  \item \textbf{PWA 오프라인 모드}: 한 번 온라인으로 접속하면 브라우저에 캐시되어 이후 인터넷 없이 사용 가능.
+\end{enumerate}
+
+% =============================================================================
+\section{학습 분량 조정과 다양성 존중}\label{sec:bun}
+
+모든 활동은 \acc{최소 두 가지 접근 경로}와 \acc{두 가지 결과 표현 방식}을 제공한다. 이를 통해 다양한 학습 수준과 특성을 가진 학생들이 자신에게 맞는 방식으로 참여할 수 있다.
+
+\subsection{학습이 느린 학생}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item 활동 1.2의 시간 연장 (15분 부여);
+  \item 원의 중심이 미리 표시된 모눈종이 제공;
+  \item 최종 프로젝트의 변호 (활동 4.3)는 글쓰기, 구두 발표, 음성 녹음 중 선택.
+\end{itemize}
+
+\subsection{심화 학습 희망 학생}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item 심화 과제: $F(x, y) = x^2 + y^2 - R^2$ 를 중점 $(1,\, R - \tfrac{1}{2})$에서 평가하여 브레젠험 초기 결정 변수 $d_0 = 1 - R$을 유도한다.
+  \item 탐구 과제: 이산 넓이가 $\pi r^2$로 수렴하는 속도를 추정 (가우스 격자점 문제, 헉슬리 2003년 결과로 $O(r^{2/3})$).
+  \item 프로그래밍: 유클리드 알고리즘을 Python으로 20행 이내에 구현.
+\end{itemize}
+
+\subsection{100분 블록 수업 변형}
+일부 학교의 \emph{블록 수업} 방식 (특히 자공고, 자율형 사립고)에서는 50분 ×4차시를 100분 ×2차시로 압축할 수 있다. 1+2 차시를 1교시 블록으로, 3+4 차시를 2교시 블록으로 묶고 중간에 10분 휴식을 둔다.
+
+\subsection{원격·혼합 수업}
+Pixel Round의 웹 기반 특성은 원격 수업에 적합하다. Zoom, EBS 클래스, e학습터 등의 화면 공유 기능을 통해 교사 시연이 가능하며, 학생들은 자기 기기에서 병행 조작한다. 모눈종이 작업물은 사진으로 찍어 NEIS, e학습터, 클래스팅, 클래스123 등으로 제출한다.
+
+% =============================================================================
+\section{수업 지도의 실제}
+
+각 차시는 한국 교실의 표준 수업 흐름인 \acc{도입 → 전개 → 정리}의 3단계 구조와, 그 안에서 \acc{사고 → 짝 활동 → 모둠 활동 → 전체 공유}의 흐름을 따른다.
+
+% =============================================================================
+\subsection{1차시 ---\,``컴퓨터는 어떻게 사각형으로 원을 그리는가?''}\label{ch1}
+
+\subsubsection*{학습 목표}
+이산 래스터화를 진짜 수학 문제로 인식하기; 원의 방정식 복습; Pixel Round 첫 만남.
+
+\medskip
+
+\begin{hwaldong}[1.1 ---\, 도입:문제 제기 \quad\sigan{8분}]
+\textbf{형태:}\emph{개별 생각 → 짝 이야기 → 전체 공유}. \\[0.4em]
+\textbf{전개:}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.2em,topsep=0.3em,nosep]
+  \item 세 개의 고전 픽셀 아트 이미지를 띄운다: 슈퍼마리오의 버섯, 1세대 포켓몬, 구글의 레트로 두들.
+  \item 발문:\emph{``이 세 그림에 공통점은 무엇인가? 컴퍼스로 그린 원과 어떻게 다른가?''}
+  \item 학생 개별로 1분간 생각 적기, 짝과 2분간 이야기.
+  \item 전체 공유. 교사는 ``컴퓨터는 정사각형 셀만 켜고 끌 수 있는데, 어떤 것을 켜야 하는지 어떻게 정하는가''로 초점화한다.
+\end{enumerate}
+\end{hwaldong}
+
+\begin{hwaldong}[1.2 ---\, 전개:수작업으로 원 그리기 \quad\sigan{12분}]
+\textbf{형태:}수작업과 형식 정의의 대조. \\[0.4em]
+\textbf{준비물:}모눈종이, 연필. \\[0.4em]
+\textbf{전개:}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.2em,topsep=0.3em,nosep]
+  \item 학생들은 모눈종이의 반쪽에 $11 \times 11$ 영역을 설정하고 중심 셀에 표시한다.
+  \item 지시:\emph{``지름 10인 가장 좋은 원을 칠해보세요. 4분, 지우개 사용 금지.''}
+  \item 시간이 다 되면 3--4명이 칠판의 큰 모눈에 자신의 그림을 재현한다.
+  \item 교사:\emph{``모두 같은 그림인가? 다른 이유는? 누가 옳은가?''}
+  \item 정리:정답은 하나가 아니다. 각자 다른 \acc{판정 기준}을 암묵적으로 사용했다.
+\end{enumerate}
+\end{hwaldong}
+
+\begin{hwaldong}[1.3 ---\, 정리:방정식과 세 가지 알고리즘 \quad\sigan{15분}]
+\textbf{형태:}판서 중심 강의.
+
+원점을 중심으로 하는 반지름 $r$ 원의 음함수 방정식:
+
+\begin{sik}
+\centering
+$\displaystyle x^2 + y^2 \;=\; r^2$
+\end{sik}
+
+내부의 점은 $x^2 + y^2 < r^2$ 를 만족한다. 장축·단축이 $r_x, r_y$ 인 타원으로의 일반화:
+
+\begin{sik}
+\centering
+$\displaystyle \left(\dfrac{x}{r_x}\right)^{\!2} + \left(\dfrac{y}{r_y}\right)^{\!2} \;=\; 1$
+\end{sik}
+
+픽셀 격자에서 문제는 어떤 \acc{셀} 이 내부에 속하는가이다. Pixel Round는 세 가지 방식의 답을 제공한다:
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item \acc{유클리드 거리}:셀의 중심 $(i + \tfrac{1}{2},\, j + \tfrac{1}{2})$이 내부에 있는가?
+  \item \acc{브레젠험 (Bresenham)}:1965년 고전 알고리즘, 정수 연산만.
+  \item \acc{임계값 (Threshold)}:셀의 어느 \emph{모서리}가 내부에 있는가?
+\end{itemize}
+
+\textbf{실연:}교사가 Pixel Round를 열어 지름 10으로 설정. 세 알고리즘을 차례로 30초씩 보여준다. 강조:\emph{세 그림 모두 수학적으로 옳다, 단지 적용한 기준이 다를 뿐}.
+\end{hwaldong}
+
+\begin{hwaldong}[1.4 ---\, 적용:규칙을 엄격히 \quad\sigan{15분}]
+\textbf{지시:}\emph{``모눈종이로 돌아가, \acc{엄격하게} 유클리드 기준으로 지름 10 원을 다시 그리세요. 셀의 중심 $(i + 0.5,\, j + 0.5)$이 원의 중심에서 거리 5 이하일 때만 칠한다.''}
+
+완성 후 Pixel Round의 유클리드 모드 (지름 10) 출력과 비교한다. \emph{둘은 정확히 일치해야 한다.}
+
+\textbf{성찰 카드 (2분):}\emph{``셀이 ``원 안에 있다''는 것은 한 문장으로 무엇을 의미하는가?''}
+\end{hwaldong}
+
+\subsubsection*{과제 (선택)}
+활동 1.4를 지름 8과 14로 반복한다. 두 그림을 다음 시간에 가져온다.
+
+% =============================================================================
+\subsection{2차시 ---\,``세 알고리즘, 세 그림''}
+
+\subsubsection*{학습 목표}
+각 알고리즘을 독립된 수학적 정의로 분석하고, 정량적으로 비교하기.
+
+\begin{hwaldong}[2.1 ---\, 도입:복습 \quad\sigan{5분}]
+과제 회수. 학생들의 그림 차이를 빠르게 확인. 본 차시 목표 안내:\emph{``오늘은 각 알고리즘을 현미경으로 들여다보며, 왜 브레젠험이 컴퓨터 과학의 보석으로 불리는지 알아본다.''}
+\end{hwaldong}
+
+\begin{hwaldong}[2.2 ---\, 유클리드 알고리즘 \quad\sigan{10분}]
+셀 $(i, j)$에 대해 정규화된 변위를 계산:
+
+\begin{sik}
+\centering
+$\displaystyle d_x = \dfrac{i + \tfrac{1}{2} - c_x}{r_x},\qquad d_y = \dfrac{j + \tfrac{1}{2} - c_y}{r_y}$
+\end{sik}
+
+$d_x^{\,2} + d_y^{\,2} \leq 1$ 일 때만 셀을 칠한다.
+
+\textbf{칠판 예제:}$c_x = c_y = 5$, $r_x = r_y = 5$, 셀 $(2, 1)$. 결과 $d_x = -0.5$, $d_y = -0.7$, $d_x^2 + d_y^2 = 0.74 \leq 1$. 셀 \emph{내부}.
+
+\textbf{개별 활동:}셀 $(0, 0)$을 직접 확인. (답:$1.62 > 1$, \acc{외부}.)
+\end{hwaldong}
+
+\begin{hwaldong}[2.3 ---\, 브레젠험 알고리즘 \quad\sigan{15분}]
+\textbf{역사적 배경:}Jack Bresenham이 1965년 IBM 근무 중에 발표. 당시 한 번의 부동소수점 곱셈은 수백 마이크로초가 걸렸다. 그의 기여는 \emph{정수 덧셈과 비교만} 으로 원을 그리는 방법.
+
+\textbf{한국 맥락에서:}1965년은 한국에서도 본격적인 산업화가 시작되던 시기이다. 컴퓨터 그래픽의 역사를 학생들이 추적해 보는 것은 학생부의 \emph{독서활동} 과 \emph{탐구 활동}에 좋은 소재가 된다. 또한 2022년 한국계 \emph{허준이} 교수의 필즈상 수상은 한국 수학 위상의 새로운 정점을 보여주었다 ---\, 수학을 ``직업''으로 진지하게 생각할 학생들에게 좋은 자극이 된다.
+
+$(x = 0,\, y = R)$, $d_0 = 1 - R$ 에서 출발. $0$--$45°$ 8분원에서 매 단계:
+
+\begin{sik}
+\centering
+$\begin{cases}
+d < 0 \text{ 이면}: & \text{다음 픽셀 } (x{+}1,\, y),\; d \mathrel{+}= 2x+3 \\
+d \geq 0 \text{ 이면}: & \text{다음 픽셀 } (x{+}1,\, y{-}1),\; d \mathrel{+}= 2(x-y)+5
+\end{cases}$
+\end{sik}
+
+\textbf{칠판 추적:}$R = 5$에 대해 $x, y, d$를 단계마다 표로 작성. 나머지 7개의 8분원은 $D_4$ 대칭성에 의해 얻어진다.
+
+\textbf{지도 차별화:}결정 변수의 대수가 어렵다면 알고리즘을 \emph{규칙}으로만 제시하고 유도는 생략한다. 자세한 유도는 \texttt{Pixel\_Round\_Math\_ko-KR.pdf} §5.
+\end{hwaldong}
+
+\begin{hwaldong}[2.4 ---\, 임계값 알고리즘 \quad\sigan{10분}]
+각 셀 $(i, j)$ 에 대해 원의 중심에서 가장 가까운 모서리를 찾는다:
+
+\begin{sik}
+\centering
+$\displaystyle n_x = \mathrm{clamp}(c_x,\, i,\, i{+}1),\qquad n_y = \mathrm{clamp}(c_y,\, j,\, j{+}1)$
+\end{sik}
+
+$\left(\dfrac{n_x - c_x}{r_x}\right)^{\!2} + \left(\dfrac{n_y - c_y}{r_y}\right)^{\!2} \leq 0.94$ 이면 셀을 칠한다.
+
+\textbf{왜 $1$ 이 아니라 $0.94$ 인가?}경험적으로 $1$ 일 때 동·서·남·북의 네 방향에서 1픽셀짜리 ``뾰족이''가 생긴다. 약간 낮은 임계값이 이를 제거한다. \emph{이것은 시각적 관찰에 따른 공학적 결정} 이다 ---\, 순수 수학이 항상 마지막 답을 주지는 않음을 보여주는 좋은 예이다.
+\end{hwaldong}
+
+\begin{hwaldong}[2.5 ---\, 정량 비교 \quad\sigan{10분}]
+\textbf{짝 활동:}Pixel Round에서:
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em,nosep]
+  \item 지름 16, 모드 \emph{Filled} 로 설정.
+  \item 정보 칩 활성화. 세 알고리즘의 이산 넓이를 기록.
+  \item 연속 넓이 $\pi r^2 = 64\pi \approx 201.06$ 계산.
+  \item 각 알고리즘의 상대 오차 계산: $\dfrac{|S_{\text{이산}} - S_{\text{연속}}|}{S_{\text{연속}}} \times 100\%$.
+  \item 오차가 작은 순으로 정렬.
+\end{enumerate}
+
+\textbf{예상 결과:}유클리드 < 1\%, 임계값 5--8\% 과대 추정, 브레젠험 그 중간. 전체 공유.
+\end{hwaldong}
+
+% =============================================================================
+\subsection{3차시 ---\,``타원에서 타원체로:3차원으로의 도약''}
+
+\subsubsection*{학습 목표}
+타원 방정식을 3차원으로 일반화; 복셀과 이산 부피 도입; 평면 절단을 일차 부등식으로 이해.
+
+\begin{hwaldong}[3.1 ---\, 2D 에서 3D 로 \quad\sigan{15분}]
+세 번째 좌표 $z$를 추가하면 타원 방정식이 즉시 일반화된다:
+
+\begin{sik}
+\centering
+$\displaystyle \left(\dfrac{x}{r_x}\right)^{\!2} + \left(\dfrac{y}{r_y}\right)^{\!2} + \left(\dfrac{z}{r_z}\right)^{\!2} \;=\; 1$
+\end{sik}
+
+$r_x = r_y = r_z = r$ 일 때 \acc{구} $x^2 + y^2 + z^2 = r^2$.
+
+\textbf{복셀:}3차원 격자의 셀을 \emph{복셀} (voxel, \emph{volume element}) 이라 한다. 포함 조건은 2차원과 동일한 구조이며 $z$ 좌표가 추가된다:
+
+\begin{sik}
+\centering
+$\displaystyle a_x^2 + a_y^2 + a_z^2 \leq 1,\quad a_\xi = \dfrac{\xi + \tfrac{1}{2} - c_\xi}{r_\xi}$
+\end{sik}
+
+\textbf{실연:}Pixel Round를 3D 모드로 전환. 구와 타원체를 번갈아 보여주고, 마우스로 회전, 세 가지 렌더링 스타일 (\emph{Classic, Smooth, Blocks}) 을 비교.
+\end{hwaldong}
+
+\begin{hwaldong}[3.2 ---\, 연속 부피와 이산 부피 \quad\sigan{15분}]
+타원체의 연속 부피는 미적분의 고전적 결과:
+
+\begin{sik}
+\centering
+$\displaystyle V \;=\; \dfrac{4}{3}\,\pi\, r_x\, r_y\, r_z$
+\end{sik}
+
+$r_x = r_y = r_z = r$ 일 때 $V = \tfrac{4}{3}\pi r^3$. 이 공식은 수능 \emph{미적분} 영역의 입체 부피 문제에서 반복적으로 등장한다.
+
+\textbf{짝 활동:}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em,nosep]
+  \item 지름 12 ($r = 6$) 구의 연속 부피를 계산:$V = \tfrac{4}{3}\pi \cdot 216 \approx 904.78$.
+  \item Pixel Round에서 $D = 12$ 구 (Filled 모드) 를 생성. 이산 부피를 읽는다.
+  \item 상대 오차를 계산.
+\end{enumerate}
+
+\textbf{논의:}$V_{\text{이산}}/V_{\text{연속}} \to 1$, $D \to \infty$ 일 때. 작은 $D$에서 차이가 크지만 ---\, 이는 이산화가 \emph{실제로} 셈을 바꾼다는 사실의 정직한 반영.
+\end{hwaldong}
+
+\begin{hwaldong}[3.3 ---\, 평면 절단과 일차 부등식 \quad\sigan{10분}]
+Pixel Round 는 입체를 세 가지 평면으로 절단할 수 있다. 각 절단은 \acc{일차 부등식} 으로 복셀 좌표에 적용된다:
+
+\begin{sik}
+\centering
+$\begin{array}{lcl}
+\text{X 축:} & x \geq \mathit{cut} & \Rightarrow \text{복셀 제거} \\
+\text{Y 축:} & y \geq \mathit{cut} & \Rightarrow \text{복셀 제거} \\
+\text{대각:} & x + y \geq \mathit{cut} & \Rightarrow \text{복셀 제거}
+\end{array}$
+\end{sik}
+
+\textbf{실연:}구를 Y축에서 50\% 절단, X축에서 50\% 절단, 대각선에서 50\% 절단으로 차례로 시연.
+
+\textbf{발문:}\emph{``대각선 절단의 슬라이더는 왜 $0$ 부터 $D_x + D_y$ 까지 움직이는가? $D_x$ 가 아닌 이유는? 방정식의 어디에 답이 있는가?''}
+\end{hwaldong}
+
+\begin{hwaldong}[3.4 ---\, 한국 문화와의 접점 \quad\sigan{10분}]
+\emph{한글, 한옥, 케이팝 시각 디자인 속의 기하학.}
+
+세 가지 이미지 또는 자료를 제시:
+\begin{itemize}[leftmargin=1.3em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item \acc{한글} (1443) 의 기하학적 디자인:기본 자음의 ``ㅇ''은 완벽한 원, ``ㄱ''은 모서리, ``ㅁ''은 정사각형. 세종대왕은 한글을 \emph{음성기관의 형상화}와 \emph{철학적 기본 도형}으로 설계했다.
+  \item \acc{한옥의 처마 곡선}:기와로 정의되는 이산적 형상이 멀리서 보면 매끄러운 곡선으로 인지된다. 이는 본 단원의 ``이산 → 연속''과 같은 원리.
+  \item \acc{케이팝 시각 디자인}:BTS, BLACKPINK, NewJeans 등 그룹 로고의 기하학적 원형성. 단순 기본 도형의 정교한 결합.
+\end{itemize}
+
+\textbf{논의:}\emph{``한글은 600년 가까이 된 디지털 인터페이스라 할 수 있다 ---\, 기본 도형의 ``픽셀''로 음성을 표현한다. 케이팝의 시각 언어도 같은 원리에 의지한다. Pixel Round로 우리가 하는 일은 사실 한국 시각 전통의 연장선이다.''}
+
+이 연결은 학생부 \emph{세특}에 기록하기에 좋은 융합적 사고의 사례가 된다.
+\end{hwaldong}
+
+% =============================================================================
+\subsection{4차시 ---\,``최종 프로젝트:창의적 픽셀 작품과 수학적 변호''}
+
+\subsubsection*{학습 목표}
+단원 전체 내용을 종합한 창의적 산출물 제작; 수학적 언어를 통한 평가.
+
+\begin{hwaldong}[4.1 ---\, 도입:과제 안내 \quad\sigan{5분}]
+\textbf{과제:}\emph{``2~3명 모둠으로 Pixel Round로 만든 도형을 최소 3 가지 결합한 픽셀 또는 복셀 작품을 만든다 (원, 타원, 구, 타원체 중에서). 캐릭터, 아이콘, 동물, 로고 등 자유 주제. 마지막에 각 모둠이 작품을 발표하고 선택을 \acc{수학적으로} 변호한다:왜 이 알고리즘? 왜 이 비율? 왜 이 절단?''}
+
+\textbf{모둠 구성:}이질적으로 사전 편성.
+\end{hwaldong}
+
+\begin{hwaldong}[4.2 ---\, 전개:창작 \quad\sigan{30분}]
+\textbf{모둠별 자료:}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em,nosep]
+  \item Pixel Round 가 동작하는 기기 1대;
+  \item 모눈종이, 연필, 사인펜 (밑그림용);
+  \item 필수 3문항이 적힌 안내지 (부록~\ref{ap:hak} 문제 5).
+\end{itemize}
+
+\textbf{단계:}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em,nosep]
+  \item \sigan{5분} 브레인스토밍과 스케치.
+  \item \sigan{15분} Pixel Round에서 부분 제작, PNG 내보내기.
+  \item \sigan{5분} 최종 구성 (모눈종이에 사인펜으로 옮기거나 PPT 슬라이드로).
+  \item \sigan{5분} 안내지에 수학적 변호 작성.
+\end{enumerate}
+
+\textbf{교사 순회:}\emph{``왜 이 알고리즘? 이 절단을 부등식으로 어떻게 쓸 수 있나?''} 와 같은 유도 발문.
+\end{hwaldong}
+
+\begin{hwaldong}[4.3 ---\, 정리:발표와 수업 마무리 \quad\sigan{15분}]
+각 모둠 2분씩 발표하며 필수 3문항 중 \emph{최소 1문항}에 답한다.
+
+\textbf{최소 요건:}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item 작품에 포함된 수학적 도형을 적어도 하나 식별;
+  \item 선택한 알고리즘을 명시하고 (\emph{사후}라도) 이유 제시;
+  \item 3D 절단이 있으면 부등식으로 표현.
+\end{itemize}
+
+\textbf{교사 마무리 (3분):}단원의 핵심 명제 재확인 ---\, \emph{``이산 격자 위에서는 같은 연속 곡선이 여러 표현을 허용한다. 그 중 하나를 택하는 것은 그 자체로 수학적 결정이다.''} 평가 자료 제출 일정 안내.
+
+\textbf{학생부 기록 안내:}모둠 활동의 우수 사례는 학생부 \emph{교과학습발달상황} \emph{세부능력 및 특기사항}에 기록 가능. 특히 ``수학적 모델링 능력'', ``창의적 사고와 디지털 도구 활용'' 등의 키워드로 정리할 수 있다.
+\end{hwaldong}
+
+% =============================================================================
+\section{평가}
+
+평가는 \acc{과정 중심 평가}와 \acc{역량 기반 평가}를 결합한다. 2022 개정 교육과정의 평가 기조에 부합한다.
+
+\subsection{진단 평가}
+1차시 활동 1.2 에서 실시. 좌표평면, 원의 방정식, 넓이 계산에 어려움이 있는 학생을 식별한다.
+
+\subsection{형성 평가}
+4차시에 걸쳐 분산:관찰을 통한 참여도, 활동 1.4 · 2.2 · 2.5 · 3.2 의 개인 응답의 질.
+
+\subsection{총괄 평가}
+두 가지 산출물:
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.2em,topsep=0.3em,nosep]
+  \item \textbf{학습지} (부록~\ref{ap:hak}), 5 문항, 4차시 종료 시 제출.
+  \item \textbf{최종 프로젝트} (활동 4.2) 와 변호 안내지.
+\end{enumerate}
+
+\subsection{평가 루브릭}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.21\textwidth}XX@{}}
+\toprule
+\textbf{평가 요소} & \textbf{매우 우수 (A) / 우수 (B)} & \textbf{보통 (C) / 미흡 (D)} \\
+\midrule
+\textbf{수학적 지식} & 타원·타원체 방정식을 정확히 활용; 세 알고리즘을 구분하고 효과를 예측. & 원 방정식은 다루지만 타원으로의 일반화에서 막힘; 알고리즘 혼동. \\
+\addlinespace[3pt]
+\textbf{도구 활용 능력} & 2D·3D Pixel Round를 자율 조작; 내보내기와 알고리즘 전환에 능숙. & 잦은 도움 필요; 2D만 다룸. \\
+\addlinespace[3pt]
+\textbf{수학적 의사소통} & 정확한 전문 용어 (알고리즘, 복셀, 절단, 부등식) 로 변호. & 미학적 설명에 머무름; 전문 용어 부족. \\
+\addlinespace[3pt]
+\textbf{협력적 소통} & 모둠 내에서 적극 기여; 전체 토론에 참여. & 개별 작업 중심; 기여 미미. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{학기 성적 반영 (권장)}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item 학습지:40\%;
+  \item 최종 프로젝트와 발표:50\%;
+  \item 수업 참여 관찰:10\%.
+\end{itemize}
+
+% =============================================================================
+\section{교과 융합과 진로 연계}
+
+\subsection{정보 교과와의 융합}
+브레젠험 알고리즘은 알고리즘 입문 교과서의 고전이다. 2차시 2.3을 정보 교사와 협력 진행하면, Python 으로의 구현 (약 25행) 을 정보 교과의 과제로 연결할 수 있다. 정보 교과의 \emph{수행평가} 자료로도 활용 가능.
+
+\subsection{미술 교과와의 융합}
+픽셀 아트는 디지털 미술의 핵심 표현 양식이다. Pixel Round 는 그림이 \emph{동시에} 방정식이며 구도임을 직접 보여준다. 미술 교사와 협력하여 학교 복도나 SNS에서 작품 전시 가능 ---\, \emph{학교 동아리} 활동과도 잘 연결된다.
+
+\subsection{물리 교과와의 융합}
+Pixel Round 의 효과음은 순수 사인파의 가산 합성으로 생성된다. 선택된 주파수들은 \acc{12 평균율} 음에 근접한다 (반음 간격의 주파수비는 $2^{1/12} \approx 1.0595$). 물리학 ``파동'' 단원과 직접 연결된다.
+
+\subsection{진로 연계 ---\, 미래 융합 인재}
+본 단원에서 다루는 \emph{알고리즘 + 시각 표현 + 수학 + 디지털 도구}의 결합은 인공지능, 게임 개발, 그래픽 디자인, 데이터 시각화 등 미래 직업 분야와 직결된다. \emph{허준이 (June Huh)} 교수의 2022년 필즈상 수상 사례를 통해 ---\, ``수학의 길''이 자기 자신에게도 열려 있을 수 있다는 동기 부여를 제공할 수 있다. 이는 \emph{학생부 진로활동}에도 좋은 기록 소재가 된다.
+
+% =============================================================================
+\section{참고 문헌}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.2em,topsep=0.3em]
+  \item 교육부. \emph{초·중등학교 교육과정 총론 (교육부 고시 제2022-33호 별책 1)}. 세종:교육부, 2022.
+  \item 교육부. \emph{고등학교 수학과 교육과정 (교육부 고시 제2022-33호 별책 8)}. 세종:교육부, 2022.
+  \item 한국교육과정평가원. \emph{2022 개정 교육과정에 따른 수학과 평가기준 자료}. 진천:한국교육과정평가원, 2023.
+  \item 신현용·나카마 보혜·신영주. \emph{수학의 발견 ---\, 한국 수학 천재들의 자취를 찾아서}. 서울:궁리, 2018.
+  \item 박세희. \emph{수학자의 시선으로 본 한글}. 서울:홍익출판사, 2019.
+  \item Bresenham, J. E. Algorithm for computer control of a digital plotter. \emph{IBM Systems Journal}, 권 4, 호 1, 25--30쪽, 1965.
+  \item Lakatos, I. \emph{증명과 반박:수학적 발견의 논리} (윤지나 역). 서울:민음사, 2001.
+  \item Pólya, G. \emph{어떻게 문제를 풀 것인가} (이상호 역). 서울:천재교육, 2002.
+  \item Stigler, J. W. \& Hiebert, J. \emph{학습 격차 ---\, 세계 최고 학생들에게서 배우는 교실의 원리} (김상희 역). 서울:다른우리, 2003.
+  \item 황선욱 외. \emph{고등학교 기하 (지학사 교과서, 2022 개정)}. 서울:지학사, 2024.
+  \item 김원경 외. \emph{고등학교 미적분 II (좋은책신사고 교과서, 2022 개정)}. 서울:좋은책신사고, 2024.
+  \item Pixel Round 기술 문서:\texttt{docs\_math/Pixel\_Round\_Math\_ko-KR.pdf}.
+\end{itemize}
+
+\newpage
+% =============================================================================
+% 부록
+% =============================================================================
+\appendix
+\renewcommand{\thesection}{\Alph{section}}
+\setcounter{section}{0}
+
+\section{Pixel Round 시연 대본}\label{ap:demo}
+
+1차시 활동 1.3 의 시연 흐름과 교사 자가 연수용 대본. 총 15분.
+
+\subsection{시작과 2D 모드}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item Pixel Round 실행. 상단 바, 캔버스 영역, 컨트롤 패널을 지적.
+  \item 모드 \acc{2D / 원} 확인.
+  \item Size 슬라이더를 10으로.
+  \item 정보 칩 활성화 후 낭독:``지름 10, 반지름 5, 넓이 …, 알고리즘 유클리드.''
+  \item 알고리즘 전환:\acc{유클리드 / 브레젠험 / 임계값}. 각 30초씩.
+\end{enumerate}
+
+\subsection{타원}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item 형태를 \acc{타원} 으로 전환. Width 와 Height 슬라이더 출현.
+  \item $W = 16$, $H = 8$ 설정.
+  \item 발문:\emph{``이 형태의 방정식은 $(x/8)^2 + (y/4)^2 = 1$. 왜 $x$ 를 8 로, $y$ 를 4 로 나누는가?''}
+\end{enumerate}
+
+\subsection{3D 모드}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item \acc{3D / 구}, $D = 12$.
+  \item 마우스 드래그로 회전.
+  \item 정보 칩 활성화:부피를 기록.
+  \item \acc{타원체} 로 전환:$W = 20, H = 10, D = 10$.
+  \item Cut 슬라이더를 Y 축 50\%.
+  \item 대각선 축으로 전환, 사선 절단 논의.
+\end{enumerate}
+
+\subsection{내보내기}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item 캔버스 모서리의 다운로드 버튼.
+  \item PNG 저장.
+  \item 고해상도:인쇄 또는 슬라이드 첨부에 적합.
+\end{enumerate}
+
+% =============================================================================
+\newpage
+\section{학습지}\label{ap:hak}
+
+\textbf{안내.}개별로 풀기. Pixel Round 로 검증 가능, \emph{단 수학적 설명은 필수}. 손글씨 또는 타이핑 가능.
+
+\subsection*{문제 1 ---\, 원의 방정식}
+원의 중심 $(0, 0)$, 반지름 $r = 7$. 각 점이 \emph{내부, 외부, 위} 중 어디에 있는지 판단하고 이유를 적어라.
+\begin{enumerate}[label=\alph*),leftmargin=1.5em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item $(3, 4)$ \hfill \emph{답:}내부 ($25 < 49$).
+  \item $(5, 5)$ \hfill \emph{답:}외부 ($50 > 49$).
+  \item $(0, 7)$ \hfill \emph{답:}위.
+  \item $(-7, 0)$ \hfill \emph{답:}위.
+\end{enumerate}
+
+\subsection*{문제 2 ---\, 유클리드 기준}
+중심 $(5, 5)$, 반지름 $5$ 원에 대해 셀 $(1, 3)$ 이 칠해지는가?
+
+\emph{답:}셀 중심 $(1.5, 3.5)$. 거리 $\sqrt{14.5} \approx 3.81 < 5$. \acc{칠해진다}.
+
+\subsection*{문제 3 ---\, 이산 넓이 vs.\ 연속 넓이}
+Pixel Round 에서 유클리드 모드, 지름 20 원을 생성. 이산 넓이 기록. $\pi r^2$ 계산. 상대 오차 산출. 임계값 알고리즘에 대해서도 반복. 비교.
+
+\emph{답:}$S_{\text{연속}} = 100\pi \approx 314.16$. 유클리드 오차 < 2\%. 임계값 5--8\% 초과.
+
+\subsection*{문제 4 ---\, 타원체 부피와 절단}
+타원체 $r_x = 4$, $r_y = 6$, $r_z = 3$.
+\begin{enumerate}[label=\alph*),leftmargin=1.5em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item 연속 부피 계산.
+  \item $Y$ 축 방향 50\% 절단 후 남은 부피.
+  \item 절단을 $y$ 좌표 부등식으로 표현.
+\end{enumerate}
+
+\emph{답:}
+(a) $V = 96\pi \approx 301.59$;
+(b) 대칭성으로 $\approx 150.80$;
+(c) $y < \mathit{cut}$, $\mathit{cut} = 6$.
+
+\subsection*{문제 5 ---\, 최종 프로젝트 변호 안내지}
+모둠 작품 완성 후 답하시오:
+\begin{enumerate}[label=(\arabic*),leftmargin=1.7em,itemsep=0.15em,topsep=0.2em,nosep]
+  \item 사용한 기하 도형 (원, 타원, 구, 타원체) 과 매개 변수 나열.
+  \item 메인 도형에서 어떤 알고리즘을 선택했는가? 그 이유는? 다른 두 알고리즘이 만들지 못하는 시각 효과는?
+  \item 3D 절단이 있는가? 있다면 \emph{한 가지} 를 부등식으로 적으시오.
+\end{enumerate}
+
+% =============================================================================
+\newpage
+\section{디지털 기기 부족 환경 대안}\label{ap:adapt}
+
+기기 보급이 불충분한 학교나, 기기 사용을 제한해야 하는 시간대에도, 본 단원의 핵심 학습을 \emph{종이만으로} 수행할 수 있다.
+
+\subsection{차시별 대체}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.14\textwidth}p{0.36\textwidth}X@{}}
+\toprule
+\textbf{차시} & \textbf{원래 활동} & \textbf{종이 대체} \\
+\midrule
+1 & Pixel Round 시연 (1.3) & 교사가 칠판에 미리 그려둔 큰 모눈에 세 가지 알고리즘으로 직접 그리며 보여줌. \\
+\addlinespace[3pt]
+2 & 소프트웨어 비교 (2.5) & 사전 인쇄한 $D = 16$ 세 가지 알고리즘 원을 학생들에게 나눠 주고 손으로 셀을 센다. \\
+\addlinespace[3pt]
+3 & 3D 구 생성 (3.1, 3.2) & 사전 인쇄한 구의 \emph{단면} 시트 ($z = 0, 1, 2, \ldots$) 를 모눈종이에 그려 학생들에게 배부, 머릿속에서 쌓는다. \\
+\addlinespace[3pt]
+4 & Pixel Round 창작 (4.2) & \emph{완전히} 모눈종이와 색연필로 창작. 변호 (4.3) 동일. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{준비물 (일회성)}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item A3 모눈종이 1매 ($30 \times 30$ 격자), 칠판 또는 게시판에 부착.
+  \item 학생당 A4 모눈종이 4매.
+  \item 비교용 세 가지 알고리즘 원의 참조 시트 (교사가 사전에 Pixel Round 로 생성, PNG 출력, 학교 복사실에서 인쇄).
+\end{itemize}
+
+\subsection{학교 유형별 조정}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item \textbf{과학고·외고·자사고:}2차시 브레젠험 유도를 학급 전체에 적용; 3차시의 가우스 격자점 문제를 심화 탐구 과제로 부여.
+  \item \textbf{일반계 고교:}본 지도안의 기본 경로 적용; 수능 \emph{기하} 및 \emph{미적분} 주요 출제 단원과의 연계를 강조.
+  \item \textbf{특성화고·마이스터고:}부록의 종이 대체 경로 + 최종 프로젝트를 진로 분야 (산업 디자인, IT, 시각 미디어) 의 실제 상황으로 변형.
+\end{itemize}
+
+% =============================================================================
+\newpage
+\section{교사용 용어집}\label{ap:glos}
+
+\begin{itemize}[leftmargin=1.4em,itemsep=0.3em,topsep=0.3em]
+  \item \acc{알고리즘 (algorithm)} ---\, 문제를 해결하기 위한 유한하고 명확한 명령의 순서. Pixel Round 의 세 알고리즘은 동일한 문제 (어느 셀을 칠할지) 에 대한 세 가지 다른 절차.
+  \item \acc{브레젠험 알고리즘 (Bresenham)} ---\, 1965 년 Jack Bresenham (IBM) 이 직선용으로 발표, 후에 Pitteway 와 Kappel 이 타원으로 확장. 정수 산술만 사용한다는 특성.
+  \item \acc{캔버스 (canvas)} ---\, 브라우저에서 2D 또는 3D 그리기 공간을 제공하는 HTML 요소.
+  \item \acc{음함수 방정식} ---\, $F(x, y) = 0$ 형태로 곡선을 함수의 영점 집합으로 정의하는 방정식. 타원은 $(x/r_x)^2 + (y/r_y)^2 - 1 = 0$.
+  \item \acc{픽셀 (pixel)} ---\, picture element 의 축약. 디지털 이미지의 최소 단위. 격자 상의 $1 \times 1$ 셀.
+  \item \acc{PWA (Progressive Web App)} ---\, 기기에 설치할 수 있고 오프라인에서도 동작하는 웹 앱. Pixel Round 가 그 예.
+  \item \acc{래스터화 (rasterization)} ---\, 연속적 기하 표현을 픽셀 (2D) 또는 복셀 (3D) 행렬로 변환하는 과정.
+  \item \acc{장축·단축의 반 (semi-axis)} ---\, 중심 $C$ 의 타원에서, $C$ 로부터 해당 축 방향 꼭짓점까지의 거리. 원은 $r_x = r_y$ 인 특수한 경우.
+  \item \acc{12 평균율} ---\, 옥타브를 12 개의 같은 반음으로 분할. 반음 간 주파수비는 $\sqrt[12]{2} \approx 1.0595$. 서양 및 현대 한국 음악의 기반.
+  \item \acc{복셀 (voxel)} ---\, volume element 의 축약. 3D 격자의 $1 \times 1 \times 1$ 정육면체 단위.
+  \item \acc{WebGL} ---\, 브라우저의 3D 그래픽 API. Pixel Round 는 \emph{three.js} 를 통해 사용.
+\end{itemize}
+
+\vspace{2em}
+\begin{center}
+\color{muted}\small\sffamily
+--- 수업 지도안 끝 ---
+\end{center}
+
+\end{document}

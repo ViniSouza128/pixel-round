@@ -1,0 +1,887 @@
+% !TEX program = xelatex
+% =============================================================================
+% Pixel Round — Unterrichtssequenz (de-DE)
+% Angepasst an die 12. Jahrgangsstufe des Gymnasiums (Q2 / Kursphase)
+% Visuelle Identität nach docs_math/Pixel_Round_Math_de-DE.pdf
+% Kompilieren: xelatex Plano_de_Aula_de-DE.tex   (zweimal für TOC + Refs)
+% =============================================================================
+\documentclass[12pt,a4paper]{scrartcl}
+
+% ---------- Sprache und Schriften --------------------------------------------
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{german}
+\PolyglossiaSetup{german}{indentfirst=false}
+\setmainfont{Latin Modern Roman}[Scale=1.08]
+\setsansfont{Latin Modern Sans}[Scale=1.08]
+\setmonofont{Latin Modern Mono}[Scale=1.00]
+\usepackage{unicode-math}
+\setmathfont{Latin Modern Math}[Scale=1.08]
+
+% ---------- Pakete -----------------------------------------------------------
+\usepackage{amsmath}
+\usepackage{mathtools}
+
+\usepackage[a4paper,top=2.8cm,bottom=2.8cm,left=2.6cm,right=2.6cm,
+            headheight=16pt]{geometry}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage[hidelinks,bookmarks=true,bookmarksopen=true,
+            pdftitle={Pixel Round — Unterrichtssequenz (de-DE)},
+            pdfauthor={Vinicius Souza}]{hyperref}
+
+% ---------- Farbpalette ------------------------------------------------------
+\definecolor{accent}{HTML}{CC2020}
+\definecolor{ink}{HTML}{1F1F23}
+\definecolor{muted}{HTML}{4E4E58}
+\definecolor{bg}{HTML}{FBF6E9}
+\definecolor{rule}{HTML}{D8D1BC}
+
+\color{ink}
+
+% ---------- Abschnittsstile --------------------------------------------------
+\titleformat{\section}
+  {\sffamily\Large\bfseries\color{accent}}{\thesection.}{0.6em}{}
+\titleformat{\subsection}
+  {\sffamily\large\bfseries\color{accent!85!ink}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}
+  {\sffamily\normalsize\bfseries\color{muted}}{\thesubsubsection}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.2\baselineskip}{0.6\baselineskip}
+\titlespacing*{\subsection}{0pt}{0.8\baselineskip}{0.3\baselineskip}
+\titlespacing*{\subsubsection}{0pt}{0.6\baselineskip}{0.2\baselineskip}
+
+% ---------- Kopf- und Fußzeile -----------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily\bfseries\color{accent}PIXEL ROUND}
+\fancyhead[R]{\small\sffamily\color{muted}Unterrichtssequenz --- Q2/12.~Jg.}
+\fancyfoot[L]{\small\sffamily\color{muted}Pixel Round --- Lehrkraft-Material}
+\fancyfoot[R]{\small\sffamily\color{muted}Seite \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\headrule}{{\color{rule}\hrule height \headrulewidth}}
+\renewcommand{\footrule}{{\color{rule}\vskip-\footrulewidth\hrule height \footrulewidth\vskip-\footrulewidth}}
+
+% ---------- Didaktische Boxen ------------------------------------------------
+\newtcolorbox{formel}{
+  colback=bg, colframe=rule, boxrule=0.4pt, arc=2pt,
+  left=10pt,right=10pt,top=8pt,bottom=8pt,
+  before skip=8pt, after skip=8pt,
+  fontupper=\color{accent}, breakable
+}
+
+\newtcolorbox{aufgabe}[1][Aufgabe]{
+  enhanced, breakable,
+  colback=bg, colframe=accent, boxrule=0.6pt, arc=4pt,
+  left=12pt,right=12pt,top=10pt,bottom=10pt,
+  before skip=12pt, after skip=12pt,
+  attach boxed title to top left={xshift=10pt,yshift=-8pt},
+  boxed title style={colback=accent,colframe=accent,boxrule=0pt,arc=2pt},
+  coltitle=white, fonttitle=\sffamily\bfseries\small,
+  title=#1
+}
+
+\newtcolorbox{hinweis}[1][Didaktischer Hinweis]{
+  enhanced, breakable,
+  colback=bg!50!white, colframe=rule, boxrule=0.4pt, arc=2pt,
+  left=10pt,right=10pt,top=8pt,bottom=8pt,
+  before skip=8pt, after skip=8pt,
+  attach boxed title to top left={xshift=10pt,yshift=-7pt},
+  boxed title style={colback=muted,colframe=muted,boxrule=0pt,arc=2pt},
+  coltitle=white, fonttitle=\sffamily\bfseries\footnotesize,
+  title=#1
+}
+
+\newtcolorbox{kompetenz}[1][KMK-Standard]{
+  enhanced, breakable,
+  colback=bg!70!white, colframe=accent!60!ink, boxrule=0.4pt, arc=2pt,
+  left=10pt,right=10pt,top=6pt,bottom=6pt,
+  before skip=6pt, after skip=6pt,
+  attach boxed title to top left={xshift=10pt,yshift=-6pt},
+  boxed title style={colback=accent!60!ink,colframe=accent!60!ink,boxrule=0pt,arc=2pt},
+  coltitle=white, fonttitle=\sffamily\bfseries\footnotesize,
+  title=#1
+}
+
+\setlength{\parskip}{0.75em}
+\setlength{\parindent}{0pt}
+\linespread{1.10}
+
+\newcommand{\code}[1]{\texttt{\small #1}}
+\newcommand{\acc}[1]{\textcolor{accent}{\textbf{#1}}}
+\newcommand{\zeit}[1]{\textbf{\small\color{muted}\textsf{#1}}}
+
+\begin{document}
+
+% =============================================================================
+% TITELSEITE
+% =============================================================================
+\begin{titlepage}
+  \centering
+  \vspace*{3.2cm}
+  {\sffamily\bfseries\fontsize{56}{60}\selectfont \color{accent} Pixel Round\par}
+  \vspace{0.7cm}
+  {\sffamily\LARGE\color{muted} Unterrichtssequenz\par}
+  \vspace{0.25cm}
+  {\sffamily\Large\color{muted} Gymnasiale Oberstufe --- Q2 / 12.~Jahrgangsstufe\par}
+  \vspace{1.4cm}
+  {\color{rule}\rule{0.6\textwidth}{0.6pt}\par}
+  \vspace{0.9cm}
+  \begin{minipage}{0.84\textwidth}
+    \centering\color{ink}\large
+    Eine Unterrichtssequenz aus vier Doppelstunden für den
+    Mathematikunterricht in der Qualifikationsphase deutscher
+    Gymnasien. Sie verknüpft analytische Geometrie, algorithmisches
+    Denken und ästhetische Gestaltung anhand eines einzigen
+    Leitproblems: Wie lässt sich eine stetige Kurve auf einem
+    endlichen Raster aus Pixeln darstellen?
+  \end{minipage}
+  \vspace{0.9cm}\\
+  {\color{rule}\rule{0.6\textwidth}{0.6pt}\par}
+  \vspace{1.8cm}
+  \begin{minipage}{0.82\textwidth}
+    \centering\sffamily\small\color{muted}
+    \textbf{Fächerverknüpfungen:} Mathematik $\cdot$ Informatik $\cdot$ Bildende Kunst $\cdot$ Physik \\[0.4em]
+    \textbf{Bezugsrahmen:} KMK-Bildungsstandards Mathematik (Allgemeine Hochschulreife, 2012) $\cdot$ Bildungspläne der Länder
+  \end{minipage}
+\end{titlepage}
+
+% =============================================================================
+% INHALTSVERZEICHNIS
+% =============================================================================
+\renewcommand{\contentsname}{\color{accent}Inhaltsverzeichnis}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =============================================================================
+\section{Identifikation und Rahmen}
+
+\begin{center}
+\begin{tabular}{@{}p{0.32\textwidth}p{0.62\textwidth}@{}}
+\toprule
+\textbf{Unterrichtsfach} & Mathematik. Anpassbar an Informatik (Leistungs- oder Grundkurs) und an den Wahlpflichtbereich Informatik der Sekundarstufe~II. \\
+\addlinespace[2pt]
+\textbf{Jahrgang und Stufe} & Gymnasium, Qualifikationsphase Q2 (12.~Jahrgangsstufe, in einigen Ländern 13.). Anpassbar an Q1 und an die 10.~Klasse. \\
+\addlinespace[2pt]
+\textbf{Schulform} & Gymnasium oder Gesamtschule. Anpassungen für Berufsfachschule in Anhang~\ref{ap:adapt}. \\
+\addlinespace[2pt]
+\textbf{Zeitumfang} & 4 Doppelstunden zu je 90 Minuten (insgesamt 6 Zeitstunden). Variante mit acht Einzelstunden (45 min) in §\ref{sec:diff}. \\
+\addlinespace[2pt]
+\textbf{Zentrale Ressource} & Pixel Round --- freie, browserbasierte Anwendung. Keine Anmeldung, kein Server, vollständig offline-fähig (PWA). DSGVO-konform. \\
+\addlinespace[2pt]
+\textbf{Curricularer Bezug} & Leitidee \emph{Raum und Form} und Leitidee \emph{Algorithmus und Zahl} (KMK 2012). \\
+\addlinespace[2pt]
+\textbf{Fachübergreifende Bezüge} & Informatik (Algorithmik), Bildende Kunst (digitale Bildgestaltung), Physik (Wellenlehre, Akustik). \\
+\addlinespace[2pt]
+\textbf{Vorkenntnisse der Lernenden} & Kreisgleichung; Vektoren und Koordinaten im $\mathbb{R}^3$; Flächen- und Volumenberechnung der Grundkörper; Funktionsbegriff; Prozentrechnung. \\
+\addlinespace[2pt]
+\textbf{Vorbereitung der Lehrkraft} & 15 Minuten praktische Erkundung der Anwendung; Studium von \texttt{docs\_math/Pixel\_Round\_Math\_de-DE.pdf}. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{hinweis}[Schulrealität in Deutschland]
+Die Sequenz ist auf die typischen Bedingungen deutscher öffentlicher Gymnasien zugeschnitten: Klassenraum mit Beamer oder digitaler Tafel, mobile Tablet-Wagen aus dem \emph{DigitalPakt Schule}, eine pädagogische Lehrer-Wolke (\emph{LOGINEO NRW}, \emph{Mebis} in Bayern, \emph{LernSax} in Sachsen, IServ in vielen Ländern), strenge Anforderungen an Datenschutz (DSGVO). Pixel Round wurde bewusst so entworfen, dass es ohne Anmeldung, ohne Datenübertragung und vollständig offline lauffähig ist. Für Schulen ohne ausreichende digitale Ausstattung ist in Anhang~\ref{ap:adapt} ein \emph{vollständig analoger Pfad} dokumentiert.
+\end{hinweis}
+
+% =============================================================================
+\section{Fachdidaktische Begründung}
+
+Pixel- und Voxelgrafik prägen die visuelle Alltagskultur der Jugendlichen in dieser Altersstufe maßgeblich --- von Minecraft und Stardew Valley bis zu den Piktogrammen auf dem Smartphone. Diese vertraute visuelle Sprache zum \emph{mathematischen Gegenstand} zu machen, verwandelt einen ästhetischen Bezug in ein echtes mathematisches Problem: Wie kann ein Rechner, der nur quadratische Zellen ein- und ausschalten kann, eine über $\mathbb{R}$ definierte Kurve darstellen?
+
+Die Sequenz folgt drei didaktischen Grundüberzeugungen:
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item \acc{Genetisches Prinzip} im Sinne Martin Wagenscheins. Statt drei Algorithmen als Lehrstoff frontal zu präsentieren, lassen wir die Lernenden in der ersten Doppelstunde \emph{selbst entdecken}, dass es keine einzige richtige Antwort auf die Frage gibt, welche Zellen einem Kreis angehören. Die Mathematik tritt dann als notwendige Sprache zur Präzisierung der eigenen impliziten Wahl auf.
+  \item \acc{Drei Grunderfahrungen} im Sinne Heinrich Winters (1995): erstens das Mathematische als Mittel zur \emph{Welterschließung} (die Pixelgrafik im Alltag), zweitens als \emph{geistige Tätigkeit eigener Art} (die Erklärung der drei Algorithmen) und drittens als Schule des \emph{heuristischen Denkens} (das offene Projekt der vierten Doppelstunde).
+  \item \acc{Realitätsbezug und Modellbildung} im Sinne Werner Blums. Pixel Round dient nicht dem Üben einer fertigen Formel, sondern stellt das Modellieren selbst in den Mittelpunkt: dieselbe stetige Kurve lässt mehrere, formal voneinander unterscheidbare diskrete Modelle zu.
+\end{itemize}
+
+\begin{hinweis}[Bildungsbegriff und Allgemeinbildung]
+Im Sinne des humboldtschen Bildungsbegriffs verbindet die Sequenz \emph{mathematische Strenge} (Implizite Gleichungen, Ungleichungen, Algorithmen) mit \emph{ästhetischer Erfahrung} (Pixelkunst) und \emph{technischer Sachkenntnis} (Funktionsweise von Bildschirmen, Voxelgrafik im Computerspiel). Sie illustriert damit, was Wagenschein das \emph{Exemplarische} nannte: ein Lerngegenstand, an dem sich Grundzüge des Faches und allgemeinbildende Einsichten gleichermaßen entfalten lassen.
+\end{hinweis}
+
+% =============================================================================
+\section{Lernziele}
+
+\subsection{Übergeordnetes Lernziel}
+
+Die Lernenden erkennen, dass \acc{die Darstellung eines stetigen mathematischen Objekts auf einem diskreten Raster eine eigenständige mathematische Entscheidung} ist, die mehrere begründbare Antworten zulässt, von denen jede als präzises Zellzugehörigkeitskriterium formalisierbar ist.
+
+\subsection{Inhaltsbezogene Lernziele (Konzepte)}
+
+Die Lernenden können nach Abschluss der Sequenz:
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item die implizite Gleichung einer Ellipse mit den Halbachsen $r_x$ und $r_y$ aufstellen und den Kreis als Spezialfall ($r_x = r_y$) erkennen;
+  \item drei verschiedene Zellzugehörigkeitskriterien (euklidisch, Bresenham-Mittelpunktverfahren, Schwellenwert) benennen und qualitativ vorhersagen, worin sich ihre Ergebnisse unterscheiden;
+  \item die Gleichung in den dreidimensionalen Raum verallgemeinern und das Ellipsoid als Quadrik beschreiben;
+  \item einen ebenen Schnitt eines Festkörpers als \emph{lineare Ungleichung} bezüglich der Voxelkoordinaten interpretieren.
+\end{itemize}
+
+\subsection{Prozessbezogene Lernziele (Tätigkeiten)}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Die Anwendung Pixel Round in den Modi 2D und 3D bedienen; Bilder als PNG exportieren.
+  \item Auf Karopapier von Hand die diskrete Approximation eines Kreises nach einer ausgesprochenen Regel zeichnen und mit der Softwareausgabe vergleichen.
+  \item Die diskrete Fläche einer Ellipse durch Zellabzählung berechnen und mit der kontinuierlichen Fläche $\pi r_x r_y$ vergleichen; die Abweichung als relativer Fehler ausdrücken.
+  \item Eine eigene Komposition aus mehreren Figuren erstellen und die Wahl in mathematischer Sprache begründen.
+\end{itemize}
+
+\subsection{Sozial-affektive Lernziele}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Konstruktive Zusammenarbeit in Paar- oder Dreiergruppen;
+  \item Mathematische Verteidigung einer ästhetischen Entscheidung --- direkte Vorbereitung auf die mündliche Mitarbeit und die mündliche Abiturprüfung;
+  \item Akzeptanz mehrerer technisch korrekter Antworten auf dasselbe Problem.
+\end{itemize}
+
+% =============================================================================
+\section{KMK-Bildungsstandards}
+
+Die Sequenz adressiert systematisch \acc{alle sechs allgemeinen mathematischen Kompetenzen} der KMK-Bildungsstandards für die Allgemeine Hochschulreife (2012). Pro Doppelstunde liegt der Schwerpunkt auf einer Auswahl:
+
+\begin{kompetenz}[K1 --- Mathematisch argumentieren]
+Die Lernenden begründen, warum die drei Algorithmen für denselben Kreis unterschiedliche Pixelmuster liefern, und führen die Schlussweise auf das jeweils zugrunde liegende Kriterium zurück. \emph{Schwerpunkt:} Doppelstunden 2 und 4.
+\end{kompetenz}
+
+\begin{kompetenz}[K2 --- Probleme mathematisch lösen]
+Die Lernenden formulieren die Frage \emph{Welche Zellen gehören zum Kreis?} als Ungleichungsproblem und entwickeln verschiedene Lösungsstrategien. \emph{Schwerpunkt:} Doppelstunde 1.
+\end{kompetenz}
+
+\begin{kompetenz}[K3 --- Mathematisch modellieren]
+Die Lernenden übertragen ein gestalterisches Problem (\emph{Pixel-Art-Figur}) in eine mathematische Beschreibung (Halbachsen, Schnittungleichung) und zurück. \emph{Schwerpunkt:} Doppelstunde 4.
+\end{kompetenz}
+
+\begin{kompetenz}[K4 --- Mathematische Darstellungen verwenden]
+Die Lernenden wechseln zwischen geometrischer (Skizze auf Karopapier), algebraischer (Gleichung) und algorithmischer (Programmcode) Darstellung. \emph{Schwerpunkt:} alle Doppelstunden.
+\end{kompetenz}
+
+\begin{kompetenz}[K5 --- Symbolische und formale Elemente]
+Die Lernenden setzen Pixel Round als Werkzeug ein, kennzeichnen aber die Grenzen des Werkzeugs und können auch ohne es argumentieren. \emph{Schwerpunkt:} alle Doppelstunden, insbesondere 2 und 3.
+\end{kompetenz}
+
+\begin{kompetenz}[K6 --- Mathematisch kommunizieren]
+Die Lernenden präsentieren in Doppelstunde 4 ihre Komposition vor der Klasse und verteidigen die Entscheidungen mit Fachvokabular --- direktes Training für die mündliche Abiturprüfung. \emph{Schwerpunkt:} Doppelstunde 4.
+\end{kompetenz}
+
+\subsection{Leitideen}
+
+Die Sequenz integriert insbesondere die KMK-Leitideen:
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item \acc{L3 --- Raum und Form}: Ellipsen und Ellipsoide, Schnittebenen, Symmetrien.
+  \item \acc{L5 --- Algorithmus und Zahl}: drei Algorithmen, Ganzzahlarithmetik bei Bresenham, Zeitkomplexität.
+\end{itemize}
+
+% =============================================================================
+\section{Inhalte}
+
+\subsection{Begriffliche Inhalte}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Kartesisches Koordinatensystem in $\mathbb{R}^2$ und $\mathbb{R}^3$; Zellenmittelpunkt im Vergleich zur Zellenecke.
+  \item Kreisgleichung in Normalform: $x^2 + y^2 = r^2$.
+  \item Implizite Ellipsengleichung: $(x/r_x)^2 + (y/r_y)^2 = 1$.
+  \item Zugehörigkeitsungleichung: Inneres, Äußeres, Rand.
+  \item Ellipsoid- und Kugelgleichung im $\mathbb{R}^3$.
+  \item Volumen des Ellipsoids: $V = \tfrac{4}{3}\pi r_x r_y r_z$.
+  \item Ebenen im Raum als lineare Ungleichungen (Schnittoperation).
+  \item Diskrete Nachbarschaften (4-Nachbarschaft in 2D, 6-Nachbarschaft in 3D).
+\end{itemize}
+
+\subsection{Verfahren}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Handzeichnung auf Karopapier nach formal ausgesprochener Regel.
+  \item Bedienung von Pixel Round (Moduswechsel, Schiebereglerverwendung, Algorithmuswahl, PNG-Export).
+  \item Vergleich von diskreter und kontinuierlicher Fläche durch Zellabzählung.
+  \item Originalkomposition aus mehreren Grundformen.
+\end{itemize}
+
+% =============================================================================
+\section{Vorausgesetzte Kenntnisse}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Kartesisches Koordinatensystem; Punktdarstellung im $\mathbb{R}^2$ und $\mathbb{R}^3$.
+  \item Kreisgleichung (Sekundarstufe~I, Klasse~9 oder 10).
+  \item Volumen von Würfel, Quader, Zylinder (Sekundarstufe~I).
+  \item Funktionsbegriff: Definitionsbereich, Wertebereich, Schaubild.
+  \item Prozentrechnung und relative Abweichung.
+\end{itemize}
+
+Ein \emph{Vorwissensdiagnostik-Block} von 10 Minuten in Doppelstunde~1 ermöglicht der Lehrkraft, Lücken einzelner Schülerinnen und Schüler aufzudecken --- nach den pandemiebedingten Lernlücken weiterhin relevant.
+
+% =============================================================================
+\section{Material und technische Voraussetzungen}
+
+\subsection{Digitale Ausstattung}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Pixel Round (ein Gerät je Lernender oder je Tandem);
+  \item Beamer oder digitale Tafel;
+  \item Schul-Tablet-Set, Chromebook-Wagen, Schul-Laptops \emph{oder} BYOD über Smartphones.
+\end{itemize}
+
+\subsection{Analoge Materialien}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Karopapier (Rasterweite 5\,mm), 2 Blätter je Lernende;
+  \item Bleistift, Radiergummi, Lineal 30\,cm;
+  \item Buntstifte oder Filzstifte (möglichst in den Projektfarben rot \texttt{\#CC2020} und schwarz);
+  \item Aufgabenblatt (Anhang~\ref{ap:auf});
+  \item Tafel oder Whiteboard.
+\end{itemize}
+
+\subsection{Bereitstellung der Software}
+
+Drei Wege, in Reihenfolge der Einfachheit:
+
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item \textbf{Hosting} auf GitHub Pages, dem Schulserver oder der LOGINEO-Cloud. Verteilung per QR-Code an der Tafel.
+  \item \textbf{Lokale Kopie} auf jedem Schulrechner (Öffnen der \texttt{index.html} per \texttt{file://}).
+  \item \textbf{PWA-Modus offline}: einmaliges Öffnen mit Internet, danach permanent verfügbar im Browser-Cache.
+\end{enumerate}
+
+% =============================================================================
+\section{Differenzierung und Barrierefreiheit}\label{sec:diff}
+
+Jede Aufgabe bietet \acc{mindestens zwei Zugänge} und \acc{zwei Darstellungsformen}. Damit erfüllt die Sequenz die Grundgedanken der \emph{Universal Design for Learning} und ist mit den meisten Nachteilsausgleichen vereinbar.
+
+\subsection{Lernende mit Nachteilsausgleich (LRS, Dyskalkulie u.~a.)}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Zeitzuschlag in Aufgabe~1.2 (15 statt 10 Minuten).
+  \item Karopapier mit vorab eingezeichnetem Mittelpunkt.
+  \item Wahl zwischen schriftlicher und mündlicher Verteidigung des Endprodukts.
+\end{itemize}
+
+\subsection{Leistungsstarke Lernende (LK-Niveau)}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item Vertiefung: Herleitung des Entscheidungsparameters $d_0 = 1 - R$ durch Auswertung von $F(x, y) = x^2 + y^2 - R^2$ am Mittelpunkt $(1,\, R - \tfrac{1}{2})$.
+  \item Forschungsaufgabe: Konvergenzgeschwindigkeit der diskreten Fläche gegen $\pi r^2$ für $r \to \infty$. Antwort: $O(r^{2/3})$ (Resultat aus der analytischen Zahlentheorie, Gauß-Kreisproblem).
+  \item Programmieraufgabe: Implementierung des euklidischen Algorithmus in 20 Zeilen Python.
+\end{itemize}
+
+\subsection{Variante in Einzelstunden (45 min)}
+Wo Doppelstunden nicht angeboten werden, lassen sich die vier Doppelstunden in acht Einzelstunden aufteilen. Die jeweils erste Stunde dient der Einführung, die zweite der Vertiefung und der praktischen Anwendung.
+
+\subsection{Hybridunterricht und Distanzlernen}
+Die Webnatur von Pixel Round erlaubt einen reibungslosen Übergang in Distanzformate (BigBlueButton-Instanzen der Länder, Zoom Education, Microsoft Teams für Bildung). Die Lehrkraft teilt den Bildschirm; die Lernenden arbeiten parallel am eigenen Gerät. Karopapierarbeiten werden fotografiert und über die schulische Lernplattform (Mebis, LernSax, Schulcloud) eingereicht.
+
+% =============================================================================
+\section{Unterrichtssequenz}
+
+Die Sequenz folgt einer Vier-Phasen-Struktur, die der deutschen fachdidaktischen Tradition entspricht: \acc{Hinführung} (Einstieg) --- \acc{Erarbeitung} (Schülerarbeit) --- \acc{Sicherung} (Institutionalisierung) --- \acc{Anwendung} (Transfer). Jede Doppelstunde umfasst alle vier Phasen mit unterschiedlicher Gewichtung.
+
+% =============================================================================
+\subsection{Doppelstunde 1 --- »Wie zeichnet ein Computer einen Kreis aus Quadraten?«}\label{stunde1}
+
+\subsubsection*{Stundenziel}
+Das Kernproblem der diskreten Rasterung als echtes mathematisches Problem etablieren; die Kreisgleichung mobilisieren; Pixel Round vorstellen.
+
+\medskip
+
+\begin{aufgabe}[1.1 --- Einstieg \quad\zeit{15 min}]
+\textbf{Methode:} \emph{Think--Pair--Share}. \\[0.4em]
+\textbf{Ablauf:}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.2em,topsep=0.3em,nosep]
+  \item Drei klassische Pixel-Art-Motive auf die Leinwand projizieren: Mario-Pilz, einen Pokémon der ersten Generation, das Retro-Doodle von Google.
+  \item Leitfrage: \emph{»Was haben diese drei Bilder gemeinsam? Wodurch unterscheiden sie sich von einem mit dem Zirkel gezeichneten Kreis?«}
+  \item Stille Einzelarbeit (2 min), dann Austausch im Tandem (3 min).
+  \item Plenum: Antworten an der Tafel sammeln; gezielt zur Beobachtung führen --- \emph{der Rechner kann nur Quadrate ein- oder ausschalten; wonach entscheidet er, welche?}
+\end{enumerate}
+\end{aufgabe}
+
+\begin{aufgabe}[1.2 --- Problematisierung \quad\zeit{20 min}]
+\textbf{Methode:} Handzeichnung im Vergleich zur formalen Definition. \\[0.4em]
+\textbf{Material:} Karopapier, Bleistift. \\[0.4em]
+\textbf{Ablauf:}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.2em,topsep=0.3em,nosep]
+  \item Jede Lernende erhält ein halbes Blatt Karopapier und markiert das Zentrum eines $11 \times 11$-Bereichs.
+  \item Auftrag: \emph{»Zeichnet den besten Kreis, den ihr hinbekommt, mit Durchmesser 10. Vier Minuten. Kein Radieren.«}
+  \item Nach Ablauf der Zeit: Drei oder vier Lernende übertragen ihre Zeichnung an die vorbereitete Tafel-Karoflur.
+  \item Geleitete Beobachtung: \emph{»Habt ihr alle dasselbe gezeichnet? Warum nicht? Wer hat recht?«}
+  \item Institutionalisierung: Es gibt keine eindeutige Antwort. Jede Lernende hat implizit ein anderes \acc{Kriterium} angelegt.
+\end{enumerate}
+\end{aufgabe}
+
+\begin{aufgabe}[1.3 --- Sicherung \quad\zeit{25 min}]
+\textbf{Methode:} Lehrervortrag im Dialog mit der Klasse; Hefteinträge nach Tafelbild.
+
+Die implizite Gleichung eines Kreises mit Mittelpunkt $O$ und Radius $r$ lautet:
+
+\begin{formel}
+\centering
+$\displaystyle x^2 + y^2 \;=\; r^2$
+\end{formel}
+
+Innere Punkte erfüllen $x^2 + y^2 < r^2$. Die Verallgemeinerung auf die Ellipse mit Halbachsen $r_x, r_y$:
+
+\begin{formel}
+\centering
+$\displaystyle \left(\dfrac{x}{r_x}\right)^{\!2} + \left(\dfrac{y}{r_y}\right)^{\!2} \;=\; 1$
+\end{formel}
+
+Auf einem Pixelraster ist die Frage, welche \acc{Zellen} zum Inneren gehören. Pixel Round bietet drei Antworten:
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em]
+  \item \acc{Euklidisch}: Liegt der Zellenmittelpunkt $(i + \tfrac{1}{2},\, j + \tfrac{1}{2})$ im Inneren?
+  \item \acc{Bresenham}: Klassischer Algorithmus von 1965, nur Ganzzahlarithmetik.
+  \item \acc{Schwellenwert}: Liegt eine Ecke der Zelle im Inneren?
+\end{itemize}
+
+\textbf{Live-Demonstration:} Pixel Round wird mit Durchmesser 10 geöffnet. Die Lehrkraft wechselt zwischen den drei Algorithmen, jeweils 30 Sekunden Aufmerksamkeit. Pointe: Alle drei sind \emph{mathematisch korrekt}, jeder unter seinem eigenen Kriterium.
+\end{aufgabe}
+
+\begin{aufgabe}[1.4 --- Anwendung und Hausaufgabe \quad\zeit{30 min}]
+\textbf{Arbeitsauftrag:} \emph{»Zurück zum Karopapier. Zeichnet den Kreis mit Durchmesser 10 erneut, diesmal \acc{strikt} nach dem euklidischen Kriterium: Zelle füllen genau dann, wenn ihr Mittelpunkt $(i + 0.5,\, j + 0.5)$ in Abstand $\leq 5$ zum Kreismittelpunkt liegt.«}
+
+Vergleich mit der entsprechenden Pixel-Round-Ausgabe im euklidischen Modus. \emph{Die beiden Zeichnungen müssen übereinstimmen.}
+
+\textbf{Hausaufgabe (Hefteintrag):} Wiederhole die Aufgabe für Durchmesser 8 und 14. Notiere in einem Satz, was es bedeutet, dass eine Zelle »im Kreis« liegt.
+\end{aufgabe}
+
+% =============================================================================
+\subsection{Doppelstunde 2 --- »Drei Algorithmen, drei Zeichnungen«}
+
+\subsubsection*{Stundenziel}
+Die drei Algorithmen als mathematisch unterschiedliche Kriterien vertiefen und quantitativ vergleichen.
+
+\begin{aufgabe}[2.1 --- Wiedereinstieg \quad\zeit{10 min}]
+Hausaufgaben einsammeln und stichprobenartig vergleichen. Stundenziel ansagen: \emph{»Heute betrachten wir jeden Algorithmus unter dem Mikroskop und erkennen, warum Bresenham als ein Juwel der Informatik gilt.«}
+\end{aufgabe}
+
+\begin{aufgabe}[2.2 --- Euklidisches Verfahren \quad\zeit{20 min}]
+Formale Reformulierung. Für eine Zelle $(i, j)$ werden die normierten Abstände berechnet:
+
+\begin{formel}
+\centering
+$\displaystyle d_x = \dfrac{i + \tfrac{1}{2} - c_x}{r_x},\qquad d_y = \dfrac{j + \tfrac{1}{2} - c_y}{r_y}$
+\end{formel}
+
+Die Zelle wird genau dann gefüllt, wenn $d_x^{\,2} + d_y^{\,2} \leq 1$.
+
+\textbf{Im Plenum:} Beispiel $c_x = c_y = 5$, $r_x = r_y = 5$, Zelle $(2, 1)$. Es folgt $d_x = -0{,}5$, $d_y = -0{,}7$, also $d_x^2 + d_y^2 = 0{,}74 \leq 1$. \emph{Innen.}
+
+\textbf{Einzelarbeit:} Jede Lernende testet die Zelle $(0, 0)$. (Lösung: $1{,}62 > 1$, also \acc{außen}.)
+\end{aufgabe}
+
+\begin{aufgabe}[2.3 --- Bresenham-Algorithmus \quad\zeit{30 min}]
+\textbf{Historischer Anker.} Jack Bresenham veröffentlicht den Algorithmus 1965 bei IBM. Eine einzige Gleitkommamultiplikation auf damaligen Rechnern kostete einige hundert Mikrosekunden. Bresenhams Beitrag: Zeichnen mit \emph{ausschließlich} ganzzahligen Additionen und Vergleichen.
+
+Ausgehend von $(x = 0,\, y = R)$ mit $d_0 = 1 - R$, bei jedem Schritt im Oktanten $0$--$45°$:
+
+\begin{formel}
+\centering
+$\begin{cases}
+\text{wenn } d < 0: & \text{nächstes Pixel: } (x{+}1,\, y),\; d \mathrel{+}= 2x+3 \\
+\text{wenn } d \geq 0: & \text{nächstes Pixel: } (x{+}1,\, y{-}1),\; d \mathrel{+}= 2(x-y)+5
+\end{cases}$
+\end{formel}
+
+\textbf{Tafelbild:} den Algorithmus für $R = 5$ Schritt für Schritt durchgehen, $x$, $y$, $d$ tabellieren. Die übrigen sieben Oktanten ergeben sich aus der Diedersymmetrie $D_4$.
+
+\textbf{Konrad-Zuse-Bezug:} der Z3 (1941, Konrad Zuse, Berlin) war der erste programmierbare Rechner der Welt. Bresenhams Beitrag passt in die direkte Linie dieser deutschen Informatikgeschichte.
+
+\textbf{Differenzierungshinweis:} Bei Schwierigkeiten mit der Algebra des Entscheidungsparameters den Algorithmus als \emph{Regel} präsentieren. Vollständige Herleitung im technischen Begleitdokument.
+\end{aufgabe}
+
+\begin{aufgabe}[2.4 --- Schwellenwert-Algorithmus \quad\zeit{15 min}]
+Für jede Zelle $(i, j)$ wird die zum Kreismittelpunkt nächstgelegene Ecke bestimmt:
+
+\begin{formel}
+\centering
+$\displaystyle n_x = \mathrm{clamp}(c_x,\, i,\, i{+}1),\qquad n_y = \mathrm{clamp}(c_y,\, j,\, j{+}1)$
+\end{formel}
+
+Die Zelle wird gefüllt, wenn $\left(\dfrac{n_x - c_x}{r_x}\right)^{\!2} + \left(\dfrac{n_y - c_y}{r_y}\right)^{\!2} \leq 0{,}94$.
+
+\textbf{Warum 0,94 statt 1?} Empirisch entstehen bei $1$ einzelne Pixel-»Stacheln« an den vier Kardinalpunkten. Der leicht reduzierte Schwellenwert beseitigt sie. \emph{Eine ingenieurmäßige Entscheidung aus visueller Inspektion} --- ein wertvolles Beispiel dafür, dass reine Mathematik nicht alle Antworten gibt.
+\end{aufgabe}
+
+\begin{aufgabe}[2.5 --- Quantitativer Vergleich \quad\zeit{15 min}]
+\textbf{Partnerarbeit.} In Pixel Round:
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em,nosep]
+  \item Durchmesser 16 einstellen, Modus \emph{Gefüllt}.
+  \item Info-Chip aktivieren. Die diskrete Fläche aller drei Algorithmen notieren.
+  \item Kontinuierliche Fläche berechnen: $\pi r^2 = 64\pi \approx 201{,}06$.
+  \item Relativer Fehler pro Algorithmus: $\dfrac{|A_{\text{disk}} - A_{\text{kont}}|}{A_{\text{kont}}} \times 100\%$.
+  \item Reihenfolge: vom kleinsten zum größten Fehler.
+\end{enumerate}
+
+\textbf{Erwartetes Ergebnis:} Euklidisch unter 1\%; Schwellenwert überschätzt um wenige Prozent; Bresenham dazwischen. Auswertung im Plenum.
+\end{aufgabe}
+
+% =============================================================================
+\subsection{Doppelstunde 3 --- »Von der Ellipse zum Ellipsoid: die dritte Dimension«}
+
+\subsubsection*{Stundenziel}
+Die Ellipsengleichung in den Raum verallgemeinern; Voxel und diskretes Volumen einführen; ebene Schnitte als lineare Ungleichungen verstehen.
+
+\begin{aufgabe}[3.1 --- Übergang 2D zu 3D \quad\zeit{25 min}]
+Eine dritte Koordinate $z$ wird hinzugefügt. Die Ellipsengleichung verallgemeinert sich unmittelbar:
+
+\begin{formel}
+\centering
+$\displaystyle \left(\dfrac{x}{r_x}\right)^{\!2} + \left(\dfrac{y}{r_y}\right)^{\!2} + \left(\dfrac{z}{r_z}\right)^{\!2} \;=\; 1$
+\end{formel}
+
+Bei $r_x = r_y = r_z = r$ erhalten wir die \acc{Kugel} $x^2 + y^2 + z^2 = r^2$.
+
+\textbf{Voxel.} Die Zelle eines 3D-Rasters heißt \emph{Voxel} (\emph{volume element}). Das Zugehörigkeitskriterium ist mit der dritten Koordinate identisch:
+
+\begin{formel}
+\centering
+$\displaystyle a_x^2 + a_y^2 + a_z^2 \leq 1,\quad a_\xi = \dfrac{\xi + \tfrac{1}{2} - c_\xi}{r_\xi}$
+\end{formel}
+
+\textbf{Live-Demonstration.} Modus wechseln auf 3D, zwischen Kugel und Ellipsoid umschalten, mit der Maus rotieren. Schattierungsstile \emph{Classic}, \emph{Smooth}, \emph{Blocks} vorführen.
+\end{aufgabe}
+
+\begin{aufgabe}[3.2 --- Kontinuierliches vs.\ diskretes Volumen \quad\zeit{25 min}]
+Das kontinuierliche Volumen ist ein klassisches Ergebnis der Integralrechnung:
+
+\begin{formel}
+\centering
+$\displaystyle V \;=\; \dfrac{4}{3}\,\pi\, r_x\, r_y\, r_z$
+\end{formel}
+
+Bei $r_x = r_y = r_z = r$: $V = \tfrac{4}{3}\pi r^3$. Diese Formel ist in den Abituraufgaben zur analytischen Geometrie regelmäßig anzutreffen.
+
+\textbf{Partnerarbeit:}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em,nosep]
+  \item Berechnung des kontinuierlichen Volumens für $D = 12$, $r = 6$: $V = \tfrac{4}{3}\pi \cdot 216 \approx 904{,}78$.
+  \item In Pixel Round Kugel $D = 12$ erzeugen, Modus \emph{Gefüllt}. Diskretes Volumen ablesen.
+  \item Relativer Fehler berechnen.
+\end{enumerate}
+
+\textbf{Diskussion:} Das Verhältnis $V_{\text{disk}}/V_{\text{kont}} \to 1$ für $D \to \infty$. Für kleine $D$ besteht eine merkliche Differenz --- und das ist \emph{mathematisch korrekt}: Die Diskretisierung verändert tatsächlich die Zählung. Bezug zum Gauß-Kreisproblem (s.~Vertiefungsaufgabe in §\ref{sec:diff}).
+\end{aufgabe}
+
+\begin{aufgabe}[3.3 --- Schnitte als lineare Ungleichungen \quad\zeit{20 min}]
+Pixel Round erlaubt drei Schnittebenen. Jeder Schnitt ist eine \acc{lineare Ungleichung} bezüglich der Voxelkoordinaten:
+
+\begin{formel}
+\centering
+$\begin{array}{lcl}
+\text{X-Achse:} & x \geq \mathit{cut} & \Rightarrow \text{Voxel verworfen} \\
+\text{Y-Achse:} & y \geq \mathit{cut} & \Rightarrow \text{Voxel verworfen} \\
+\text{Diagonale:} & x + y \geq \mathit{cut} & \Rightarrow \text{Voxel verworfen}
+\end{array}$
+\end{formel}
+
+\textbf{Demonstration.} Kugel in $Y$ auf 50\% schneiden, dann in $X$ auf 50\%, dann diagonal auf 50\%. Auswirkung auf das Bild beobachten.
+
+\textbf{Leitfrage:} \emph{»Warum reicht der Diagonalschnitt-Regler bis $D_x + D_y$ und nicht nur bis $D_x$? An welcher Stelle in der Ungleichung steht die Antwort?«}
+\end{aufgabe}
+
+\begin{aufgabe}[3.4 --- Kunsthistorischer Anker \quad\zeit{20 min}]
+\emph{Verknüpfung mit dem Bauhaus-Erbe.}
+
+Drei Bilder projizieren:
+\begin{itemize}[leftmargin=1.3em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item Albrecht Dürers Holzschnitt \emph{Melencolia I} (1514): das magische Quadrat $4 \times 4$ und die polyedrische Form.
+  \item Wassily Kandinsky, \emph{Kreise im Kreis} (1923): Bauhaus-Komposition aus geometrischen Grundformen.
+  \item Joseph Albers, \emph{Homage to the Square} (1949--76): Variation derselben Form unter veränderten Bedingungen.
+\end{itemize}
+
+\textbf{Diskussion:} \emph{»Das Bauhaus formulierte das Gestalten aus Kreis, Quadrat und Dreieck als Grammatik. Pixel Round bringt dieselbe Grammatik in den Rechner. Was bleibt vom Bauhaus-Konzept in der digitalen Pixelkunst, was geht verloren?«}
+
+Diese Verknüpfung ist eine Brücke zum Fach Kunst und kann als gemeinsames Projekt mit der Kunstlehrkraft fortgeführt werden.
+\end{aufgabe}
+
+% =============================================================================
+\subsection{Doppelstunde 4 --- »Abschlussprojekt: eigene Pixel-Art mit mathematischer Verteidigung«}
+
+\subsubsection*{Stundenziel}
+Die gesamte Sequenz in einer eigenen Produktion bündeln; durch die mathematisch fundierte Präsentation evaluieren.
+
+\begin{aufgabe}[4.1 --- Auftakt \quad\zeit{10 min}]
+\textbf{Auftrag:} \emph{»In Paaren oder Dreiergruppen produziert ihr ein Pixel- oder Voxel-Art-Bild, das mindestens drei der mit Pixel Round erzeugten Figuren kombiniert (Kreise, Ellipsen, Kugeln, Ellipsoide). Figur, Logo, Symbol, Tier --- ihr entscheidet. Am Ende präsentiert jede Gruppe das Werk und verteidigt die Entscheidungen \acc{mathematisch}: Warum dieser Algorithmus? Warum diese Proportion? Warum dieser Schnitt?«}
+
+\textbf{Gruppenbildung:} vorab heterogen eingeteilt.
+\end{aufgabe}
+
+\begin{aufgabe}[4.2 --- Produktion \quad\zeit{55 min}]
+\textbf{Material je Gruppe:}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.15em,topsep=0.3em,nosep]
+  \item Ein Gerät mit Pixel Round;
+  \item Karopapier, Bleistifte und Filzstifte für Skizzen;
+  \item Reflexionsbogen mit drei Pflichtfragen (Anhang~\ref{ap:auf}, Aufgabe~5).
+\end{itemize}
+
+\textbf{Innere Phasen:}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em,nosep]
+  \item \zeit{10 min} Brainstorming und Skizze.
+  \item \zeit{25 min} Produktion in Pixel Round; Teilbilder als PNG exportieren.
+  \item \zeit{10 min} Komposition auf Karopapier mit Filzstiften oder digital.
+  \item \zeit{10 min} schriftliche Verteidigung.
+\end{enumerate}
+
+\textbf{Begleitung durch die Lehrkraft:} Rundgang mit gezielten Fragen --- \emph{»Warum genau dieser Algorithmus? Wie ließe sich dieser Schnitt durch eine Ungleichung beschreiben?«}
+\end{aufgabe}
+
+\begin{aufgabe}[4.3 --- Präsentation und Schlussreflexion \quad\zeit{25 min}]
+Jede Gruppe hat zwei Minuten für ihre Präsentation und beantwortet mindestens eine der drei Pflichtfragen.
+
+\textbf{Mindestkriterien:}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item mindestens eine mathematische Figur identifizieren;
+  \item den gewählten Algorithmus benennen und begründen (auch \emph{nachträglich});
+  \item bei 3D-Schnitt: als Ungleichung beschreiben.
+\end{itemize}
+
+\textbf{Schlussreflexion durch die Lehrkraft (5 min):} Kernthese erneut formulieren --- \emph{»Auf einem diskreten Raster gibt es keine eindeutige Repräsentation einer stetigen Kurve. Sich für eine zu entscheiden, ist eine mathematische Handlung.«} Termin für Abgabe von Arbeitsblatt und Reflexionsbogen.
+\end{aufgabe}
+
+% =============================================================================
+\section{Leistungsbewertung}
+
+Die Leistungsbewertung folgt den Vorgaben der jeweiligen Landes-APO-GOSt und unterscheidet zwischen \acc{schriftlicher} und \acc{sonstiger Mitarbeit} (in vielen Ländern: \emph{Sonstige Mitarbeit / Allgemeine Mitarbeit}).
+
+\subsection{Lernstandsdiagnose}
+In Doppelstunde~1, Aufgabe~1.2. Die Lehrkraft erkennt frühzeitig, welche Lernenden Lücken in Koordinatensystem, Kreisgleichung oder Flächeninhalt haben.
+
+\subsection{Formative Bewertung}
+Verteilt über die vier Doppelstunden: Beobachtung der Beteiligung, Qualität der individuellen Antworten in den Aufgaben 1.4, 2.2 und 2.5, der Berechnungen in 3.2.
+
+\subsection{Summative Bewertung}
+Zwei Produkte:
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.2em,topsep=0.3em,nosep]
+  \item \textbf{Aufgabenblatt} (Anhang~\ref{ap:auf}), 5 Aufgaben, Abgabe nach Doppelstunde~4.
+  \item \textbf{Abschlussprojekt} (Aufgabe~4.2) mit Reflexionsbogen.
+\end{enumerate}
+
+\subsection{Bewertungsraster (Punktewertung 0--15)}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.20\textwidth}XX@{}}
+\toprule
+\textbf{Bereich} & \textbf{Gut bis sehr gut (10--15 Punkte)} & \textbf{Ausreichend / mangelhaft (0--9 Punkte)} \\
+\midrule
+\textbf{Mathematischer Inhalt} & Wendet die Gleichungen von Ellipse und Ellipsoid korrekt an; unterscheidet die drei Algorithmen und antizipiert deren Wirkung. & Verwendet die Kreisgleichung, scheitert aber an der Verallgemeinerung; verwechselt die Algorithmen. \\
+\addlinespace[3pt]
+\textbf{Werkzeuggebrauch} & Bedient Pixel Round in 2D und 3D selbständig; exportiert; wechselt Algorithmen sicher. & Benötigt häufige Hilfestellung; bedient nur 2D. \\
+\addlinespace[3pt]
+\textbf{Argumentation} & Verteidigt das Endprodukt mit präziser Fachsprache (Algorithmus, Voxel, Schnitt, Ungleichung). & Begründet nur ästhetisch; Fachsprache fehlt. \\
+\addlinespace[3pt]
+\textbf{Kooperation} & Konstruktiver Beitrag in Tandem oder Triade; aktive Diskussionsbeteiligung. & Einzelarbeit; kaum Beitrag. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Gewichtung im Halbjahresergebnis}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item Aufgabenblatt: 40\%.
+  \item Abschlussprojekt mit Präsentation: 50\%.
+  \item Sonstige Mitarbeit: 10\%.
+\end{itemize}
+
+% =============================================================================
+\section{Fächerverknüpfungen}
+
+\subsection{Informatik}
+Der Bresenham-Algorithmus ist Stoff jedes Informatikkurses zur Algorithmik. Doppelstunde~2.3 lässt sich mit der Informatik-Lehrkraft koordinieren; die Implementierung in 25 Zeilen Python kann als Hausaufgabe ergänzt werden. Bezug zum deutschen Informatik-Erbe: \emph{Konrad Zuse, Z3 (1941), erster programmierbarer Rechner der Welt}.
+
+\subsection{Bildende Kunst}
+Pixel Art wird im Kunstunterricht traditionell als digitale Bildsprache behandelt. Pixel Round bietet die seltene Gelegenheit, Mathematik und Kunst am selben Gegenstand zusammenzuführen: Die Figur \emph{ist gleichzeitig} Gleichung und Komposition. Vorschlag: gemeinsame Ausstellung der Schülerwerke im Schulhaus oder digital.
+
+\subsection{Physik}
+Die Tonebene von Pixel Round verwendet additive Synthese reiner Sinuswellen. Die gewählten Frequenzen nähern Töne der \acc{gleichstufigen 12-Ton-Stimmung} an (jeder Halbton multipliziert die Frequenz mit $2^{1/12} \approx 1{,}0595$). Direkter Bezug zu den Themen \emph{Mechanische Wellen} und \emph{Akustik} in der Physik-Sek.~II.
+
+\subsection{Geschichte und Kulturkunde}
+Bresenham veröffentlichte den Algorithmus 1965 in den USA --- doch die deutsche Informatikgeschichte beginnt früher: Konrad Zuse, Berlin, Z3 1941. Eine Querverbindung zur Geschichte oder Sozialkunde ist möglich: \emph{Wieso entstand der Computer in dieser Zeit? Wer waren die Akteure? Wer profitiert heute?}
+
+% =============================================================================
+\section{Literatur}
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.2em,topsep=0.3em]
+  \item BLUM, W. Mathematisches Modellieren --- zu schwer für Schüler und Lehrer? \emph{Beiträge zum Mathematikunterricht}, S.~3--12, 2007.
+  \item BRESENHAM, J. E. Algorithm for computer control of a digital plotter. \emph{IBM Systems Journal}, Bd.~4, Nr.~1, S.~25--30, 1965.
+  \item KMK --- KULTUSMINISTERKONFERENZ. \emph{Bildungsstandards im Fach Mathematik für die Allgemeine Hochschulreife}. Bonn: KMK, 2012.
+  \item KIRSCH, A. Vorschläge zur Behandlung des Volumens des Rotationsparaboloids in der Schule. \emph{Der Mathematikunterricht}, Jg.~13, Heft 3, 1967.
+  \item LAKATOS, I. \emph{Beweise und Widerlegungen --- Die Logik mathematischer Entdeckungen}. Braunschweig: Vieweg, 1979.
+  \item PITTEWAY, M. L. V. Algorithm for drawing ellipses or hyperbolae with a digital plotter. \emph{The Computer Journal}, Bd.~10, Nr.~3, S.~282--289, 1967.
+  \item PÓLYA, G. \emph{Schule des Denkens. Vom Lösen mathematischer Probleme}. Tübingen: Francke, 1949 [orig.~1945].
+  \item VYGOTSKIJ, L. S. \emph{Denken und Sprechen}. Frankfurt am Main: Fischer, 1969 [orig.~1934].
+  \item WAGENSCHEIN, M. \emph{Verstehen lehren. Genetisch, sokratisch, exemplarisch}. Weinheim: Beltz, 1968.
+  \item WINTER, H. Mathematikunterricht und Allgemeinbildung. \emph{Mitteilungen der Gesellschaft für Didaktik der Mathematik}, Nr.~61, S.~37--46, 1995.
+  \item Pixel Round --- technischer Begleittext: \texttt{docs\_math/Pixel\_Round\_Math\_de-DE.pdf}.
+\end{itemize}
+
+\newpage
+% =============================================================================
+% ANHÄNGE
+% =============================================================================
+\appendix
+\renewcommand{\thesection}{\Alph{section}}
+\setcounter{section}{0}
+
+\section{Demonstrationsskript für Pixel Round}\label{ap:skript}
+
+Empfohlene Sequenz für die Live-Demonstration in Aufgabe~1.3 und zur Einarbeitung der Lehrkraft. Gesamtdauer: 15 Minuten.
+
+\subsection{Einstieg und 2D-Modus}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item Pixel Round öffnen. Obere Leiste, Canvas-Bereich und Bedienelemente benennen.
+  \item Modus \acc{2D / Kreis} bestätigen.
+  \item Schieberegler \emph{Size} auf 10 setzen.
+  \item Info-Chip im Canvas aktivieren. Ablesung: »Durchmesser 10, Radius 5, Fläche \dots, Algorithmus Euklidisch.«
+  \item Algorithmen umschalten: \acc{Euklidisch / Bresenham / Schwellenwert}. Je 30 Sekunden Pause.
+\end{enumerate}
+
+\subsection{Ellipse}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item Auf \acc{Ellipse} umschalten. Es erscheinen die Regler \emph{Breite} und \emph{Höhe}.
+  \item $W = 16$, $H = 8$ einstellen.
+  \item Leitfrage: \emph{»Die zugehörige Gleichung ist $(x/8)^2 + (y/4)^2 = 1$. Warum durch 8 bzw.\ 4?«}
+\end{enumerate}
+
+\subsection{3D-Modus}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item Auf \acc{3D / Kugel}, $D = 12$.
+  \item Mit der Maus rotieren.
+  \item Info-Chip: Volumen ablesen.
+  \item Auf \acc{Ellipsoid} umschalten: $W = 20$, $H = 10$, $D = 10$.
+  \item Schnittregler $Y$ auf 50\%.
+  \item Diagonale Achse einschalten. Schrägschnitt erklären.
+\end{enumerate}
+
+\subsection{Export}
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em,topsep=0.3em]
+  \item Download-Knopf benutzen.
+  \item PNG speichern.
+  \item Bemerkung: hochauflösend, druck- und beamertauglich.
+\end{enumerate}
+
+% =============================================================================
+\newpage
+\section{Aufgabenblatt}\label{ap:auf}
+
+\textbf{Hinweis.} Einzelarbeit. Verifikation in Pixel Round zulässig, \emph{aber die mathematische Begründung ist Pflicht}.
+
+\subsection*{Aufgabe 1 --- Kreisgleichung}
+\textbf{Aufgabenstellung.} Ein Kreis hat den Mittelpunkt $(0, 0)$ und den Radius $r = 7$. Für jeden der folgenden Punkte: liegt er \emph{innerhalb}, \emph{außerhalb} oder \emph{auf} dem Kreis? Begründung.
+\begin{enumerate}[label=\alph*),leftmargin=1.5em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item $(3, 4)$ \hfill \emph{Lösung:} innen ($25 < 49$).
+  \item $(5, 5)$ \hfill \emph{Lösung:} außen ($50 > 49$).
+  \item $(0, 7)$ \hfill \emph{Lösung:} auf.
+  \item $(-7, 0)$ \hfill \emph{Lösung:} auf.
+\end{enumerate}
+
+\subsection*{Aufgabe 2 --- Euklidisches Kriterium}
+\textbf{Aufgabenstellung.} Mittelpunkt $(5, 5)$, Radius $5$. Wird die Zelle $(1, 3)$ gefüllt?
+
+\emph{Lösung:} Zellenmittelpunkt $(1{,}5,\, 3{,}5)$, Abstand $\sqrt{14{,}5} \approx 3{,}81 < 5$. \acc{Innen}.
+
+\subsection*{Aufgabe 3 --- Diskrete vs.\ kontinuierliche Fläche}
+\textbf{Aufgabenstellung.} In Pixel Round Kreis $D = 20$ im euklidischen Modus erzeugen. Diskrete Fläche ablesen. $\pi r^2$ berechnen. Relativen Fehler bilden. Mit Schwellenwertalgorithmus wiederholen. Vergleichen.
+
+\emph{Lösung:} $A_{\text{kont}} = 100\pi \approx 314{,}16$. Euklidisch typisch $< 2\%$. Schwellenwert überschätzt um 5--8\%.
+
+\subsection*{Aufgabe 4 --- Volumen eines Ellipsoids und Schnitt}
+\textbf{Aufgabenstellung.} Halbachsen $r_x = 4$, $r_y = 6$, $r_z = 3$.
+\begin{enumerate}[label=\alph*),leftmargin=1.5em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item Kontinuierliches Volumen.
+  \item Nach Schnitt auf der $Y$-Achse mit 50\% Erhalt: verbleibendes Volumen.
+  \item Beschreibung des Schnitts als Ungleichung.
+\end{enumerate}
+
+\emph{Lösung:}
+(a) $V = 96\pi \approx 301{,}59$.
+(b) Aus Symmetrie: $\approx 150{,}80$.
+(c) $y < \mathit{cut}$ mit $\mathit{cut} = 6$.
+
+\subsection*{Aufgabe 5 --- Reflexionsbogen für das Abschlussprojekt}
+\begin{enumerate}[label=(\arabic*),leftmargin=1.7em,itemsep=0.15em,topsep=0.2em,nosep]
+  \item Welche geometrischen Figuren wurden verwendet (Kreis, Ellipse, Kugel, Ellipsoid)? Welche Parameter?
+  \item Welcher Algorithmus für die Hauptfigur? Warum? Welcher visuelle Effekt entsteht, der mit den anderen nicht erzielt würde?
+  \item Wurden 3D-Schnitte verwendet? Wenn ja, einen davon als Ungleichung formulieren.
+\end{enumerate}
+
+% =============================================================================
+\newpage
+\section{Anpassung für Schulen ohne digitale Ausstattung}\label{ap:adapt}
+
+Diese Anpassung ermöglicht die Durchführung der Sequenz \emph{vollständig auf Papier}, wenn der Zugang zu Endgeräten nicht für die gesamte Lerngruppe gewährleistet ist. Die fachliche Substanz bleibt erhalten; nur das Medium ändert sich.
+
+\subsection{Ersatzmaßnahmen pro Doppelstunde}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.18\textwidth}p{0.34\textwidth}X@{}}
+\toprule
+\textbf{Doppelstunde} & \textbf{Originalaktivität} & \textbf{Analoger Ersatz} \\
+\midrule
+1 & Pixel-Round-Demonstration (1.3) & Die Lehrkraft zeichnet die drei Algorithmusvarianten des Kreises $D = 10$ auf einem an die Wand gehefteten Karoplakat. \\
+\addlinespace[3pt]
+2 & Softwarevergleich (2.5) & Vorbereitete Arbeitsblätter mit drei bereits abgebildeten $D = 16$-Kreisen verteilen. Zellen manuell abzählen. \\
+\addlinespace[3pt]
+3 & Erzeugung der 3D-Kugel (3.1, 3.2) & Arbeitsblätter mit den \emph{Schichten} der Kugel ($z = 0, 1, 2, \ldots$) auf Karopapier verteilen. Mental stapeln. \\
+\addlinespace[3pt]
+4 & Produktion in Pixel Round (4.2) & Produktion \emph{ausschließlich} auf Karopapier mit Buntstiften. Verteidigung (4.3) unverändert. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Vorbereitungs-Kit (einmalig)}
+\begin{itemize}[leftmargin=1.3em,itemsep=0.1em,topsep=0.2em,nosep]
+  \item Ein DIN-A3-Bogen mit $30 \times 30$ Karos.
+  \item Pro Lernender ein Set von 4 DIN-A4-Karobögen.
+  \item Eine Vergleichsblattserie mit allen drei Kreisvarianten ($D = 16$), zu Hause vorbereitet und in der Schulkopierstelle vervielfältigt.
+\end{itemize}
+
+\subsection{Länderspezifische Curriculum-Crosswalk}\label{ap:laender}
+
+Auswahl von Bundesländern mit eigenen Bildungsplänen:
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.18\textwidth}p{0.30\textwidth}X@{}}
+\toprule
+\textbf{Bundesland} & \textbf{Lehrplanwerk} & \textbf{Zugehöriges Themenfeld} \\
+\midrule
+Bayern & LehrplanPLUS Gymnasium & Q12, Mathematik: Analytische Geometrie. \\
+\addlinespace[3pt]
+NRW & Kernlehrplan GOSt & Q-Phase Mathematik: Geometrische Objekte im Raum (LK + GK). \\
+\addlinespace[3pt]
+Baden-Württemberg & Bildungsplan 2016 & Kursstufe Math.: Vektorgeometrie und Lagebeziehungen. \\
+\addlinespace[3pt]
+Berlin/Brandenburg & Rahmenlehrplan SekII & Mathematik: Analytische Geometrie. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+% =============================================================================
+\newpage
+\section{Glossar für Lehrkräfte}\label{ap:glos}
+
+\begin{itemize}[leftmargin=1.4em,itemsep=0.3em,topsep=0.3em]
+  \item \acc{Algorithmus} --- endliche, wohldefinierte Befehlsfolge zur Problemlösung. Die drei Algorithmen in Pixel Round sind unterschiedliche Verfahren für dasselbe Problem.
+  \item \acc{Bresenham-Algorithmus} --- 1965 von Jack Bresenham (IBM) für Strecken veröffentlicht, später auf Kreise und Ellipsen (Pitteway, Kappel) verallgemeinert. Kennzeichen: ausschließlich Ganzzahlarithmetik.
+  \item \acc{Canvas} --- HTML-Element, das eine 2D- oder 3D-Zeichenfläche im Browser bereitstellt.
+  \item \acc{DSGVO-konform} --- entspricht der EU-Datenschutz-Grundverordnung. Pixel Round verarbeitet keinerlei personenbezogene Daten.
+  \item \acc{Implizite Gleichung} --- Gleichung der Form $F(x, y) = 0$, die eine Kurve als Nullstellenmenge einer Funktion definiert. Für die Ellipse: $(x/r_x)^2 + (y/r_y)^2 - 1 = 0$.
+  \item \acc{Pixel} --- Kurzform für \emph{picture element}. Kleinste Einheit eines Digitalbildes; in einem Raster eine $1 \times 1$-Zelle.
+  \item \acc{PWA --- Progressive Web App} --- Webanwendung, die offline lauffähig ist und sich wie eine native App verhält.
+  \item \acc{Rasterung} --- Umsetzung einer kontinuierlichen geometrischen Beschreibung in eine Matrix aus Pixeln (2D) oder Voxeln (3D).
+  \item \acc{Halbachse} --- in einer Ellipse mit Mittelpunkt $M$: Abstand von $M$ zum Ellipsenscheitel in Richtung der entsprechenden Achse. Der Kreis ist der Spezialfall $r_x = r_y$.
+  \item \acc{Gleichstufige 12-Ton-Stimmung} --- Aufteilung der Oktave in 12 gleich große Halbtonschritte. Frequenzverhältnis zweier benachbarter Halbtöne: $\sqrt[12]{2} \approx 1{,}0595$. Grundlage der westlichen Musik.
+  \item \acc{Voxel} --- Kurzform für \emph{volume element}. Dreidimensionale Verallgemeinerung des Pixels: kubische Zelle der Kantenlänge 1.
+  \item \acc{WebGL} --- 3D-Grafik-API im Browser. Pixel Round verwendet sie über \emph{three.js}.
+\end{itemize}
+
+\vspace{2em}
+\begin{center}
+\color{muted}\small\sffamily
+--- Ende der Unterrichtssequenz ---
+\end{center}
+
+\end{document}
