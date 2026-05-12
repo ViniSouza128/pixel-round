@@ -6,13 +6,14 @@
    and serves from cache when offline. Bumping the CACHE version invalidates
    the previous cache on next activation.
    ============================================================================ */
-const CACHE = 'pixel-round-v1';
+const CACHE = 'pixel-round-v2';
 const ASSETS = [
   './',
   './index.html',
   './style.css',
   './manifest.json',
   './favicon.svg',
+  './js/i18n.js',
   './js/state.js',
   './js/algorithms.js',
   './js/audio.js',

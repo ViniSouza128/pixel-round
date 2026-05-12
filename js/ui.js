@@ -181,7 +181,7 @@ function resetState(){
   if (state.mode === '3d') resetCamera3D();
   redraw();
   Sfx.ok();
-  toast('Reset', 'ok');
+  toast(t('reset'), 'ok');
 }
 
 /* Returns true if `el` is a non-navigation tool toggle — render/algo/style
@@ -221,6 +221,7 @@ function setupClickDelegation(){
     const a = t.dataset.act;
     if (a === 'logo'){ goRoute('tool'); return; }
     if (a === 'theme'){ cycleTheme(); return; }
+    if (a === 'lang'){ if (typeof cycleLocale === 'function') cycleLocale(); Sfx.click(); return; }
 
     if (a === 'info-chip'){
       const chip = document.querySelector('.info-chip');
@@ -236,13 +237,13 @@ function setupClickDelegation(){
         Sfx.click();
         if (typeof toggleEdges3D === 'function') toggleEdges3D();
         else update3D();
-        toast(`Edges ${state.edges3d ? 'on' : 'off'}`);
+        toast(window.t(state.edges3d ? 'edges_on' : 'edges_off'));
       } else {
         state.grid = !state.grid;
         t.classList.toggle('active', state.grid);
         const inp = document.querySelector('[data-pref=grid]');
         if (inp) inp.checked = state.grid;
-        Sfx.click(); redraw(); toast(`Grid ${state.grid ? 'on' : 'off'}`);
+        Sfx.click(); redraw(); toast(window.t(state.grid ? 'grid_on' : 'grid_off'));
       }
       return;
     }
@@ -270,7 +271,7 @@ function setupClickDelegation(){
       Sfx.click(); redraw(); return;
     }
 
-    if (a === 'download'){ downloadPNG(); Sfx.ok(); toast('PNG saved', 'ok'); return; }
+    if (a === 'download'){ downloadPNG(); Sfx.ok(); toast(window.t('png_saved'), 'ok'); return; }
     if (a === 'reset'){ resetState(); return; }
 
     // Pills
@@ -371,20 +372,26 @@ function setupSliders(){
 
 /* ---------- PREFS (settings toggles) ------------------------------------ */
 function setupPrefs(){
-  document.querySelectorAll('[data-pref]').forEach(t => {
-    t.addEventListener('change', () => {
-      const k = t.dataset.pref;
+  /* Maps a pref key to the i18n key prefix for its on/off toast. */
+  const TOAST_PREFIX = { sound:'sounds', grid:'grid', center:'center' };
+  document.querySelectorAll('[data-pref]').forEach(el => {
+    el.addEventListener('change', () => {
+      const k = el.dataset.pref;
+      if (k === 'locale'){
+        if (typeof setLocale === 'function') setLocale(el.value);
+        return;
+      }
       if (k === 'sound'){
-        Sfx.setEnabled(t.checked);
-        toast(`Sounds ${t.checked ? 'on' : 'off'}`);
+        Sfx.setEnabled(el.checked);
       } else if (k in state){
-        state[k] = t.checked;
+        state[k] = el.checked;
         // Sync canvas-corner buttons
         const btn = document.querySelector(`[data-act=${k}]`);
-        if (btn) btn.classList.toggle('active', t.checked);
+        if (btn) btn.classList.toggle('active', el.checked);
         redraw();
-        toast(`${k} ${t.checked ? 'on' : 'off'}`);
       }
+      const pfx = TOAST_PREFIX[k];
+      if (pfx) toast(window.t(`${pfx}_${el.checked ? 'on' : 'off'}`));
       Sfx.click();
       savePrefs();
     });
@@ -535,7 +542,7 @@ function setupKeyboard(){
       if (inp) inp.checked = state.center;
       redraw();
     }
-    else if (k === 'd'){ downloadPNG(); toast('PNG saved', 'ok'); }
+    else if (k === 'd'){ downloadPNG(); toast(window.t('png_saved'), 'ok'); }
     else if (k === 't'){ cycleTheme(); }
     else if (k === 'i'){ document.querySelector('.info-chip')?.classList.toggle('open'); }
     else if (k === 'm'){
@@ -550,7 +557,7 @@ function setupKeyboard(){
       Sfx.setEnabled(!Sfx.isEnabled());
       const inp = document.querySelector('[data-pref=sound]');
       if (inp) inp.checked = Sfx.isEnabled();
-      toast(`Sounds ${Sfx.isEnabled() ? 'on' : 'off'}`);
+      toast(window.t(Sfx.isEnabled() ? 'sounds_on' : 'sounds_off'));
     }
   });
 }

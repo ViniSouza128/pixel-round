@@ -101,3 +101,8 @@ const ALGO_FULL_NAME = {
   bresenham: 'Bresenham',
   threshold: 'Threshold',
 };
+const STYLE3D_FULL_NAME = {
+  classic: 'Classic',
+  smooth:  'Smooth',
+  blocks:  'Blocks',
+};

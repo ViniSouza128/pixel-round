@@ -3,7 +3,7 @@
   Pixel Round — pixel-perfect circle / ellipse / sphere / ellipsoid generator.
   All Rights Reserved. See LICENSE and NOTICE.md.
 -->
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="light" id="html-root">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -23,12 +23,12 @@
 
   <!-- UNIFIED TOPBAR: brand (L) · toggles (C) · theme/info/settings (R) -->
   <div class="topbar">
-    <a class="brand" data-act="logo" aria-label="Pixel Round home" title="Pixel Round">
+    <a class="brand" data-act="logo" aria-label="Pixel Round home" title="Pixel Round" data-i18n-title="brand_title" data-i18n-aria="brand_aria">
       <svg class="mark" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
         <circle cx="12" cy="12" r="9"/>
         <circle cx="12" cy="12" r="4" fill="currentColor"/>
       </svg>
-      <span class="title">Pixel Round</span>
+      <span class="title" data-i18n="brand">Pixel Round</span>
     </a>
     <div class="center">
       <div class="mode-strip">
@@ -41,13 +41,18 @@
       </div>
     </div>
     <div class="actions">
-      <button class="icon-btn" data-act="theme" title="Theme (T)" aria-label="Toggle theme">
+      <!-- Language toggle. Label shows CURRENT locale; click cycles through
+           AVAILABLE_LOCALES in js/i18n.js. Picker in Settings mirrors it. -->
+      <button class="icon-btn lang-btn" data-act="lang" title="Change language" aria-label="Change language" data-i18n-title="lang_toggle_title">
+        <span class="lang-lbl">EN-US</span>
+      </button>
+      <button class="icon-btn" data-act="theme" title="Theme (T)" aria-label="Toggle theme" data-i18n-title="theme_title">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.9" y1="4.9" x2="7.1" y2="7.1"/><line x1="16.9" y1="16.9" x2="19.1" y2="19.1"/><line x1="19.1" y1="4.9" x2="16.9" y2="7.1"/><line x1="4.9" y1="19.1" x2="7.1" y2="16.9"/></svg>
       </button>
-      <button class="icon-btn" data-route="info" title="Info" aria-label="Info">
+      <button class="icon-btn" data-route="info" title="Info" aria-label="Info" data-i18n-title="info_title">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6"/><circle cx="12" cy="7.5" r="1" fill="currentColor" stroke="none"/></svg>
       </button>
-      <button class="icon-btn" data-route="settings" title="Settings" aria-label="Settings">
+      <button class="icon-btn" data-route="settings" title="Settings" aria-label="Settings" data-i18n-title="settings_title">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h7"/><path d="M15 6h5"/><circle cx="13" cy="6" r="2"/><path d="M4 12h3"/><path d="M11 12h9"/><circle cx="9" cy="12" r="2"/><path d="M4 18h11"/><path d="M19 18h1"/><circle cx="17" cy="18" r="2"/></svg>
       </button>
     </div>
@@ -61,167 +66,128 @@
         <div class="tool-grid">
 
           <div class="pill-row left">
-            <button class="pill active" data-render="filled"><span class="icn">●</span><span class="lbl">Filled</span></button>
-            <button class="pill" data-render="thin"><span class="icn">○</span><span class="lbl">Thin</span></button>
-            <button class="pill" data-render="thick"><span class="icn">◎</span><span class="lbl">Thick</span></button>
+            <button class="pill active" data-render="filled"><span class="icn">●</span><span class="lbl" data-i18n="render_filled">Filled</span></button>
+            <button class="pill" data-render="thin"><span class="icn">○</span><span class="lbl" data-i18n="render_thin">Thin</span></button>
+            <button class="pill" data-render="thick"><span class="icn">◎</span><span class="lbl" data-i18n="render_thick">Thick</span></button>
           </div>
 
           <div class="canvas-frame">
             <canvas class="circle-canvas" id="c2d"></canvas>
             <canvas class="three-canvas" id="c3d"></canvas>
             <div class="canvas-corner tl">
-              <button class="c-btn" data-act="grid" title="Grid / Wireframe (G)">
+              <button class="c-btn" data-act="grid" title="Grid / Wireframe (G)" data-i18n-title="title_grid">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20"/><line x1="9" y1="2" x2="9" y2="22"/><line x1="15" y1="2" x2="15" y2="22"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="2" y1="15" x2="22" y2="15"/></svg>
               </button>
             </div>
             <div class="canvas-corner tr">
-              <button class="c-btn" data-act="download" title="Download PNG (D)">
+              <button class="c-btn" data-act="download" title="Download PNG (D)" data-i18n-title="title_download">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="15"/><polyline points="7,10 12,15 17,10"/><line x1="4" y1="20" x2="20" y2="20"/></svg>
               </button>
             </div>
             <div class="canvas-corner br">
-              <button class="c-btn" data-act="center" title="Center guides (C)">
+              <button class="c-btn" data-act="center" title="Center guides (C)" data-i18n-title="title_center">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="8"/><line x1="12" y1="16" x2="12" y2="22"/><line x1="2" y1="12" x2="8" y2="12"/><line x1="16" y1="12" x2="22" y2="12"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/></svg>
               </button>
               <div class="row">
-                <button class="c-btn" data-act="overlay" title="Perfect overlay">
+                <button class="c-btn" data-act="overlay" title="Perfect overlay" data-i18n-title="title_overlay">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/></svg>
                 </button>
-                <button class="c-btn" data-act="zoom" title="Zoom top-left quadrant">
+                <button class="c-btn" data-act="zoom" title="Zoom top-left quadrant" data-i18n-title="title_zoom">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><line x1="17" y1="17" x2="22" y2="22"/></svg>
                 </button>
               </div>
             </div>
             <div class="canvas-corner bl">
-              <button class="c-btn" data-act="info-chip" title="Info chip (I)">i</button>
+              <button class="c-btn" data-act="info-chip" title="Info chip (I)" data-i18n-title="title_infochip">i</button>
               <div class="info-chip">
-                <div>D: <b data-info-diam>16</b></div>
-                <div>R: <b data-info-rad>8</b></div>
-                <div>Area: <b data-info-area>208</b></div>
-                <div>Algo: <b data-info-algo>Euclidean</b></div>
+                <div><span data-i18n="chip_d">D</span>: <b data-info-diam>16</b></div>
+                <div><span data-i18n="chip_r">R</span>: <b data-info-rad>8</b></div>
+                <div><span data-info-area-lbl data-i18n="chip_area">Area</span>: <b data-info-area>208</b></div>
+                <div><span data-info-algo-lbl data-i18n="chip_algo">Algo</span>: <b data-info-algo>Euclidean</b></div>
               </div>
             </div>
           </div>
 
           <div class="pill-row right">
-            <button class="pill algo-pill active" data-algo="euclidean"><span class="dot"></span><span class="lbl">Euclidean</span></button>
-            <button class="pill algo-pill" data-algo="bresenham"><span class="dot"></span><span class="lbl">Bresenham</span></button>
-            <button class="pill algo-pill" data-algo="threshold"><span class="dot"></span><span class="lbl">Threshold</span></button>
-            <button class="pill style-pill active" data-3dstyle="classic" hidden><span class="dot"></span><span class="lbl">Classic</span></button>
-            <button class="pill style-pill" data-3dstyle="smooth" hidden><span class="dot"></span><span class="lbl">Smooth</span></button>
-            <button class="pill style-pill" data-3dstyle="blocks" hidden><span class="dot"></span><span class="lbl">Blocks</span></button>
+            <button class="pill algo-pill active" data-algo="euclidean"><span class="dot"></span><span class="lbl" data-i18n="algo_euclidean">Euclidean</span></button>
+            <button class="pill algo-pill" data-algo="bresenham"><span class="dot"></span><span class="lbl" data-i18n="algo_bresenham">Bresenham</span></button>
+            <button class="pill algo-pill" data-algo="threshold"><span class="dot"></span><span class="lbl" data-i18n="algo_threshold">Threshold</span></button>
+            <button class="pill style-pill active" data-3dstyle="classic" hidden><span class="dot"></span><span class="lbl" data-i18n="style_classic">Classic</span></button>
+            <button class="pill style-pill" data-3dstyle="smooth" hidden><span class="dot"></span><span class="lbl" data-i18n="style_smooth">Smooth</span></button>
+            <button class="pill style-pill" data-3dstyle="blocks" hidden><span class="dot"></span><span class="lbl" data-i18n="style_blocks">Blocks</span></button>
           </div>
 
           <div class="slider-row">
             <div class="slider-box" data-dim="size">
               <div class="wrap"><input type="range" min="1" max="64" value="16" data-slider="size"></div>
-              <div class="lbl">Size <span class="val" data-val="size">16</span></div>
+              <div class="lbl"><span data-i18n="lbl_size">Size</span> <span class="val" data-val="size">16</span></div>
             </div>
             <div class="slider-box" data-dim="width" hidden>
               <div class="wrap"><input type="range" min="1" max="64" value="20" data-slider="width"></div>
-              <div class="lbl">Width <span class="val" data-val="width">20</span></div>
+              <div class="lbl"><span data-i18n="lbl_width">Width</span> <span class="val" data-val="width">20</span></div>
             </div>
             <div class="slider-box" data-dim="height" hidden>
               <div class="wrap"><input type="range" min="1" max="64" value="12" data-slider="height"></div>
-              <div class="lbl">Height <span class="val" data-val="height">12</span></div>
+              <div class="lbl"><span data-i18n="lbl_height">Height</span> <span class="val" data-val="height">12</span></div>
             </div>
             <div class="slider-box" data-dim="depth" hidden>
               <div class="wrap"><input type="range" min="1" max="64" value="14" data-slider="depth"></div>
-              <div class="lbl">Depth <span class="val" data-val="depth">14</span></div>
+              <div class="lbl"><span data-i18n="lbl_depth">Depth</span> <span class="val" data-val="depth">14</span></div>
             </div>
           </div>
 
           <div class="cut-row">
             <div class="cut-toggle">
-              <button class="active" data-axis="x" title="Cut on X axis">X</button>
-              <button data-axis="y" title="Cut on Y axis">Y</button>
+              <button class="active" data-axis="x" title="Cut on X axis" data-i18n-title="title_cut_x">X</button>
+              <button data-axis="y" title="Cut on Y axis" data-i18n-title="title_cut_y">Y</button>
             </div>
             <div class="wrap"><input type="range" min="0" max="64" value="64" data-slider="cut"></div>
-            <div class="lbl">Cut <span class="val" data-val="cut">64</span></div>
+            <div class="lbl"><span data-i18n="lbl_cut">Cut</span> <span class="val" data-val="cut">64</span></div>
           </div>
 
         </div>
       </div>
     </div>
 
-    <!-- INFO -->
+    <!-- INFO — content is rendered from js/i18n.js TR[locale].info on
+         initI18N() and every setLocale() call. Empty by default so a
+         hard refresh doesn't briefly show stale text. -->
     <div class="route" data-route="info" hidden>
-      <div class="route-pad">
-        <h2 class="section-title">Info</h2>
-        <p class="section-sub">A pixel-perfect circle, ellipse, sphere and ellipsoid generator.</p>
-
-        <h3 class="ds-h2" style="margin-top:28px;">1. What it is</h3>
-        <div class="help-list">
-          <div class="help-item"><p>Browser-based generator for pixel-art circles &amp; ellipses (2D) and voxel spheres &amp; ellipsoids (3D). Integer dimensions in, PNG out. No installation, no account, no backend.</p></div>
-        </div>
-
-        <h3 class="ds-h2" style="margin-top:28px;">2. Modes &amp; shapes</h3>
-        <div class="help-list">
-          <div class="help-item"><h3>2D · Circle</h3><p>Single <b>Size</b>. Filled, thin or thick pixel circle.</p></div>
-          <div class="help-item"><h3>2D · Ellipse</h3><p><b>Width</b> + <b>Height</b> independent. Same render-mode set.</p></div>
-          <div class="help-item"><h3>3D · Sphere</h3><p>Single <b>Size</b>. Isometric voxel sphere. <b>Cut</b> on X or Y slices through.</p></div>
-          <div class="help-item"><h3>3D · Ellipsoid</h3><p><b>Width</b> + <b>Height</b> + <b>Depth</b> independent. <b>Cut</b> slices on the chosen axis.</p></div>
-        </div>
-
-        <h3 class="ds-h2" style="margin-top:28px;">3. Algorithms (2D only)</h3>
-        <div class="help-list">
-          <div class="help-item"><h3>Euclidean</h3><p>Distance test at pixel centres. Smoothest contour.</p></div>
-          <div class="help-item"><h3>Bresenham</h3><p>Classic integer midpoint algorithm. Stair-stepped pixel-art look.</p></div>
-          <div class="help-item"><h3>Threshold</h3><p>Corner-coverage test. Chunkier silhouette — any cell with a corner inside fills.</p></div>
-        </div>
-
-        <h3 class="ds-h2" style="margin-top:28px;">4. Controls</h3>
-        <div class="help-list">
-          <div class="help-item"><h3>Mode &amp; shape</h3><p>The <b>2D / 3D</b> and <b>Circle / Ellipse</b> (or <b>Sphere / Ellipsoid</b> in 3D) toggles at the top are the ONLY way to switch.</p></div>
-          <div class="help-item"><h3>Cut (3D)</h3><p>The <b>X / Y</b> toggle chooses the slicing axis. Switching axis restores the full figure automatically — only one axis cuts at a time. The slider max equals the chosen axis dimension.</p></div>
-          <div class="help-item"><h3>Pinch &amp; rotate</h3><p>Two fingers on the canvas zoom. In 3D, the midpoint of the fingers also rotates the figure. Mouse wheel zooms in 3D; click-drag rotates.</p></div>
-          <div class="help-item"><h3>Grid &amp; wireframe</h3><p>The grid button in the canvas top-left toggles the cell grid in 2D and wireframe in 3D.</p></div>
-          <div class="help-item"><h3>Keyboard</h3><p><span class="key">G</span> Grid &nbsp; <span class="key">C</span> Center &nbsp; <span class="key">D</span> Download &nbsp; <span class="key">T</span> Theme &nbsp; <span class="key">I</span> Info chip &nbsp; <span class="key">M</span> 2D/3D &nbsp; <span class="key">S</span> Sound</p></div>
-        </div>
-
-        <h3 class="ds-h2" style="margin-top:28px;">5. Technical</h3>
-        <div class="help-list">
-          <div class="help-item"><h3>Stack</h3><p>Vanilla JavaScript + Canvas 2D + three.js. No framework, no build step.</p></div>
-          <div class="help-item"><h3>Offline</h3><p>PWA-installable. Once loaded, no network is required. Settings persist via <code>localStorage</code>.</p></div>
-          <div class="help-item"><h3>Output</h3><p>PNG with the accent color on transparent background. 2D exports at ~2048px on the major axis.</p></div>
-        </div>
-
-        <h3 class="ds-h2" style="margin-top:28px;">6. License &amp; credits</h3>
-        <div class="help-list">
-          <div class="help-item"><h3>License</h3><p>All Rights Reserved on code &amp; design — see <code>LICENSE</code>. Third-party attributions in <code>NOTICE.md</code>.</p></div>
-          <div class="help-item"><h3>Source</h3><p>Repository: <code>github.com/ViniSouza128/pixel-round</code>.</p></div>
-        </div>
-      </div>
+      <div class="route-pad"></div>
     </div>
 
     <!-- SETTINGS -->
     <div class="route" data-route="settings" hidden>
       <div class="route-pad">
-        <h2 class="section-title">Settings</h2>
-        <p class="section-sub">Preferences persist in the browser.</p>
+        <h2 class="section-title" data-i18n="settings_h2">Settings</h2>
+        <p class="section-sub" data-i18n="settings_sub">Preferences persist in the browser.</p>
         <div class="settings-grid">
           <div class="setting-row">
-            <div class="lbl-grp"><label>Theme</label><span class="desc">Light or Dark</span></div>
+            <div class="lbl-grp"><label data-i18n="setting_lang_lbl">Language</label><span class="desc" data-i18n="setting_lang_desc">Interface language</span></div>
+            <select class="lang-select" data-pref="locale"></select>
+          </div>
+          <div class="setting-row">
+            <div class="lbl-grp"><label data-i18n="setting_theme_lbl">Theme</label><span class="desc" data-i18n="setting_theme_desc">Light or Dark</span></div>
             <div class="segmented" data-set="theme">
-              <button class="theme-btn-i active" data-theme="light">Light</button>
-              <button class="theme-btn-i" data-theme="dark">Dark</button>
+              <button class="theme-btn-i active" data-theme="light" data-i18n="theme_light">Light</button>
+              <button class="theme-btn-i" data-theme="dark" data-i18n="theme_dark">Dark</button>
             </div>
           </div>
           <div class="setting-row">
-            <div class="lbl-grp"><label>Sounds</label><span class="desc">Sound feedback on interactions</span></div>
+            <div class="lbl-grp"><label data-i18n="setting_sounds_lbl">Sounds</label><span class="desc" data-i18n="setting_sounds_desc">Sound feedback on interactions</span></div>
             <label class="toggle-sw"><input type="checkbox" data-pref="sound" checked><span class="slider"></span></label>
           </div>
           <div class="setting-row">
-            <div class="lbl-grp"><label>Canvas grid</label><span class="desc">Background helper lines (full canvas)</span></div>
+            <div class="lbl-grp"><label data-i18n="setting_grid_lbl">Canvas grid</label><span class="desc" data-i18n="setting_grid_desc">Background helper lines (full canvas)</span></div>
             <label class="toggle-sw"><input type="checkbox" data-pref="grid" checked><span class="slider"></span></label>
           </div>
           <div class="setting-row">
-            <div class="lbl-grp"><label>Center guides</label><span class="desc">X/Y lines through the figure center</span></div>
+            <div class="lbl-grp"><label data-i18n="setting_center_lbl">Center guides</label><span class="desc" data-i18n="setting_center_desc">X/Y lines through the figure center</span></div>
             <label class="toggle-sw"><input type="checkbox" data-pref="center"><span class="slider"></span></label>
           </div>
           <div class="setting-row">
-            <div class="lbl-grp"><label>Reset</label><span class="desc">Restore all settings to defaults</span></div>
-            <button class="btn ghost sm" data-act="reset">Reset</button>
+            <div class="lbl-grp"><label data-i18n="setting_reset_lbl">Reset</label><span class="desc" data-i18n="setting_reset_desc">Restore all settings to defaults</span></div>
+            <button class="btn ghost sm" data-act="reset" data-i18n="btn_reset">Reset</button>
           </div>
         </div>
       </div>
@@ -234,6 +200,7 @@
 
 </div>
 
+<script src="js/i18n.js"></script>
 <script src="js/state.js"></script>
 <script src="js/algorithms.js"></script>
 <script src="js/audio.js"></script>

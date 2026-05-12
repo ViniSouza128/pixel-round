@@ -54,6 +54,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   applyLoadedPrefsToUI();
 
+  if (typeof initI18N === 'function') initI18N();
+
   setupUI();
   syncShape();
 

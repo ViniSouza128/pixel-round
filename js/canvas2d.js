@@ -213,6 +213,11 @@ function updateInfoChip(){
   if (!diamEl) return;
 
   const isEllipse = state.shape === 'ellipse';
+  // Translated labels for the value rows ("Area" vs "Vol", "Algo" vs "Style")
+  const areaLbl = host.querySelector('[data-info-area-lbl]');
+  const algoLbl = host.querySelector('[data-info-algo-lbl]');
+  const tx = (typeof t === 'function') ? t : (k => k);
+
   if (state.mode === '2d'){
     if (isEllipse){
       diamEl.textContent = `${state.width}×${state.height}`;
@@ -223,6 +228,8 @@ function updateInfoChip(){
     }
     areaEl.textContent = area2D(state.size, state.width, state.height, isEllipse, state.algo);
     algoEl.textContent = ALGO_FULL_NAME[state.algo] || state.algo;
+    if (areaLbl) areaLbl.textContent = tx('chip_area');
+    if (algoLbl) algoLbl.textContent = tx('chip_algo');
   } else {
     if (isEllipse){
       diamEl.textContent = `${state.width}×${state.height}×${state.depth}`;
@@ -235,7 +242,9 @@ function updateInfoChip(){
     const Dy = isEllipse ? state.height : state.size;
     const Dz = isEllipse ? state.depth : state.size;
     areaEl.textContent = voxelVolume(Dx, Dy, Dz);
-    algoEl.textContent = ({classic:'Classic',smooth:'Smooth',blocks:'Blocks'})[state.style3d] || state.style3d;
+    algoEl.textContent = (typeof STYLE3D_FULL_NAME !== 'undefined' && STYLE3D_FULL_NAME[state.style3d]) || state.style3d;
+    if (areaLbl) areaLbl.textContent = tx('chip_vol');
+    if (algoLbl) algoLbl.textContent = tx('chip_style');
   }
 }
 
