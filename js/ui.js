@@ -282,7 +282,7 @@ function resetState(){
 function isToolToggle(el){
   if (!el) return false;
   if (el.dataset.route || el.dataset.act === 'logo' || el.dataset.act === 'theme') return false;
-  if (el.dataset.act === 'info-chip') return false;
+  if (el.dataset.act === 'info-chip' || el.dataset.act === 'lang') return false;
   return !!(el.dataset.render || el.dataset.algo || el.dataset['3dstyle']
          || el.dataset.mode   || el.dataset.shape|| el.dataset.axis
          || el.dataset.act);
