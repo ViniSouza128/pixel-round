@@ -93,7 +93,11 @@ function syncCutMax(){
   const isEllipse = state.shape === 'ellipse';
   const Dx = isEllipse ? state.width : state.size;
   const Dy = isEllipse ? state.height : state.size;
-  const maxVal = state.axis === 'x' ? Dx : Dy;
+  // Cut max scales with the chosen axis. Diagonal (x+y >= cut) covers
+  // the full Dx+Dy range so the slider can reach "remove nothing".
+  const maxVal = state.axis === 'x' ? Dx
+               : state.axis === 'y' ? Dy
+               : /* 'diag' */         (Dx + Dy);
   cs.max = maxVal;
   cs.min = 0;
   const pct = (state.cutPct == null) ? 1 : state.cutPct;
@@ -103,6 +107,89 @@ function syncCutMax(){
   setSliderPct(cs);
   const cv = document.querySelector('[data-val=cut]');
   if (cv) cv.textContent = cs.value;
+}
+
+/* ---------- UNDO / REDO HISTORY -----------------------------------------
+   Lightweight time-travel for figure-changing edits. Snapshots only the
+   fields that change the figure (mode/shape/render/algo/style3d/sizes/
+   cut/axis). Camera angle, edge overlay, theme, sound, info-chip and
+   other purely visual flags are deliberately excluded.
+
+   Two stacks: undo and redo, stored as JSON strings so duplicate
+   consecutive snapshots are cheap to detect. Slider input uses
+   pushHistoryDebounced (commits 250 ms after the last input) so a drag
+   becomes one history entry, not 50. Discrete clicks call pushHistory
+   immediately. Capped at 50 entries. */
+const HIST_FIELDS = [
+  'mode', 'shape', 'render', 'algo', 'style3d',
+  'size', 'width', 'height', 'depth',
+  'cut', 'cutPct', 'axis',
+];
+const HIST_MAX = 50;
+let _histStack = [];
+let _histPos = -1;
+let _histDebounce = null;
+let _histApplying = false;     // re-entrancy guard during _applyHistory
+
+function _histSnap(){
+  const o = {};
+  HIST_FIELDS.forEach(k => o[k] = state[k]);
+  return JSON.stringify(o);
+}
+function pushHistory(){
+  if (_histApplying) return;
+  const snap = _histSnap();
+  if (_histPos >= 0 && _histStack[_histPos] === snap) return;
+  // Drop everything after current pos (the redo branch is now invalid).
+  _histStack = _histStack.slice(0, _histPos + 1);
+  _histStack.push(snap);
+  _histPos = _histStack.length - 1;
+  if (_histStack.length > HIST_MAX){
+    _histStack.shift();
+    _histPos--;
+  }
+}
+function pushHistoryDebounced(){
+  if (_histDebounce) clearTimeout(_histDebounce);
+  _histDebounce = setTimeout(() => { _histDebounce = null; pushHistory(); }, 250);
+}
+function _applyHistory(snap){
+  _histApplying = true;
+  const o = JSON.parse(snap);
+  Object.assign(state, o);
+  // Rehydrate every UI control that reflects a snapshotted field.
+  document.querySelectorAll('input[type=range]').forEach(s => {
+    const k = s.dataset.slider;
+    if (k && (k in state)) s.value = state[k];
+    setSliderPct(s);
+  });
+  ['render','algo'].forEach(k =>
+    document.querySelectorAll(`[data-${k}]`).forEach(p => p.classList.toggle('active', p.dataset[k] === state[k]))
+  );
+  document.querySelectorAll('[data-3dstyle]').forEach(p =>
+    p.classList.toggle('active', p.dataset['3dstyle'] === state.style3d)
+  );
+  document.querySelectorAll('[data-axis]').forEach(b => b.classList.toggle('active', b.dataset.axis === state.axis));
+  document.querySelectorAll('[data-val]').forEach(v => {
+    const k = v.dataset.val;
+    if (k && k in state) v.textContent = state[k];
+  });
+  syncShape();
+  if (state.mode === '3d' && typeof autoZoom3D === 'function') autoZoom3D();
+  redraw();
+  _histApplying = false;
+}
+function undo(){
+  if (_histPos <= 0) return false;
+  _histPos--;
+  _applyHistory(_histStack[_histPos]);
+  return true;
+}
+function redo(){
+  if (_histPos >= _histStack.length - 1) return false;
+  _histPos++;
+  _applyHistory(_histStack[_histPos]);
+  return true;
 }
 
 /* ---------- REDRAW ------------------------------------------------------- */
@@ -180,6 +267,9 @@ function resetState(){
   syncShape();
   if (state.mode === '3d') resetCamera3D();
   redraw();
+  // Record the reset as a single history entry so Ctrl+Z restores
+  // whatever the user had before clicking Reset.
+  pushHistory();
   Sfx.ok();
   toast(t('reset'), 'ok');
 }
@@ -278,17 +368,17 @@ function setupClickDelegation(){
     if (t.dataset.render){
       state.render = t.dataset.render;
       document.querySelectorAll('[data-render]').forEach(p => p.classList.toggle('active', p === t));
-      Sfx.click(); redraw(); return;
+      Sfx.click(); redraw(); pushHistory(); return;
     }
     if (t.dataset.algo){
       state.algo = t.dataset.algo;
       document.querySelectorAll('[data-algo]').forEach(p => p.classList.toggle('active', p === t));
-      Sfx.click(); redraw(); return;
+      Sfx.click(); redraw(); pushHistory(); return;
     }
     if (t.dataset['3dstyle']){
       state.style3d = t.dataset['3dstyle'];
       document.querySelectorAll('[data-3dstyle]').forEach(p => p.classList.toggle('active', p === t));
-      Sfx.click(); update3D(); return;
+      Sfx.click(); update3D(); pushHistory(); return;
     }
 
     if (t.dataset.mode){
@@ -305,7 +395,7 @@ function setupClickDelegation(){
       } else {
         redraw();
       }
-      Sfx.pop(); return;
+      Sfx.pop(); pushHistory(); return;
     }
     if (t.dataset.shape){
       if (state.shape === t.dataset.shape) return;
@@ -313,7 +403,7 @@ function setupClickDelegation(){
       syncShape();
       if (state.mode === '3d'){ autoZoom3D(); update3D(); }
       else { redraw(); }
-      Sfx.pop(); return;
+      Sfx.pop(); pushHistory(); return;
     }
     if (t.dataset.axis){
       if (state.axis === t.dataset.axis) return;
@@ -321,7 +411,13 @@ function setupClickDelegation(){
       // Switching axis keeps the same percentage cut on the new axis.
       syncCutMax();
       document.querySelectorAll('[data-axis]').forEach(b => b.classList.toggle('active', b === t));
-      Sfx.click(); update3D(); return;
+      // Switching axis shifts which side of the figure is trimmed; re-fit
+      // so the visible portion stays centred on the canvas.
+      Sfx.click();
+      if (typeof autoZoom3D === 'function') autoZoom3D();
+      update3D();
+      pushHistory();
+      return;
     }
 
     if (t.dataset.theme){ setTheme(t.dataset.theme); redraw(); Sfx.pop(); return; }
@@ -366,6 +462,9 @@ function setupSliders(){
         else { redraw(); pulseCanvas(); }
       }
       if (+sl.value % 4 === 0) Sfx.tick();
+      // Slider drags fire many input events — debounce the history
+      // snapshot so one drag becomes one undo step.
+      pushHistoryDebounced();
     });
   });
 }
@@ -531,6 +630,17 @@ function setupKeyboard(){
   document.addEventListener('keydown', e => {
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
     const k = e.key.toLowerCase();
+    // Undo / Redo. Three redo bindings so muscle memory from any host
+    // app works: Ctrl+Y (Office / most Windows apps), Ctrl+Shift+Z
+    // (Photoshop / web editors), Ctrl+Alt+Z (some Linux DEs / IDEs).
+    // Plain Ctrl+Z is always undo.
+    if ((e.ctrlKey || e.metaKey) && (k === 'z' || k === 'y')){
+      e.preventDefault();
+      const wantRedo = (k === 'y') || (k === 'z' && (e.shiftKey || e.altKey));
+      const did = wantRedo ? redo() : undo();
+      if (did) toast(window.t(wantRedo ? 'redo' : 'undo'));
+      return;
+    }
     if (k === 'g'){
       const btn = document.querySelector('[data-act=grid]');
       btn?.click();
@@ -541,6 +651,7 @@ function setupKeyboard(){
       const inp = document.querySelector('[data-pref=center]');
       if (inp) inp.checked = state.center;
       redraw();
+      toast(window.t(state.center ? 'center_on' : 'center_off'));
     }
     else if (k === 'd'){ downloadPNG(); toast(window.t('png_saved'), 'ok'); }
     else if (k === 't'){ cycleTheme(); }
@@ -552,6 +663,7 @@ function setupKeyboard(){
         if (init3D(dom.canvas3D)){ resize3D(); autoZoom3D(); update3D(); }
       } else redraw();
       Sfx.pop();
+      pushHistory();
     }
     else if (k === 's'){
       Sfx.setEnabled(!Sfx.isEnabled());
@@ -569,4 +681,7 @@ function setupUI(){
   setup3DPointer();
   setupPinch();
   setupKeyboard();
+  // Seed the undo stack with the initial state so the user can undo
+  // all the way back to the moment they opened the page.
+  pushHistory();
 }

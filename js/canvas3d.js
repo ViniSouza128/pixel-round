@@ -231,8 +231,12 @@ function update3D(){
   const Dy = isEllipse ? state.height     : state.size;
   const Dz = isEllipse ? state.depth : state.size;
 
-  // Cut max equals the axis dim — anything < axis dim slices in
-  const maxAxis = state.axis === 'x' ? Dx : Dy;
+  // Cut max depends on the axis: X→Dx, Y→Dy, diag→Dx+Dy (since the
+  // diagonal test is (x+y) ≥ cut). When cut < max we apply it; otherwise
+  // bump the limit out so nothing is removed.
+  const maxAxis = state.axis === 'x' ? Dx
+                : state.axis === 'y' ? Dy
+                : /* 'diag' */         (Dx + Dy);
   const cutLimit = state.cut < maxAxis ? state.cut : maxAxis + 1;
   const voxels = voxelShell(Dx, Dy, Dz, state.render, state.axis, cutLimit);
   if (voxels.length === 0){ scheduleRender3D(); return; }

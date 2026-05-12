@@ -106,6 +106,10 @@
                 <div><span data-info-algo-lbl data-i18n="chip_algo">Algo</span>: <b data-info-algo>Euclidean</b></div>
               </div>
             </div>
+            <!-- Toast host inside the canvas frame so floating messages
+                 overlay the canvas bottom; anchoring to the page bottom
+                 puts toasts off-screen on mobile / responsive layouts. -->
+            <div class="toast-host"></div>
           </div>
 
           <div class="pill-row right">
@@ -140,6 +144,7 @@
             <div class="cut-toggle">
               <button class="active" data-axis="x" title="Cut on X axis" data-i18n-title="title_cut_x">X</button>
               <button data-axis="y" title="Cut on Y axis" data-i18n-title="title_cut_y">Y</button>
+              <button data-axis="diag" title="Diagonal 45° cut (x+y plane)" data-i18n-title="title_cut_diag">⟋</button>
             </div>
             <div class="wrap"><input type="range" min="0" max="64" value="64" data-slider="cut"></div>
             <div class="lbl"><span data-i18n="lbl_cut">Cut</span> <span class="val" data-val="cut">64</span></div>
@@ -194,9 +199,6 @@
     </div>
 
   </div>
-
-  <!-- TOAST -->
-  <div class="toast-host"></div>
 
 </div>
 

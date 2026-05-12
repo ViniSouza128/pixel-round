@@ -210,8 +210,14 @@ function voxelShell(Dx, Dy, Dz, mode, cutAxis, cutLimit){
   const inKept = (x, y, z) => {
     if (x < 0 || x >= Dx || y < 0 || y >= Dy || z < 0 || z >= Dz) return false;
     if (!inEllip(x, y, z)) return false;
-    if (cutAxis === 'x' && x >= cutLimit) return false;
-    if (cutAxis === 'y' && y >= cutLimit) return false;
+    // Cut axes:
+    //   'x' / 'y' — straight slice perpendicular to the axis.
+    //   'diag'    — 45° slice through the XY plane (x + y ≥ cut).
+    //               Cut max for diag is (Dx + Dy); cut = (Dx+Dy) keeps
+    //               everything, cut = 0 excludes everything.
+    if (cutAxis === 'x'    && x >= cutLimit) return false;
+    if (cutAxis === 'y'    && y >= cutLimit) return false;
+    if (cutAxis === 'diag' && (x + y) >= cutLimit) return false;
     return true;
   };
 

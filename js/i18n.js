@@ -102,10 +102,13 @@ const TR = {
     chip_style:'Style',
 
     /* ---- cut-axis titles ---- */
-    title_cut_x: 'Cut on X axis',
-    title_cut_y: 'Cut on Y axis',
+    title_cut_x:    'Cut on X axis',
+    title_cut_y:    'Cut on Y axis',
+    title_cut_diag: 'Diagonal 45° cut (x+y plane)',
 
     /* ---- toasts ---- */
+    undo:       'Undo',
+    redo:       'Redo',
     sounds_on:  'Sounds on',
     sounds_off: 'Sounds off',
     grid_on:    'Grid on',
@@ -158,7 +161,7 @@ const TR = {
         ]},
         { h3: '4. Controls', items: [
           { h: 'Mode & shape',     p: 'The <b>2D / 3D</b> and <b>Circle / Ellipse</b> (or <b>Sphere / Ellipsoid</b> in 3D) toggles at the top are the ONLY way to switch.' },
-          { h: 'Cut (3D)',         p: 'The <b>X / Y</b> toggle chooses the slicing axis. Switching axis restores the full figure automatically — only one axis cuts at a time. The slider max equals the chosen axis dimension.' },
+          { h: 'Cut (3D)',         p: 'The <b>X / Y / ⟋</b> toggle chooses the slicing axis. <b>⟋</b> is a 45° diagonal through the x+y plane. Switching axis restores the full figure automatically — only one axis cuts at a time. The slider max scales to the chosen axis.' },
           { h: 'Pinch & rotate',   p: 'Two fingers on the canvas zoom. In 3D, the midpoint of the fingers also rotates the figure. Mouse wheel zooms in 3D; click-drag rotates.' },
           { h: 'Grid & wireframe', p: 'The grid button in the canvas top-left toggles the cell grid in 2D and wireframe in 3D.' },
           { h: 'Language',         p: 'The <b>language</b> button at the right side of the topbar (and the picker in Settings) swaps the interface between supported locales. Choice is remembered across reloads.' },
@@ -237,10 +240,13 @@ const TR = {
     chip_style:'Estilo',
 
     /* ---- cut-axis titles ---- */
-    title_cut_x: 'Cortar no eixo X',
-    title_cut_y: 'Cortar no eixo Y',
+    title_cut_x:    'Cortar no eixo X',
+    title_cut_y:    'Cortar no eixo Y',
+    title_cut_diag: 'Corte diagonal 45° (plano x+y)',
 
     /* ---- toasts ---- */
+    undo:       'Desfazer',
+    redo:       'Refazer',
     sounds_on:  'Sons ativados',
     sounds_off: 'Sons desativados',
     grid_on:    'Grade ativada',
@@ -293,7 +299,7 @@ const TR = {
         ]},
         { h3: '4. Controles', items: [
           { h: 'Modo & forma',      p: 'Os botões <b>2D / 3D</b> e <b>Círculo / Elipse</b> (ou <b>Esfera / Elipsoide</b> em 3D) no topo são a ÚNICA forma de alternar.' },
-          { h: 'Corte (3D)',        p: 'O toggle <b>X / Y</b> escolhe o eixo do corte. Trocar o eixo restaura a figura automaticamente — apenas um eixo corta por vez. O máximo do slider equivale ao tamanho do eixo escolhido.' },
+          { h: 'Corte (3D)',        p: 'O toggle <b>X / Y / ⟋</b> escolhe o eixo do corte. <b>⟋</b> é uma diagonal 45° no plano x+y. Trocar o eixo restaura a figura automaticamente — apenas um eixo corta por vez. O máximo do slider se ajusta ao eixo escolhido.' },
           { h: 'Pinçar & rotacionar', p: 'Dois dedos no canvas dão zoom. Em 3D, o ponto médio dos dedos também rotaciona a figura. A roda do mouse dá zoom em 3D; clique-arraste rotaciona.' },
           { h: 'Grade & wireframe', p: 'O botão de grade no canto superior esquerdo do canvas alterna a grade de células em 2D e o wireframe em 3D.' },
           { h: 'Idioma',            p: 'O botão de <b>idioma</b> à direita do topo (e o seletor em Configurações) troca o idioma da interface entre os disponíveis. A escolha fica salva entre as recargas.' },
