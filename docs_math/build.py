@@ -232,6 +232,11 @@ F\!\left(x+1,\;y-\tfrac{1}{2}\right) \;=\; (x+1)^2 + \left(y-\tfrac{1}{2}\right)
 \]
 «S5_P5»
 
+\begin{figure}[!htb]\centering
+\includegraphics[width=0.48\textwidth]{fig02_2d_d20_bresenham.png}
+\caption{«FIG_S5_CAP»}
+\end{figure}
+
 \subsection{«S5_SUB2»}
 
 «S5_P6»
@@ -250,8 +255,8 @@ p_2 &= b^2\!\left(x+\tfrac{1}{2}\right)^{\!2} + a^2\!\left(y-1\right)^{\!2} - a^
 «S5_P8»
 
 \begin{figure}[!htb]\centering
-\includegraphics[width=0.48\textwidth]{fig02_2d_d20_bresenham.png}
-\caption{«FIG_S5_CAP»}
+\includegraphics[width=0.62\textwidth]{fig_5b_bresenham_ellipse.png}
+\caption{«FIG_S5B_CAP»}
 \end{figure}
 
 % =============================================================================
