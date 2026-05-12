@@ -48,9 +48,6 @@ let state = {
   zoom2D: 1,
 };
 
-/* Reserved — kept for older callsites that reference prevStyle3D. */
-let prevStyle3D = 'classic';
-
 /* ---------- Theme ------------------------------------------------------- */
 function getTheme(){ return document.documentElement.dataset.theme || 'light'; }
 function setTheme(theme){

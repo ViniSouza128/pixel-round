@@ -32,7 +32,8 @@ block-by-block into Minecraft.
 - **Double-click any slider** to snap it back to its default value
   (Cut returns to "no cut" / 100%)
 - Cut is **proportional**: 50% stays 50% even when Size changes.
-  Default axis = **Y** (horizontal slice).
+  Default axis = **Y** (horizontal slice). A third axis **⟋** is a
+  45° diagonal in the x+y plane; its slider ranges over `Dx + Dy`.
 - Pinch on touch screens for zoom + rotation
 - **Grid corner button** in 3D toggles the **edge overlay** on all
   voxels (default ON). In 2D it toggles the cell grid.
@@ -43,13 +44,32 @@ block-by-block into Minecraft.
   figure so the alignment reads as axis lines.
 - Clicking a tool toggle while on **Info** or **Settings** returns to
   the canvas automatically.
+- **Undo / Redo:** every figure-changing edit (mode, shape, render,
+  algorithm, 3D style, size sliders, cut, axis, reset) is recorded.
+  `Ctrl+Z` undoes; `Ctrl+Y`, `Ctrl+Shift+Z` and `Ctrl+Alt+Z` all redo.
+  Slider drags collapse to a single history step. Visual-only
+  toggles (camera, edges, theme, sound, grid) are deliberately
+  excluded.
 - Keyboard: `G` grid · `C` center guides · `D` download · `T` theme
-  · `I` info · `M` 2D/3D · `S` sound
+  · `I` info · `M` 2D/3D · `S` sound · `Ctrl+Z` undo · `Ctrl+Y` redo
+
+## Languages
+
+The interface speaks **English (US)** and **Português (Brasil)** out
+of the box. Switch via the locale pill in the topbar or the picker in
+Settings; the choice is auto-detected from `navigator.language` on
+first visit and remembered in `localStorage` (`pr_locale`).
+
+Adding a locale only touches `js/i18n.js` — append an entry to
+`AVAILABLE_LOCALES` and mirror the `en-US` keys under a new `TR`
+block.
 
 ## Session-only state
 
-Pixel Round does **not** persist any setting across reloads — every
-visit starts at the defaults so URLs are sharable as-is.
+All preferences except the chosen **language** are session-only —
+every reload starts at the defaults so URLs are sharable as-is.
+Locale is persisted on purpose: it'd be hostile to reset the
+interface to English on every visit.
 
 ## Tech
 

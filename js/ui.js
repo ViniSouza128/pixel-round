@@ -10,7 +10,7 @@
      - Cut X|Y toggle resets the other axis
      - Theme cycle (T or theme button); Settings prefs (data-pref)
      - Canvas corner buttons:
-         grid    → toggles 2D grid OR 3D wireframe (mode-aware)
+         grid    → toggles 2D grid OR 3D edge overlay (mode-aware)
          center  → toggles center guides
          overlay → toggles perfect-circle overlay (2D only)
          zoom    → toggles top-left quadrant zoom (2D only)
@@ -291,7 +291,12 @@ function isToolToggle(el){
 /* ---------- CLICK DELEGATION --------------------------------------------- */
 function setupClickDelegation(){
   document.body.addEventListener('click', e => {
-    const t = e.target.closest('[data-act],[data-route],[data-render],[data-algo],[data-3dstyle],[data-mode],[data-shape],[data-axis],[data-theme]');
+    /* `[data-route]` is scoped to .icon-btn because the `.route` containers
+       themselves carry data-route="info" / "settings". Without the scope,
+       any click inside the Info or Settings page would bubble up to the
+       container, match the selector, and treat it as a "click Info while
+       on Info" toggle — kicking the user back to the tool route. */
+    const t = e.target.closest('[data-act],.icon-btn[data-route],[data-render],[data-algo],[data-3dstyle],[data-mode],[data-shape],[data-axis],[data-theme]');
     if (!t) return;
 
     // Route nav (icon-btns + brand logo). Clicking the same route again

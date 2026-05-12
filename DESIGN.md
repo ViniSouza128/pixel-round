@@ -106,12 +106,12 @@ Render pills (Filled / Thin / Thick) are visible in ALL combinations.
 
 | Button | 2D | 3D | Notes |
 |---|:-:|:-:|---|
-| Grid    | ✅ | ✅ | 2D: toggles cell grid · 3D: toggles wireframe style |
+| Grid    | ✅ | ✅ | 2D: toggles cell grid · 3D: toggles per-voxel edge overlay |
 | Download | ✅ | ✅ | 2D: high-res PNG · 3D: WebGL framebuffer PNG |
 | Center  | ✅ | ❌ | 1 cell for odd diameters, 2 cells for even |
 | Overlay | ✅ | ❌ | Mathematical ellipse in overlay color |
 | Zoom    | ✅ | ❌ | Toggle on/off · zooms into top-left quadrant |
-| Info    | ✅ | ✅ | Toggles info chip with D / R / Area / Algo |
+| Info    | ✅ | ✅ | Info chip: D / R, Area + Algo in 2D, Vol + Style in 3D |
 
 ### Sliders (uniform sizing)
 
@@ -119,15 +119,22 @@ Render pills (Filled / Thin / Thick) are visible in ALL combinations.
 - Track: 9px, radius 5
 - Thumb: 30×30 circle, accent with accent-light border
 - `cursor: grab` on thumb (changes to `grabbing` on press)
-- Cut slider: `max` equals current axis dim (Dx or Dy)
+- Cut slider: `max` equals current axis range — `Dx`, `Dy`, or
+  `Dx + Dy` for the diagonal axis
 
 ### Cut row
 
 - Visible only in 3D
-- Toggle `X | Y` switches the axis. Switching axis:
-  1. Updates Cut slider max to the new axis dim
-  2. Resets Cut to full (max value)
-- Slider goes 0 → axis-dim. At full = no cut.
+- Toggle `X | Y | ⟋` switches the axis:
+  - **X** — slice perpendicular to the X axis (test: `x ≥ cut`).
+  - **Y** — slice perpendicular to the Y axis (test: `y ≥ cut`).
+  - **⟋** — 45° diagonal slice in the x+y plane (test: `x + y ≥ cut`).
+- Switching axis preserves the **proportional** cut: a 50% cut stays
+  50% on the new axis. The slider max scales to the chosen axis —
+  `Dx`, `Dy`, or `Dx + Dy` for diagonal.
+- At max = no cut. At 0 = everything cut.
+- The 3D camera re-fits (`autoZoom3D`) on every axis switch so the
+  visible portion stays centred.
 
 ### Center guides
 
@@ -168,10 +175,10 @@ differences.
 - **Classic** — strong face contrast (default)
 - **Smooth** — lower face contrast, more even shading
 - **Blocks** — visible grooves between voxels (slight inset)
-- **Wire** — wireframe only (toggled by the canvas Grid button in 3D)
 
-The grid button doubles as the wire toggle in 3D mode. `prevStyle3D`
-remembers the last non-wire style so toggling wire off restores it.
+In 3D the canvas Grid button toggles `state.edges3d` — a black edge
+overlay on every voxel (default ON), independent of `style3d`. There
+is no longer a separate "Wire" style.
 
 ---
 
@@ -207,13 +214,14 @@ Synthesized via WebAudio (`js/audio.js`). All sine waves, gain ≤.035.
 
 ## 12. Keyboard shortcuts
 
-- `G` Grid (or wireframe in 3D)
+- `G` Grid (2D) / edge overlay (3D)
 - `C` Center guides
 - `D` Download PNG
 - `T` Theme cycle (light ↔ dark)
 - `I` Info chip on canvas
-- `M` Toggle 2D / 3D
+- `M` Toggle 2D / 3D (recorded in history)
 - `S` Sounds on/off
+- `Ctrl+Z` Undo · `Ctrl+Y` / `Ctrl+Shift+Z` / `Ctrl+Alt+Z` Redo
 
 ---
 
@@ -227,7 +235,66 @@ Synthesized via WebAudio (`js/audio.js`). All sine waves, gain ≤.035.
 
 ---
 
-## 14. Don'ts
+## 14. Internationalisation (i18n)
+
+`js/i18n.js` is the single source of truth for every user-facing
+string. Supports `en-US` and `pt-BR` out of the box.
+
+- `AVAILABLE_LOCALES` — declarative list. Adding a locale = appending
+  one entry plus a mirrored `TR[code]` block.
+- `t(key)` — returns the current-locale string, falling back to
+  English, then to the literal key (untranslated strings stay
+  visible during development).
+- `setLocale(code)` — persists to `localStorage` under `pr_locale`,
+  rewrites `<html lang>`, document title, meta description, every
+  `[data-i18n]` / `[data-i18n-title]` / `[data-i18n-aria]` node, the
+  info-chip labels (Area / Algo in 2D vs Vol / Style in 3D), the
+  Info page tree, and the Settings locale `<select>`.
+- Topbar pill `[data-act="lang"]` cycles locales in order.
+- Locale is the **only** preference that survives a reload —
+  everything else is session-only. Resetting the language to English
+  on every visit would be hostile, so this exception is intentional.
+
+DOs and DON'Ts:
+
+- DO add `data-i18n="key"` to any text node a user reads.
+- DO add `data-i18n-title="key"` (mirrors to `aria-label` if present)
+  to any element with a `title` attribute.
+- DO add new locale-specific names for algorithms / 3D styles by
+  extending `ALGO_FULL_NAME` and `STYLE3D_FULL_NAME` lookups inside
+  `_applyAlgoStyleNames()`.
+- DO NOT hard-code English strings in toasts — go through
+  `window.t('key')`.
+- DO NOT translate the brand name "Pixel Round".
+
+---
+
+## 15. Undo / Redo
+
+Two-stack history in `js/ui.js`, capped at 50 entries, with JSON
+serialisation for cheap dedupe.
+
+- `HIST_FIELDS` — only the fields that change the **figure**:
+  `mode, shape, render, algo, style3d, size, width, height, depth,
+  cut, cutPct, axis`. Camera angle, edge overlay, theme, sound and
+  grid toggles are deliberately excluded — they would create a
+  surprising "undo" experience (Ctrl+Z eats your camera angle).
+- `pushHistory()` — immediate. Used on discrete clicks (render /
+  algo / style3d / mode / shape / axis pills, M key, reset).
+- `pushHistoryDebounced()` — 250 ms tail. Used on slider input so
+  one drag = one undo step instead of fifty.
+- `_applyHistory()` — restores state + rehydrates every UI control
+  (sliders, pills, axis buttons, value labels), calls `syncShape()`,
+  re-fits the 3D camera if in 3D mode, then `redraw()`s.
+- Keyboard: `Ctrl+Z` undo; `Ctrl+Y`, `Ctrl+Shift+Z`, `Ctrl+Alt+Z`
+  all redo. Three redo bindings cover muscle memory from Office,
+  Photoshop and Linux DEs / IDEs.
+- The undo stack is seeded at the end of `setupUI()` with the
+  initial state, so users can undo all the way back to "as opened".
+
+---
+
+## 16. Don'ts
 
 - DO NOT use Press Start 2P in Pixel Round — that's the Block Round font
 - DO NOT make the grid color same as the pixel color
