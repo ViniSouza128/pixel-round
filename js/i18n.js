@@ -209,47 +209,45 @@ const TR = {
     setting_reset_desc:  'Restore all settings to defaults',
     btn_reset:           'Reset',
 
-    /* ---- Info page (structured, rendered to HTML by _rebuildInfoPage) ---- */
+    /* ---- Info page (structured, rendered to HTML by _rebuildInfoPage) ----
+       Six-section layout designed for scanning: Quick start → Documents
+       (PDFs surfaced near the top so they're easy to find) → Shapes →
+       Algorithms → Controls → About. Each card stays at ≤2 short sentences;
+       deeper theory lives in the math/lesson PDFs to avoid duplicating
+       long-form content across 9 locales. */
     info: {
       h2:  'Info',
-      sub: 'A pixel-perfect circle, ellipse, sphere and ellipsoid generator.',
+      sub: 'A pixel-perfect generator for circles, ellipses, spheres and ellipsoids — built for pixel art, voxel art and the classroom.',
       sections: [
-        { h3: '1. What it is', items: [
-          { p: 'Browser-based generator for pixel-art circles &amp; ellipses (2D) and voxel spheres &amp; ellipsoids (3D). Integer dimensions in, PNG out. No installation, no account, no backend.' },
+        { h3: '1. Quick start', items: [
+          { p: '<b>1.</b> Pick a mode and shape at the top — <b>2D / 3D</b>, then <b>Circle / Ellipse</b> (or <b>Sphere / Ellipsoid</b> in 3D). <br><b>2.</b> Drag the sliders to set the integer dimensions. <br><b>3.</b> Hit the download icon on the canvas to save a transparent-background PNG.' },
         ]},
-        { h3: '2. Modes & shapes', items: [
-          { h: '2D · Circle',    p: 'Single <b>Size</b>. Filled, thin or thick pixel circle.' },
-          { h: '2D · Ellipse',   p: '<b>Width</b> + <b>Height</b> independent. Same render-mode set.' },
-          { h: '3D · Sphere',    p: 'Single <b>Size</b>. Isometric voxel sphere. <b>Cut</b> on X, Y or ⟋ slices through.' },
-          { h: '3D · Ellipsoid', p: '<b>Width</b> + <b>Height</b> + <b>Depth</b> independent. <b>Cut</b> slices on the chosen axis.' },
-        ]},
-        { h3: '3. Algorithms (2D only)', items: [
-          { h: 'Euclidean', p: 'Distance test at pixel centres. Smoothest contour.' },
-          { h: 'Bresenham', p: 'Classic integer midpoint algorithm. Stair-stepped pixel-art look.' },
-          { h: 'Threshold', p: 'Corner-coverage test. Chunkier silhouette — any cell with a corner inside fills.' },
-        ]},
-        { h3: '4. Controls', items: [
-          { h: 'Mode & shape',       p: 'The <b>2D / 3D</b> and <b>Circle / Ellipse</b> (or <b>Sphere / Ellipsoid</b> in 3D) toggles at the top are the ONLY way to switch.' },
-          { h: 'Cut (3D)',           p: 'The <b>X / Y / ⟋</b> toggle chooses the slicing axis. <b>⟋</b> is a 45° diagonal through the x+y plane. Switching axis restores the full figure automatically — only one axis cuts at a time. The slider max scales to the chosen axis.' },
-          { h: 'Pinch & rotate',     p: 'Two fingers on the canvas zoom. In 3D, the midpoint of the fingers also rotates the figure. Mouse wheel zooms in 3D; click-drag rotates.' },
-          { h: 'Grid & edges',       p: 'The grid button in the canvas top-left toggles the cell grid in 2D and the per-voxel edge overlay in 3D (default ON).' },
-          { h: 'Language',           p: 'The <b>language</b> button at the right side of the topbar (and the picker in Settings) swaps the interface between supported locales. Choice is remembered across reloads (the only persisted preference).' },
-          { h: 'Undo / Redo',        p: 'Every figure-changing edit (mode, shape, render, algorithm, 3D style, sliders, cut, axis, reset) is recorded. <span class="key">Ctrl+Z</span> undoes; <span class="key">Ctrl+Y</span>, <span class="key">Ctrl+Shift+Z</span> and <span class="key">Ctrl+Alt+Z</span> all redo. Visual-only toggles (camera, edges, theme, sound, grid) are not tracked.' },
-          { h: 'Keyboard',           p: '<span class="key">G</span> Grid &nbsp; <span class="key">C</span> Center &nbsp; <span class="key">D</span> Download &nbsp; <span class="key">T</span> Theme &nbsp; <span class="key">I</span> Info chip &nbsp; <span class="key">M</span> 2D/3D &nbsp; <span class="key">S</span> Sound &nbsp; <span class="key">Ctrl+Z</span> Undo &nbsp; <span class="key">Ctrl+Y</span> Redo' },
-        ]},
-        { h3: '5. Technical', items: [
-          { h: 'Stack',   p: 'Vanilla JavaScript + Canvas 2D + three.js. No framework, no build step.' },
-          { h: 'Offline', p: 'PWA-installable. Once loaded, no network is required. Only the locale persists in <code>localStorage</code>.' },
-          { h: 'Output',  p: 'PNG with the accent color on transparent background. 2D exports at ~2048px on the major axis.' },
-        ]},
-        { h3: '6. License & credits', items: [
-          { h: 'License', p: 'All Rights Reserved on code &amp; design — see <code>LICENSE</code>. Third-party attributions in <code>NOTICE.md</code>.' },
-          { h: 'Source',  p: 'Repository: <code>github.com/ViniSouza128/pixel-round</code>.' },
-        ]},
-        { h3: '7. Documents', items: [
-          { h: 'Math companion (PDF)',     p: 'In-depth derivation of equations, algorithms, voxelization, cuts and shading. <a href="docs_math/Pixel_Round_Math_en-US.pdf" target="_blank" rel="noopener">Open Pixel_Round_Math_en-US.pdf →</a>' },
+        { h3: '2. Documents', items: [
+          { h: 'Math companion (PDF)',        p: 'Full derivation of equations, algorithms, voxelization, cuts and shading. <a href="docs_math/Pixel_Round_Math_en-US.pdf" target="_blank" rel="noopener">Open Pixel_Round_Math_en-US.pdf →</a>' },
           { h: 'Classroom lesson plan (PDF)', p: 'Four-period instructional sequence aligned to the Common Core State Standards. <a href="docs_aula/Plano_de_Aula_en-US.pdf" target="_blank" rel="noopener">Open Plano_de_Aula_en-US.pdf →</a>' },
-          { h: 'All locales',              p: 'Both documents are available in 9 languages: <a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> and <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>.' },
+          { h: 'All 9 locales',               p: 'Both documents are available in 9 languages — browse <a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> and <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>.' },
+        ]},
+        { h3: '3. Shapes', items: [
+          { h: '2D · Circle',    p: 'Uses <b>Size</b>. Filled, thin or thick contour.' },
+          { h: '2D · Ellipse',   p: 'Uses <b>Width</b> + <b>Height</b>. Same render modes.' },
+          { h: '3D · Sphere',    p: 'Uses <b>Size</b>. Add <b>Cut</b> on X, Y or ⟋ to slice through.' },
+          { h: '3D · Ellipsoid', p: 'Uses <b>Width</b> + <b>Height</b> + <b>Depth</b>, plus <b>Cut</b> on the chosen axis.' },
+        ]},
+        { h3: '4. Algorithms (2D)', items: [
+          { h: 'Euclidean', p: 'Distance test at pixel centres. Smoothest contour.' },
+          { h: 'Bresenham', p: 'Integer midpoint algorithm. Stair-stepped pixel-art look.' },
+          { h: 'Threshold', p: 'Corner-coverage test. Chunkiest silhouette — any cell with a corner inside fills.' },
+        ]},
+        { h3: '5. Controls', items: [
+          { h: 'Cut (3D)',       p: '<b>X / Y / ⟋</b> picks the slice axis — <b>⟋</b> is a 45° diagonal in the x+y plane. Switching axis preserves the proportional cut; the slider max scales to the chosen axis.' },
+          { h: 'Pinch & rotate', p: 'Two fingers zoom the canvas. In 3D the finger midpoint also rotates. Mouse wheel zooms, click-drag rotates.' },
+          { h: 'Grid & guides',  p: 'Top-left canvas button toggles the cell grid (2D) or per-voxel edges (3D). Bottom-right toggles the center guides (2D).' },
+          { h: 'Keyboard',       p: '<span class="key">G</span> Grid &nbsp; <span class="key">C</span> Center &nbsp; <span class="key">D</span> Download &nbsp; <span class="key">T</span> Theme &nbsp; <span class="key">I</span> Info chip &nbsp; <span class="key">M</span> 2D/3D &nbsp; <span class="key">S</span> Sound &nbsp; <span class="key">Ctrl+Z</span> Undo &nbsp; <span class="key">Ctrl+Y</span> Redo' },
+        ]},
+        { h3: '6. About', items: [
+          { h: 'Stack & offline',  p: 'Vanilla JavaScript + Canvas 2D + three.js. No framework, no build step. PWA-installable — works offline. Only the chosen locale persists in <code>localStorage</code>.' },
+          { h: 'Output',           p: 'PNG with the accent color on a transparent background. 2D exports at ~2048px on the major axis.' },
+          { h: 'License & source', p: 'All Rights Reserved on code &amp; design — see <code>LICENSE</code>. Third-party attributions in <code>NOTICE.md</code>. Repository: <code>github.com/ViniSouza128/pixel-round</code>.' },
         ]},
       ],
     },
@@ -346,44 +344,37 @@ const TR = {
 
     info: {
       h2:  'Información',
-      sub: 'Un generador pixel-perfecto de círculos, elipses, esferas y elipsoides.',
+      sub: 'Un generador pixel-perfecto de círculos, elipses, esferas y elipsoides — pensado para pixel art, voxel art y el aula.',
       sections: [
-        { h3: '1. Qué es', items: [
-          { p: 'Generador en el navegador para círculos y elipses en pixel-art (2D) y esferas y elipsoides en voxels (3D). Entran dimensiones enteras, sale un PNG. Sin instalación, sin cuenta, sin backend.' },
+        { h3: '1. Inicio rápido', items: [
+          { p: '<b>1.</b> Elige modo y forma arriba — <b>2D / 3D</b>, luego <b>Círculo / Elipse</b> (o <b>Esfera / Elipsoide</b> en 3D). <br><b>2.</b> Arrastra los sliders para fijar las dimensiones enteras. <br><b>3.</b> Pulsa el icono de descarga sobre el lienzo para guardar un PNG con fondo transparente.' },
         ]},
-        { h3: '2. Modos y formas', items: [
-          { h: '2D · Círculo',   p: 'Solo <b>Tamaño</b>. Círculo relleno, fino o grueso.' },
-          { h: '2D · Elipse',    p: '<b>Ancho</b> + <b>Alto</b> independientes. Mismo conjunto de modos de renderizado.' },
-          { h: '3D · Esfera',    p: 'Solo <b>Tamaño</b>. Esfera de voxels isométrica. <b>Corte</b> en X, Y o ⟋ atraviesa la figura.' },
-          { h: '3D · Elipsoide', p: '<b>Ancho</b> + <b>Alto</b> + <b>Profundidad</b> independientes. <b>Corte</b> en el eje elegido.' },
+        { h3: '2. Documentos', items: [
+          { h: 'Documento matemático (PDF)',     p: 'Desarrollo completo de ecuaciones, algoritmos, voxelización, cortes y sombreado. <a href="docs_math/Pixel_Round_Math_es-ES.pdf" target="_blank" rel="noopener">Abrir Pixel_Round_Math_es-ES.pdf →</a>' },
+          { h: 'Situación de aprendizaje (PDF)', p: 'Secuencia de cuatro sesiones alineada a la LOMLOE (2.º de Bachillerato). <a href="docs_aula/Plano_de_Aula_es-ES.pdf" target="_blank" rel="noopener">Abrir Plano_de_Aula_es-ES.pdf →</a>' },
+          { h: 'Los 9 idiomas',                  p: 'Ambos documentos están disponibles en 9 idiomas — explora <a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> y <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>.' },
         ]},
-        { h3: '3. Algoritmos (solo 2D)', items: [
-          { h: 'Euclidiano', p: 'Prueba de distancia en el centro de cada píxel. Contorno más suave.' },
+        { h3: '3. Formas', items: [
+          { h: '2D · Círculo',   p: 'Usa <b>Tamaño</b>. Contorno relleno, fino o grueso.' },
+          { h: '2D · Elipse',    p: 'Usa <b>Ancho</b> + <b>Alto</b>. Mismos modos de renderizado.' },
+          { h: '3D · Esfera',    p: 'Usa <b>Tamaño</b>. Añade <b>Corte</b> en X, Y o ⟋ para atravesarla.' },
+          { h: '3D · Elipsoide', p: 'Usa <b>Ancho</b> + <b>Alto</b> + <b>Profundidad</b>, más <b>Corte</b> en el eje elegido.' },
+        ]},
+        { h3: '4. Algoritmos (solo 2D)', items: [
+          { h: 'Euclidiano', p: 'Prueba de distancia en el centro del píxel. Contorno más suave.' },
           { h: 'Bresenham',  p: 'Algoritmo clásico del punto medio con enteros. Aspecto escalonado de pixel-art.' },
           { h: 'Umbral',     p: 'Prueba de cobertura por esquina. Silueta más "blocada" — toda celda con una esquina dentro se rellena.' },
         ]},
-        { h3: '4. Controles', items: [
-          { h: 'Modo y forma',          p: 'Los botones <b>2D / 3D</b> y <b>Círculo / Elipse</b> (o <b>Esfera / Elipsoide</b> en 3D) arriba son la ÚNICA forma de cambiar.' },
-          { h: 'Corte (3D)',            p: 'El conmutador <b>X / Y / ⟋</b> elige el eje del corte. <b>⟋</b> es una diagonal de 45° en el plano x+y. Cambiar el eje restaura la figura automáticamente — solo un eje corta a la vez. El máximo del slider se ajusta al eje elegido.' },
-          { h: 'Pellizcar y rotar',     p: 'Dos dedos en el lienzo dan zoom. En 3D, el punto medio de los dedos también rota la figura. La rueda del ratón da zoom en 3D; clic y arrastrar rota.' },
-          { h: 'Cuadrícula y aristas',  p: 'El botón de cuadrícula en la esquina superior izquierda del lienzo alterna la cuadrícula de celdas en 2D y la superposición de aristas por voxel en 3D (predeterminado ACTIVADO).' },
-          { h: 'Idioma',                p: 'El botón de <b>idioma</b> a la derecha del topbar (y el selector en Ajustes) cambia el idioma de la interfaz entre los disponibles. La elección se recuerda entre recargas (la única preferencia persistente).' },
-          { h: 'Deshacer / Rehacer',    p: 'Cada edición que cambia la figura (modo, forma, renderizado, algoritmo, estilo 3D, sliders, corte, eje, restablecer) se registra. <span class="key">Ctrl+Z</span> deshace; <span class="key">Ctrl+Y</span>, <span class="key">Ctrl+Shift+Z</span> y <span class="key">Ctrl+Alt+Z</span> rehacen. Los toggles visuales (cámara, aristas, tema, sonido, cuadrícula) no se rastrean.' },
-          { h: 'Teclado',               p: '<span class="key">G</span> Cuadrícula &nbsp; <span class="key">C</span> Centro &nbsp; <span class="key">D</span> Descargar &nbsp; <span class="key">T</span> Tema &nbsp; <span class="key">I</span> Ficha de info &nbsp; <span class="key">M</span> 2D/3D &nbsp; <span class="key">S</span> Sonido &nbsp; <span class="key">Ctrl+Z</span> Deshacer &nbsp; <span class="key">Ctrl+Y</span> Rehacer' },
+        { h3: '5. Controles', items: [
+          { h: 'Corte (3D)',         p: '<b>X / Y / ⟋</b> elige el eje del corte — <b>⟋</b> es una diagonal de 45° en el plano x+y. Cambiar el eje conserva el corte proporcional; el máximo del slider se ajusta al eje elegido.' },
+          { h: 'Pellizcar y rotar',  p: 'Dos dedos en el lienzo dan zoom. En 3D, el punto medio de los dedos también rota la figura. La rueda hace zoom, clic y arrastrar rota.' },
+          { h: 'Cuadrícula y guías', p: 'El botón superior izquierdo del lienzo alterna la cuadrícula (2D) o las aristas por voxel (3D). El inferior derecho alterna las guías centrales (2D).' },
+          { h: 'Teclado',            p: '<span class="key">G</span> Cuadrícula &nbsp; <span class="key">C</span> Centro &nbsp; <span class="key">D</span> Descargar &nbsp; <span class="key">T</span> Tema &nbsp; <span class="key">I</span> Ficha de info &nbsp; <span class="key">M</span> 2D/3D &nbsp; <span class="key">S</span> Sonido &nbsp; <span class="key">Ctrl+Z</span> Deshacer &nbsp; <span class="key">Ctrl+Y</span> Rehacer' },
         ]},
-        { h3: '5. Técnico', items: [
-          { h: 'Stack',         p: 'JavaScript puro + Canvas 2D + three.js. Sin framework, sin paso de build.' },
-          { h: 'Sin conexión',  p: 'Instalable como PWA. Después del primer carga, no se necesita red. Solo el idioma persiste en <code>localStorage</code>.' },
-          { h: 'Salida',        p: 'PNG con el color de acento sobre fondo transparente. Exportación 2D en ~2048px en el eje mayor.' },
-        ]},
-        { h3: '6. Licencia y créditos', items: [
-          { h: 'Licencia',  p: 'Todos los derechos reservados sobre código y diseño — ver <code>LICENSE</code>. Atribuciones de terceros en <code>NOTICE.md</code>.' },
-          { h: 'Código',    p: 'Repositorio: <code>github.com/ViniSouza128/pixel-round</code>.' },
-        ]},
-        { h3: '7. Documentos', items: [
-          { h: 'Documento matemático (PDF)',  p: 'Desarrollo en profundidad de ecuaciones, algoritmos, voxelización, cortes y sombreado. <a href="docs_math/Pixel_Round_Math_es-ES.pdf" target="_blank" rel="noopener">Abrir Pixel_Round_Math_es-ES.pdf →</a>' },
-          { h: 'Situación de aprendizaje (PDF)', p: 'Secuencia de cuatro sesiones alineada a la LOMLOE (2.º de Bachillerato). <a href="docs_aula/Plano_de_Aula_es-ES.pdf" target="_blank" rel="noopener">Abrir Plano_de_Aula_es-ES.pdf →</a>' },
-          { h: 'Todos los idiomas',           p: 'Ambos documentos están disponibles en 9 idiomas: <a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> y <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>.' },
+        { h3: '6. Acerca de', items: [
+          { h: 'Stack y sin conexión', p: 'JavaScript puro + Canvas 2D + three.js. Sin framework, sin paso de build. Instalable como PWA — funciona sin conexión. Solo el idioma elegido persiste en <code>localStorage</code>.' },
+          { h: 'Salida',               p: 'PNG con el color de acento sobre fondo transparente. Exportación 2D en ~2048px en el eje mayor.' },
+          { h: 'Licencia y código',    p: 'Todos los derechos reservados sobre código y diseño — ver <code>LICENSE</code>. Atribuciones de terceros en <code>NOTICE.md</code>. Repositorio: <code>github.com/ViniSouza128/pixel-round</code>.' },
         ]},
       ],
     },
@@ -480,44 +471,37 @@ const TR = {
 
     info: {
       h2:  'Informações',
-      sub: 'Um gerador pixel-perfeito de círculos, elipses, esferas e elipsoides.',
+      sub: 'Um gerador pixel-perfeito de círculos, elipses, esferas e elipsoides — feito para pixel art, voxel art e a sala de aula.',
       sections: [
-        { h3: '1. O que é', items: [
-          { p: 'Gerador no navegador para círculos e elipses em pixel-art (2D) e esferas e elipsoides em voxels (3D). Entram dimensões inteiras, sai um PNG. Sem instalação, sem cadastro e sem backend.' },
+        { h3: '1. Início rápido', items: [
+          { p: '<b>1.</b> Escolha o modo e a forma no topo — <b>2D / 3D</b>, depois <b>Círculo / Elipse</b> (ou <b>Esfera / Elipsoide</b> em 3D). <br><b>2.</b> Arraste os sliders para definir as dimensões inteiras. <br><b>3.</b> Toque no ícone de download sobre o canvas para salvar um PNG com fundo transparente.' },
         ]},
-        { h3: '2. Modos & formas', items: [
-          { h: '2D · Círculo',   p: 'Apenas <b>Tamanho</b>. Círculo preenchido, fino ou grosso.' },
-          { h: '2D · Elipse',    p: '<b>Largura</b> + <b>Altura</b> independentes. Mesmo conjunto de modos de renderização.' },
-          { h: '3D · Esfera',    p: 'Apenas <b>Tamanho</b>. Esfera de voxels isométrica. <b>Corte</b> em X, Y ou ⟋ atravessa a figura.' },
-          { h: '3D · Elipsoide', p: '<b>Largura</b> + <b>Altura</b> + <b>Profundidade</b> independentes. <b>Corte</b> no eixo escolhido.' },
-        ]},
-        { h3: '3. Algoritmos (somente 2D)', items: [
-          { h: 'Euclidiano', p: 'Teste de distância no centro de cada pixel. Contorno mais suave.' },
-          { h: 'Bresenham',  p: 'Algoritmo clássico do ponto médio com inteiros. Visual escadinha em pixel-art.' },
-          { h: 'Limiar',     p: 'Teste de cobertura por canto. Silhueta mais "blocada" — toda célula com um canto dentro é preenchida.' },
-        ]},
-        { h3: '4. Controles', items: [
-          { h: 'Modo & forma',        p: 'Os botões <b>2D / 3D</b> e <b>Círculo / Elipse</b> (ou <b>Esfera / Elipsoide</b> em 3D) no topo são a ÚNICA forma de alternar.' },
-          { h: 'Corte (3D)',          p: 'O toggle <b>X / Y / ⟋</b> escolhe o eixo do corte. <b>⟋</b> é uma diagonal 45° no plano x+y. Trocar o eixo restaura a figura automaticamente — apenas um eixo corta por vez. O máximo do slider se ajusta ao eixo escolhido.' },
-          { h: 'Pinçar & rotacionar', p: 'Dois dedos no canvas dão zoom. Em 3D, o ponto médio dos dedos também rotaciona a figura. A roda do mouse dá zoom em 3D; clique-arraste rotaciona.' },
-          { h: 'Grade & arestas',     p: 'O botão de grade no canto superior esquerdo do canvas alterna a grade de células em 2D e a sobreposição de arestas por voxel em 3D (padrão LIGADO).' },
-          { h: 'Idioma',              p: 'O botão de <b>idioma</b> à direita do topo (e o seletor em Configurações) troca o idioma da interface entre os disponíveis. A escolha fica salva entre as recargas (a única preferência persistida).' },
-          { h: 'Desfazer / Refazer',  p: 'Toda alteração da figura (modo, forma, renderização, algoritmo, estilo 3D, sliders, corte, eixo, reiniciar) é registrada. <span class="key">Ctrl+Z</span> desfaz; <span class="key">Ctrl+Y</span>, <span class="key">Ctrl+Shift+Z</span> e <span class="key">Ctrl+Alt+Z</span> refazem. Toggles visuais (câmera, arestas, tema, som, grade) não entram no histórico.' },
-          { h: 'Teclado',             p: '<span class="key">G</span> Grade &nbsp; <span class="key">C</span> Centro &nbsp; <span class="key">D</span> Baixar &nbsp; <span class="key">T</span> Tema &nbsp; <span class="key">I</span> Chip de info &nbsp; <span class="key">M</span> 2D/3D &nbsp; <span class="key">S</span> Som &nbsp; <span class="key">Ctrl+Z</span> Desfazer &nbsp; <span class="key">Ctrl+Y</span> Refazer' },
-        ]},
-        { h3: '5. Técnico', items: [
-          { h: 'Stack',   p: 'JavaScript puro + Canvas 2D + three.js. Sem framework, sem build.' },
-          { h: 'Offline', p: 'Instalável como PWA. Depois do primeiro carregamento, não é preciso rede. Apenas o idioma fica salvo em <code>localStorage</code>.' },
-          { h: 'Saída',   p: 'PNG com a cor de destaque sobre fundo transparente. Exportação 2D em ~2048px no eixo maior.' },
-        ]},
-        { h3: '6. Licença & créditos', items: [
-          { h: 'Licença', p: 'Todos os direitos reservados sobre código e design — veja <code>LICENSE</code>. Atribuições de terceiros em <code>NOTICE.md</code>.' },
-          { h: 'Código',  p: 'Repositório: <code>github.com/ViniSouza128/pixel-round</code>.' },
-        ]},
-        { h3: '7. Documentos', items: [
+        { h3: '2. Documentos', items: [
           { h: 'Documento matemático (PDF)', p: 'Desenvolvimento completo das equações, algoritmos, voxelização, cortes e sombreamento. <a href="docs_math/Pixel_Round_Math_pt-BR.pdf" target="_blank" rel="noopener">Abrir Pixel_Round_Math_pt-BR.pdf →</a>' },
           { h: 'Plano de aula (PDF)',        p: 'Sequência didática de quatro aulas para o 3.º ano do Ensino Médio, alinhada à BNCC. <a href="docs_aula/Plano_de_Aula_pt-BR.pdf" target="_blank" rel="noopener">Abrir Plano_de_Aula_pt-BR.pdf →</a>' },
-          { h: 'Outros idiomas',             p: 'Ambos os documentos estão disponíveis em 9 idiomas: <a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> e <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>.' },
+          { h: 'Todos os 9 idiomas',         p: 'Ambos os documentos estão disponíveis em 9 idiomas — explore <a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> e <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>.' },
+        ]},
+        { h3: '3. Formas', items: [
+          { h: '2D · Círculo',   p: 'Usa <b>Tamanho</b>. Contorno preenchido, fino ou grosso.' },
+          { h: '2D · Elipse',    p: 'Usa <b>Largura</b> + <b>Altura</b>. Mesmos modos de renderização.' },
+          { h: '3D · Esfera',    p: 'Usa <b>Tamanho</b>. Adicione <b>Corte</b> em X, Y ou ⟋ para atravessá-la.' },
+          { h: '3D · Elipsoide', p: 'Usa <b>Largura</b> + <b>Altura</b> + <b>Profundidade</b>, mais <b>Corte</b> no eixo escolhido.' },
+        ]},
+        { h3: '4. Algoritmos (somente 2D)', items: [
+          { h: 'Euclidiano', p: 'Teste de distância no centro do pixel. Contorno mais suave.' },
+          { h: 'Bresenham',  p: 'Algoritmo clássico do ponto médio com inteiros. Visual escadinha de pixel-art.' },
+          { h: 'Limiar',     p: 'Teste de cobertura por canto. Silhueta mais "blocada" — toda célula com um canto dentro é preenchida.' },
+        ]},
+        { h3: '5. Controles', items: [
+          { h: 'Corte (3D)',          p: '<b>X / Y / ⟋</b> escolhe o eixo do corte — <b>⟋</b> é uma diagonal 45° no plano x+y. Trocar o eixo preserva o corte proporcional; o máximo do slider se ajusta ao eixo escolhido.' },
+          { h: 'Pinçar e rotacionar', p: 'Dois dedos no canvas dão zoom. Em 3D o ponto médio dos dedos também rotaciona a figura. A roda do mouse dá zoom, clique-arraste rotaciona.' },
+          { h: 'Grade e guias',       p: 'O botão superior esquerdo do canvas alterna a grade (2D) ou as arestas por voxel (3D). O inferior direito alterna as guias centrais (2D).' },
+          { h: 'Teclado',             p: '<span class="key">G</span> Grade &nbsp; <span class="key">C</span> Centro &nbsp; <span class="key">D</span> Baixar &nbsp; <span class="key">T</span> Tema &nbsp; <span class="key">I</span> Chip de info &nbsp; <span class="key">M</span> 2D/3D &nbsp; <span class="key">S</span> Som &nbsp; <span class="key">Ctrl+Z</span> Desfazer &nbsp; <span class="key">Ctrl+Y</span> Refazer' },
+        ]},
+        { h3: '6. Sobre', items: [
+          { h: 'Stack e offline',  p: 'JavaScript puro + Canvas 2D + three.js. Sem framework, sem build. Instalável como PWA — funciona offline. Apenas o idioma escolhido persiste em <code>localStorage</code>.' },
+          { h: 'Saída',            p: 'PNG com a cor de destaque sobre fundo transparente. Exportação 2D em ~2048px no eixo maior.' },
+          { h: 'Licença e código', p: 'Todos os direitos reservados sobre código e design — veja <code>LICENSE</code>. Atribuições de terceiros em <code>NOTICE.md</code>. Repositório: <code>github.com/ViniSouza128/pixel-round</code>.' },
         ]},
       ],
     },
@@ -614,44 +598,37 @@ const TR = {
 
     info: {
       h2:  'Infos',
-      sub: 'Un générateur pixel-perfect de cercles, ellipses, sphères et ellipsoïdes.',
+      sub: 'Un générateur pixel-perfect de cercles, ellipses, sphères et ellipsoïdes — pensé pour le pixel art, le voxel art et la classe.',
       sections: [
-        { h3: "1. Qu'est-ce que c'est", items: [
-          { p: "Générateur dans le navigateur pour cercles et ellipses en pixel-art (2D) et sphères et ellipsoïdes en voxels (3D). Entrez des dimensions entières, sortez un PNG. Sans installation, sans compte, sans backend." },
+        { h3: '1. Démarrage rapide', items: [
+          { p: '<b>1.</b> Choisissez le mode et la forme en haut — <b>2D / 3D</b>, puis <b>Cercle / Ellipse</b> (ou <b>Sphère / Ellipsoïde</b> en 3D). <br><b>2.</b> Faites glisser les sliders pour fixer les dimensions entières. <br><b>3.</b> Appuyez sur l\'icône de téléchargement au-dessus du canvas pour enregistrer un PNG à fond transparent.' },
         ]},
-        { h3: '2. Modes & formes', items: [
-          { h: '2D · Cercle',     p: '<b>Taille</b> uniquement. Cercle plein, fin ou épais.' },
-          { h: '2D · Ellipse',    p: '<b>Largeur</b> + <b>Hauteur</b> indépendantes. Même jeu de modes de rendu.' },
-          { h: '3D · Sphère',     p: '<b>Taille</b> uniquement. Sphère de voxels isométrique. <b>Coupe</b> en X, Y ou ⟋ traverse la figure.' },
-          { h: '3D · Ellipsoïde', p: '<b>Largeur</b> + <b>Hauteur</b> + <b>Profondeur</b> indépendantes. <b>Coupe</b> sur l\'axe choisi.' },
+        { h3: '2. Documents', items: [
+          { h: 'Document mathématique (PDF)', p: 'Développement complet des équations, des algorithmes, de la voxélisation, des coupes et de l\'ombrage. <a href="docs_math/Pixel_Round_Math_fr-FR.pdf" target="_blank" rel="noopener">Ouvrir Pixel_Round_Math_fr-FR.pdf →</a>' },
+          { h: 'Séquence pédagogique (PDF)',  p: 'Séance de quatre cours pour la classe de Terminale, spécialité Mathématiques. <a href="docs_aula/Plano_de_Aula_fr-FR.pdf" target="_blank" rel="noopener">Ouvrir Plano_de_Aula_fr-FR.pdf →</a>' },
+          { h: 'Les 9 langues',               p: 'Les deux documents sont disponibles en 9 langues — parcourez <a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> et <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>.' },
         ]},
-        { h3: '3. Algorithmes (2D uniquement)', items: [
-          { h: 'Euclidien', p: 'Test de distance au centre de chaque pixel. Contour le plus lisse.' },
+        { h3: '3. Formes', items: [
+          { h: '2D · Cercle',     p: 'Utilise <b>Taille</b>. Contour plein, fin ou épais.' },
+          { h: '2D · Ellipse',    p: 'Utilise <b>Largeur</b> + <b>Hauteur</b>. Mêmes modes de rendu.' },
+          { h: '3D · Sphère',     p: 'Utilise <b>Taille</b>. Ajoutez <b>Coupe</b> en X, Y ou ⟋ pour la traverser.' },
+          { h: '3D · Ellipsoïde', p: 'Utilise <b>Largeur</b> + <b>Hauteur</b> + <b>Profondeur</b>, plus <b>Coupe</b> sur l\'axe choisi.' },
+        ]},
+        { h3: '4. Algorithmes (2D uniquement)', items: [
+          { h: 'Euclidien', p: 'Test de distance au centre du pixel. Contour le plus lisse.' },
           { h: 'Bresenham', p: 'Algorithme classique du point milieu en entiers. Aspect "marches" du pixel-art.' },
-          { h: 'Seuil',     p: 'Test de couverture par coin. Silhouette plus massive — toute case avec un coin à l\'intérieur est remplie.' },
+          { h: 'Seuil',     p: 'Test de couverture par coin. Silhouette la plus massive — toute case avec un coin à l\'intérieur est remplie.' },
         ]},
-        { h3: '4. Contrôles', items: [
-          { h: 'Mode & forme',       p: 'Les bascules <b>2D / 3D</b> et <b>Cercle / Ellipse</b> (ou <b>Sphère / Ellipsoïde</b> en 3D) en haut sont la SEULE façon de basculer.' },
-          { h: 'Coupe (3D)',         p: 'La bascule <b>X / Y / ⟋</b> choisit l\'axe de coupe. <b>⟋</b> est une diagonale 45° dans le plan x+y. Changer d\'axe restaure la figure automatiquement — un seul axe coupe à la fois. Le max du slider s\'adapte à l\'axe choisi.' },
-          { h: 'Pincer & tourner',   p: 'Deux doigts sur le canvas zooment. En 3D, le milieu des doigts fait aussi tourner la figure. La molette zoome en 3D ; clic-glisser tourne.' },
-          { h: 'Grille & arêtes',    p: 'Le bouton grille en haut à gauche du canvas bascule la grille de cellules en 2D et la superposition d\'arêtes par voxel en 3D (par défaut ACTIVÉ).' },
-          { h: 'Langue',             p: 'Le bouton <b>langue</b> à droite du topbar (et le sélecteur dans Réglages) change la langue de l\'interface parmi celles disponibles. Le choix est conservé entre les rechargements (la seule préférence persistante).' },
-          { h: 'Annuler / Rétablir', p: 'Chaque édition modifiant la figure (mode, forme, rendu, algorithme, style 3D, sliders, coupe, axe, réinitialisation) est enregistrée. <span class="key">Ctrl+Z</span> annule ; <span class="key">Ctrl+Y</span>, <span class="key">Ctrl+Shift+Z</span> et <span class="key">Ctrl+Alt+Z</span> rétablissent. Les bascules purement visuelles (caméra, arêtes, thème, son, grille) ne sont pas suivies.' },
+        { h3: '5. Contrôles', items: [
+          { h: 'Coupe (3D)',         p: '<b>X / Y / ⟋</b> choisit l\'axe de coupe — <b>⟋</b> est une diagonale 45° dans le plan x+y. Changer d\'axe conserve la coupe proportionnelle ; le max du slider s\'adapte à l\'axe choisi.' },
+          { h: 'Pincer et tourner',  p: 'Deux doigts sur le canvas zooment. En 3D, le milieu des doigts fait aussi tourner. La molette zoome, clic-glisser tourne.' },
+          { h: 'Grille et repères',  p: 'Le bouton en haut à gauche du canvas bascule la grille (2D) ou les arêtes par voxel (3D). Celui en bas à droite bascule les repères centraux (2D).' },
           { h: 'Clavier',            p: '<span class="key">G</span> Grille &nbsp; <span class="key">C</span> Centre &nbsp; <span class="key">D</span> Télécharger &nbsp; <span class="key">T</span> Thème &nbsp; <span class="key">I</span> Bulle d\'info &nbsp; <span class="key">M</span> 2D/3D &nbsp; <span class="key">S</span> Son &nbsp; <span class="key">Ctrl+Z</span> Annuler &nbsp; <span class="key">Ctrl+Y</span> Rétablir' },
         ]},
-        { h3: '5. Technique', items: [
-          { h: 'Stack',       p: 'JavaScript pur + Canvas 2D + three.js. Pas de framework, pas d\'étape de build.' },
-          { h: 'Hors ligne',  p: 'Installable comme PWA. Une fois chargé, aucun réseau requis. Seule la langue persiste dans <code>localStorage</code>.' },
-          { h: 'Sortie',      p: 'PNG avec la couleur d\'accent sur fond transparent. Export 2D à ~2048px sur l\'axe majeur.' },
-        ]},
-        { h3: '6. Licence & crédits', items: [
-          { h: 'Licence', p: 'Tous droits réservés sur le code et le design — voir <code>LICENSE</code>. Attributions tierces dans <code>NOTICE.md</code>.' },
-          { h: 'Source',  p: 'Dépôt : <code>github.com/ViniSouza128/pixel-round</code>.' },
-        ]},
-        { h3: '7. Documents', items: [
-          { h: 'Document mathématique (PDF)', p: 'Développement complet des équations, des algorithmes, de la voxelisation, des coupes et de l\'ombrage. <a href="docs_math/Pixel_Round_Math_fr-FR.pdf" target="_blank" rel="noopener">Ouvrir Pixel_Round_Math_fr-FR.pdf →</a>' },
-          { h: 'Séquence pédagogique (PDF)',  p: 'Séance de quatre cours pour la classe de Terminale, spécialité Mathématiques. <a href="docs_aula/Plano_de_Aula_fr-FR.pdf" target="_blank" rel="noopener">Ouvrir Plano_de_Aula_fr-FR.pdf →</a>' },
-          { h: 'Autres langues',              p: 'Les deux documents sont disponibles en 9 langues : <a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> et <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>.' },
+        { h3: '6. À propos', items: [
+          { h: 'Stack et hors ligne', p: 'JavaScript pur + Canvas 2D + three.js. Pas de framework, pas d\'étape de build. Installable comme PWA — fonctionne hors ligne. Seule la langue choisie persiste dans <code>localStorage</code>.' },
+          { h: 'Sortie',              p: 'PNG avec la couleur d\'accent sur fond transparent. Export 2D à ~2048px sur l\'axe majeur.' },
+          { h: 'Licence et source',   p: 'Tous droits réservés sur le code et le design — voir <code>LICENSE</code>. Attributions tierces dans <code>NOTICE.md</code>. Dépôt : <code>github.com/ViniSouza128/pixel-round</code>.' },
         ]},
       ],
     },
@@ -748,44 +725,37 @@ const TR = {
 
     info: {
       h2:  'Info',
-      sub: 'Ein pixelgenauer Generator für Kreise, Ellipsen, Kugeln und Ellipsoide.',
+      sub: 'Ein pixelgenauer Generator für Kreise, Ellipsen, Kugeln und Ellipsoide — gemacht für Pixel-Art, Voxel-Art und den Unterricht.',
       sections: [
-        { h3: '1. Was es ist', items: [
-          { p: 'Browserbasierter Generator für Pixel-Kreise und -Ellipsen (2D) sowie Voxel-Kugeln und -Ellipsoide (3D). Ganzzahlige Maße rein, PNG raus. Keine Installation, kein Konto, kein Backend.' },
+        { h3: '1. Schnellstart', items: [
+          { p: '<b>1.</b> Modus und Form oben wählen — <b>2D / 3D</b>, dann <b>Kreis / Ellipse</b> (oder <b>Kugel / Ellipsoid</b> in 3D). <br><b>2.</b> Die Slider ziehen, um die ganzzahligen Maße festzulegen. <br><b>3.</b> Auf das Download-Symbol über dem Canvas tippen, um ein PNG mit transparentem Hintergrund zu speichern.' },
         ]},
-        { h3: '2. Modi & Formen', items: [
-          { h: '2D · Kreis',     p: 'Nur <b>Größe</b>. Gefüllter, dünner oder dicker Pixelkreis.' },
-          { h: '2D · Ellipse',   p: '<b>Breite</b> + <b>Höhe</b> unabhängig. Gleiche Render-Modi.' },
-          { h: '3D · Kugel',     p: 'Nur <b>Größe</b>. Isometrische Voxelkugel. <b>Schnitt</b> auf X, Y oder ⟋ schneidet durch.' },
-          { h: '3D · Ellipsoid', p: '<b>Breite</b> + <b>Höhe</b> + <b>Tiefe</b> unabhängig. <b>Schnitt</b> auf der gewählten Achse.' },
-        ]},
-        { h3: '3. Algorithmen (nur 2D)', items: [
-          { h: 'Euklidisch', p: 'Distanztest am Pixelzentrum. Glattester Umriss.' },
-          { h: 'Bresenham',  p: 'Klassischer Ganzzahl-Mittelpunkt-Algorithmus. Treppen-Look im Pixel-Art-Stil.' },
-          { h: 'Schwelle',   p: 'Eckenüberdeckungstest. Klobigere Silhouette — jede Zelle mit einer Ecke innen wird gefüllt.' },
-        ]},
-        { h3: '4. Steuerung', items: [
-          { h: 'Modus & Form',         p: 'Die Schalter <b>2D / 3D</b> und <b>Kreis / Ellipse</b> (oder <b>Kugel / Ellipsoid</b> in 3D) oben sind die EINZIGE Umschaltung.' },
-          { h: 'Schnitt (3D)',         p: 'Der Schalter <b>X / Y / ⟋</b> wählt die Schnittachse. <b>⟋</b> ist ein 45°-Diagonalschnitt in der x+y-Ebene. Achsenwechsel stellt die Figur automatisch wieder her — nur eine Achse schneidet auf einmal. Das Slider-Maximum skaliert mit der gewählten Achse.' },
-          { h: 'Pinch & rotieren',     p: 'Zwei Finger zoomen den Canvas. In 3D rotiert der Mittelpunkt der Finger auch die Figur. Mausrad zoomt in 3D; Klick-Ziehen rotiert.' },
-          { h: 'Raster & Kanten',      p: 'Die Rastertaste oben links am Canvas schaltet das Zellenraster in 2D und die Kantenüberlagerung pro Voxel in 3D (Standard EIN).' },
-          { h: 'Sprache',              p: 'Die <b>Sprach</b>-Taste rechts in der Topbar (und der Auswähler in den Einstellungen) wechselt die Oberflächensprache zwischen den verfügbaren Sprachen. Die Auswahl bleibt über Neuladen hinweg erhalten (die einzige persistente Einstellung).' },
-          { h: 'Rückgängig / Wiederh.',p: 'Jede figurändernde Bearbeitung (Modus, Form, Rendering, Algorithmus, 3D-Stil, Slider, Schnitt, Achse, Zurücksetzen) wird aufgezeichnet. <span class="key">Strg+Z</span> macht rückgängig; <span class="key">Strg+Y</span>, <span class="key">Strg+Shift+Z</span> und <span class="key">Strg+Alt+Z</span> stellen wieder her. Rein visuelle Schalter (Kamera, Kanten, Thema, Ton, Raster) werden nicht erfasst.' },
-          { h: 'Tastatur',             p: '<span class="key">G</span> Raster &nbsp; <span class="key">C</span> Mitte &nbsp; <span class="key">D</span> Download &nbsp; <span class="key">T</span> Thema &nbsp; <span class="key">I</span> Info-Chip &nbsp; <span class="key">M</span> 2D/3D &nbsp; <span class="key">S</span> Ton &nbsp; <span class="key">Strg+Z</span> Rückgängig &nbsp; <span class="key">Strg+Y</span> Wiederh.' },
-        ]},
-        { h3: '5. Technisch', items: [
-          { h: 'Stack',    p: 'Vanilla JavaScript + Canvas 2D + three.js. Kein Framework, kein Build-Schritt.' },
-          { h: 'Offline',  p: 'Als PWA installierbar. Nach dem Laden ist kein Netzwerk nötig. Nur die Sprache bleibt in <code>localStorage</code> gespeichert.' },
-          { h: 'Ausgabe',  p: 'PNG mit Akzentfarbe auf transparentem Hintergrund. 2D-Export bei ~2048px auf der Hauptachse.' },
-        ]},
-        { h3: '6. Lizenz & Credits', items: [
-          { h: 'Lizenz', p: 'Alle Rechte vorbehalten für Code und Design — siehe <code>LICENSE</code>. Drittanbieter-Hinweise in <code>NOTICE.md</code>.' },
-          { h: 'Quelle', p: 'Repository: <code>github.com/ViniSouza128/pixel-round</code>.' },
-        ]},
-        { h3: '7. Dokumente', items: [
+        { h3: '2. Dokumente', items: [
           { h: 'Mathematischer Begleittext (PDF)', p: 'Ausführliche Herleitung der Gleichungen, Algorithmen, Voxelisierung, Schnitte und Schattierung. <a href="docs_math/Pixel_Round_Math_de-DE.pdf" target="_blank" rel="noopener">Pixel_Round_Math_de-DE.pdf öffnen →</a>' },
           { h: 'Unterrichtssequenz (PDF)',         p: 'Vier Doppelstunden für die gymnasiale Oberstufe (Q2). <a href="docs_aula/Plano_de_Aula_de-DE.pdf" target="_blank" rel="noopener">Plano_de_Aula_de-DE.pdf öffnen →</a>' },
-          { h: 'Alle Sprachen',                    p: 'Beide Dokumente liegen in 9 Sprachen vor: <a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> und <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>.' },
+          { h: 'Alle 9 Sprachen',                  p: 'Beide Dokumente liegen in 9 Sprachen vor — durchstöbern: <a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> und <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>.' },
+        ]},
+        { h3: '3. Formen', items: [
+          { h: '2D · Kreis',     p: 'Nutzt <b>Größe</b>. Gefüllter, dünner oder dicker Umriss.' },
+          { h: '2D · Ellipse',   p: 'Nutzt <b>Breite</b> + <b>Höhe</b>. Gleiche Render-Modi.' },
+          { h: '3D · Kugel',     p: 'Nutzt <b>Größe</b>. Mit <b>Schnitt</b> auf X, Y oder ⟋ wird durchgeschnitten.' },
+          { h: '3D · Ellipsoid', p: 'Nutzt <b>Breite</b> + <b>Höhe</b> + <b>Tiefe</b>, plus <b>Schnitt</b> auf der gewählten Achse.' },
+        ]},
+        { h3: '4. Algorithmen (nur 2D)', items: [
+          { h: 'Euklidisch', p: 'Distanztest am Pixelzentrum. Glattester Umriss.' },
+          { h: 'Bresenham',  p: 'Klassischer Ganzzahl-Mittelpunkt-Algorithmus. Treppen-Look im Pixel-Art-Stil.' },
+          { h: 'Schwelle',   p: 'Eckenüberdeckungstest. Klobigste Silhouette — jede Zelle mit einer Ecke innen wird gefüllt.' },
+        ]},
+        { h3: '5. Steuerung', items: [
+          { h: 'Schnitt (3D)',          p: '<b>X / Y / ⟋</b> wählt die Schnittachse — <b>⟋</b> ist ein 45°-Diagonalschnitt in der x+y-Ebene. Achsenwechsel erhält den proportionalen Schnitt; das Slider-Maximum skaliert mit der gewählten Achse.' },
+          { h: 'Pinch & rotieren',      p: 'Zwei Finger zoomen den Canvas. In 3D rotiert der Mittelpunkt der Finger auch die Figur. Mausrad zoomt, Klick-Ziehen rotiert.' },
+          { h: 'Raster & Mittelachsen', p: 'Die Taste oben links am Canvas schaltet das Raster (2D) bzw. die Voxel-Kanten (3D). Unten rechts schaltet die Mittelachsen (2D).' },
+          { h: 'Tastatur',              p: '<span class="key">G</span> Raster &nbsp; <span class="key">C</span> Mitte &nbsp; <span class="key">D</span> Download &nbsp; <span class="key">T</span> Thema &nbsp; <span class="key">I</span> Info-Chip &nbsp; <span class="key">M</span> 2D/3D &nbsp; <span class="key">S</span> Ton &nbsp; <span class="key">Strg+Z</span> Rückgängig &nbsp; <span class="key">Strg+Y</span> Wiederh.' },
+        ]},
+        { h3: '6. Über', items: [
+          { h: 'Stack & Offline', p: 'Vanilla JavaScript + Canvas 2D + three.js. Kein Framework, kein Build-Schritt. Als PWA installierbar — offline nutzbar. Nur die gewählte Sprache bleibt in <code>localStorage</code>.' },
+          { h: 'Ausgabe',         p: 'PNG mit Akzentfarbe auf transparentem Hintergrund. 2D-Export bei ~2048px auf der Hauptachse.' },
+          { h: 'Lizenz & Quelle', p: 'Alle Rechte vorbehalten für Code und Design — siehe <code>LICENSE</code>. Drittanbieter-Hinweise in <code>NOTICE.md</code>. Repository: <code>github.com/ViniSouza128/pixel-round</code>.' },
         ]},
       ],
     },
@@ -882,44 +852,37 @@ const TR = {
 
     info: {
       h2:  '信息',
-      sub: '一个像素完美的圆、椭圆、球体和椭球体生成器。',
+      sub: '一个像素完美的圆、椭圆、球体和椭球体生成器 — 为像素艺术、体素艺术和课堂教学而设计。',
       sections: [
-        { h3: '1. 这是什么', items: [
-          { p: '基于浏览器的像素画圆和椭圆（2D）以及体素球体和椭球体（3D）生成器。输入整数尺寸，输出 PNG。无需安装、无需账号、无需后端。' },
+        { h3: '1. 快速开始', items: [
+          { p: '<b>1.</b> 在顶部选择模式与形状 — <b>2D / 3D</b>，然后 <b>圆 / 椭圆</b>（在 3D 中为 <b>球体 / 椭球体</b>）。<br><b>2.</b> 拖动滑块设置整数尺寸。<br><b>3.</b> 点击画布上的下载图标，保存透明背景的 PNG。' },
         ]},
-        { h3: '2. 模式与形状', items: [
-          { h: '2D · 圆',     p: '仅 <b>尺寸</b>。填充、细或粗的像素圆。' },
-          { h: '2D · 椭圆',   p: '<b>宽度</b> + <b>高度</b> 独立。相同的渲染模式集。' },
-          { h: '3D · 球体',   p: '仅 <b>尺寸</b>。等距体素球体。<b>切割</b> X、Y 或 ⟋ 穿过图形。' },
-          { h: '3D · 椭球体', p: '<b>宽度</b> + <b>高度</b> + <b>深度</b> 独立。<b>切割</b> 在所选轴上。' },
-        ]},
-        { h3: '3. 算法（仅 2D）', items: [
-          { h: '欧几里得',     p: '在像素中心进行距离测试。轮廓最平滑。' },
-          { h: '布雷森汉姆',   p: '经典的整数中点算法。像素画的阶梯外观。' },
-          { h: '阈值',         p: '角点覆盖测试。轮廓更块状 — 任何内部有角点的单元格都会填充。' },
-        ]},
-        { h3: '4. 控制', items: [
-          { h: '模式与形状',   p: '顶部的 <b>2D / 3D</b> 和 <b>圆 / 椭圆</b>（在 3D 中为 <b>球体 / 椭球体</b>）切换按钮是唯一的切换方式。' },
-          { h: '切割（3D）',    p: '<b>X / Y / ⟋</b> 切换选择切割轴。<b>⟋</b> 是 x+y 平面上的 45° 对角线。切换轴会自动恢复完整图形 — 一次只有一个轴在切割。滑块最大值随所选轴缩放。' },
-          { h: '捏合与旋转',   p: '在画布上用两根手指缩放。在 3D 中，手指的中点也会旋转图形。3D 中鼠标滚轮缩放；点击拖动旋转。' },
-          { h: '网格与边线',   p: '画布左上角的网格按钮在 2D 中切换单元格网格，在 3D 中切换每个体素的边线叠加（默认开启）。' },
-          { h: '语言',         p: '顶部栏右侧的<b>语言</b>按钮（以及设置中的选择器）在受支持的语言之间切换界面语言。选择在重新加载后保留（唯一持久化的偏好）。' },
-          { h: '撤销 / 重做',   p: '每次改变图形的编辑（模式、形状、渲染、算法、3D 样式、滑块、切割、轴、重置）都会被记录。<span class="key">Ctrl+Z</span> 撤销；<span class="key">Ctrl+Y</span>、<span class="key">Ctrl+Shift+Z</span> 和 <span class="key">Ctrl+Alt+Z</span> 都重做。仅视觉的切换（相机、边线、主题、声音、网格）不会被跟踪。' },
-          { h: '键盘',         p: '<span class="key">G</span> 网格 &nbsp; <span class="key">C</span> 中心 &nbsp; <span class="key">D</span> 下载 &nbsp; <span class="key">T</span> 主题 &nbsp; <span class="key">I</span> 信息卡 &nbsp; <span class="key">M</span> 2D/3D &nbsp; <span class="key">S</span> 声音 &nbsp; <span class="key">Ctrl+Z</span> 撤销 &nbsp; <span class="key">Ctrl+Y</span> 重做' },
-        ]},
-        { h3: '5. 技术', items: [
-          { h: '技术栈', p: '原生 JavaScript + Canvas 2D + three.js。无框架、无构建步骤。' },
-          { h: '离线',   p: '可作为 PWA 安装。加载后无需网络。仅语言保留在 <code>localStorage</code> 中。' },
-          { h: '输出',   p: '透明背景上带强调色的 PNG。2D 在主轴上以 ~2048 像素导出。' },
-        ]},
-        { h3: '6. 许可与致谢', items: [
-          { h: '许可', p: '代码和设计保留所有权利 — 见 <code>LICENSE</code>。第三方归属见 <code>NOTICE.md</code>。' },
-          { h: '源码', p: '仓库：<code>github.com/ViniSouza128/pixel-round</code>。' },
-        ]},
-        { h3: '7. 文档', items: [
+        { h3: '2. 文档', items: [
           { h: '数学技术文档 (PDF)', p: '完整推导方程、三种算法、体素化、切割与着色。<a href="docs_math/Pixel_Round_Math_zh-CN.pdf" target="_blank" rel="noopener">打开 Pixel_Round_Math_zh-CN.pdf →</a>' },
           { h: '教学设计 (PDF)',     p: '面向普通高中三年级（高三）数学的四课时教学设计。<a href="docs_aula/Plano_de_Aula_zh-CN.pdf" target="_blank" rel="noopener">打开 Plano_de_Aula_zh-CN.pdf →</a>' },
-          { h: '其他语言版本',       p: '两份文档均提供 9 种语言：<a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> 与 <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>。' },
+          { h: '全部 9 种语言',       p: '两份文档均提供 9 种语言 — 浏览 <a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> 与 <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>。' },
+        ]},
+        { h3: '3. 形状', items: [
+          { h: '2D · 圆',     p: '使用 <b>尺寸</b>。填充、细或粗的轮廓。' },
+          { h: '2D · 椭圆',   p: '使用 <b>宽度</b> + <b>高度</b>。相同的渲染模式。' },
+          { h: '3D · 球体',   p: '使用 <b>尺寸</b>。<b>切割</b> X、Y 或 ⟋ 可穿透切片。' },
+          { h: '3D · 椭球体', p: '使用 <b>宽度</b> + <b>高度</b> + <b>深度</b>，并在所选轴上 <b>切割</b>。' },
+        ]},
+        { h3: '4. 算法（仅 2D）', items: [
+          { h: '欧几里得',   p: '在像素中心进行距离测试。轮廓最平滑。' },
+          { h: '布雷森汉姆', p: '经典的整数中点算法。像素画的阶梯外观。' },
+          { h: '阈值',       p: '角点覆盖测试。轮廓最块状 — 任何内部有角点的单元格都会填充。' },
+        ]},
+        { h3: '5. 控制', items: [
+          { h: '切割（3D）',   p: '<b>X / Y / ⟋</b> 选择切割轴 — <b>⟋</b> 是 x+y 平面上的 45° 对角线。切换轴时保留比例切割；滑块最大值会按所选轴缩放。' },
+          { h: '捏合与旋转',   p: '在画布上用两根手指缩放。3D 中手指中点也会旋转图形。鼠标滚轮缩放，点击拖动旋转。' },
+          { h: '网格与参考线', p: '画布左上角按钮在 2D 中切换单元格网格，在 3D 中切换每个体素的边线。右下角切换中心参考线（2D）。' },
+          { h: '键盘',         p: '<span class="key">G</span> 网格 &nbsp; <span class="key">C</span> 中心 &nbsp; <span class="key">D</span> 下载 &nbsp; <span class="key">T</span> 主题 &nbsp; <span class="key">I</span> 信息卡 &nbsp; <span class="key">M</span> 2D/3D &nbsp; <span class="key">S</span> 声音 &nbsp; <span class="key">Ctrl+Z</span> 撤销 &nbsp; <span class="key">Ctrl+Y</span> 重做' },
+        ]},
+        { h3: '6. 关于', items: [
+          { h: '技术栈与离线', p: '原生 JavaScript + Canvas 2D + three.js。无框架、无构建步骤。可作为 PWA 安装 — 可离线使用。仅所选语言保留在 <code>localStorage</code> 中。' },
+          { h: '输出',         p: '透明背景上带强调色的 PNG。2D 在主轴上以 ~2048 像素导出。' },
+          { h: '许可与源码',   p: '代码和设计保留所有权利 — 见 <code>LICENSE</code>。第三方归属见 <code>NOTICE.md</code>。仓库：<code>github.com/ViniSouza128/pixel-round</code>。' },
         ]},
       ],
     },
@@ -1016,44 +979,37 @@ const TR = {
 
     info: {
       h2:  '情報',
-      sub: '円・楕円・球・楕円体のピクセルパーフェクトジェネレーター。',
+      sub: '円・楕円・球・楕円体のピクセルパーフェクトジェネレーター — ピクセルアート、ボクセルアート、授業向け。',
       sections: [
-        { h3: '1. これは何か', items: [
-          { p: 'ピクセルアートの円と楕円（2D）、ボクセルの球と楕円体（3D）を生成するブラウザベースのツール。整数の寸法を入れると PNG が出ます。インストール不要、アカウント不要、バックエンド不要。' },
+        { h3: '1. クイックスタート', items: [
+          { p: '<b>1.</b> 上部でモードと形状を選択 — <b>2D / 3D</b>、続いて <b>円 / 楕円</b>（3D では <b>球 / 楕円体</b>）。<br><b>2.</b> スライダーを動かして整数の寸法を設定。<br><b>3.</b> キャンバス上のダウンロードアイコンをタップして、透明背景の PNG を保存。' },
         ]},
-        { h3: '2. モードと形状', items: [
-          { h: '2D · 円',     p: '<b>サイズ</b> のみ。塗りつぶし・細・太のピクセル円。' },
-          { h: '2D · 楕円',    p: '<b>幅</b> + <b>高さ</b> 独立。同じレンダリングモードセット。' },
-          { h: '3D · 球',      p: '<b>サイズ</b> のみ。アイソメトリックなボクセル球。<b>カット</b> X、Y、⟋ で図形を切り抜き。' },
-          { h: '3D · 楕円体',  p: '<b>幅</b> + <b>高さ</b> + <b>奥行き</b> 独立。<b>カット</b> は選択した軸で。' },
+        { h3: '2. ドキュメント', items: [
+          { h: '数学解説 (PDF)',    p: '方程式・3アルゴリズム・ボクセル化・切断・シェーディングの詳細な導出。<a href="docs_math/Pixel_Round_Math_ja-JP.pdf" target="_blank" rel="noopener">Pixel_Round_Math_ja-JP.pdf を開く →</a>' },
+          { h: '学習指導案 (PDF)',  p: '高等学校第3学年数学のための4単位時間の学習指導案。<a href="docs_aula/Plano_de_Aula_ja-JP.pdf" target="_blank" rel="noopener">Plano_de_Aula_ja-JP.pdf を開く →</a>' },
+          { h: '9言語すべて',        p: 'どちらの文書も9言語で利用可能 — <a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> と <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a> を参照。' },
         ]},
-        { h3: '3. アルゴリズム（2D のみ）', items: [
+        { h3: '3. 形状', items: [
+          { h: '2D · 円',     p: '<b>サイズ</b> を使用。塗りつぶし・細・太の輪郭。' },
+          { h: '2D · 楕円',    p: '<b>幅</b> + <b>高さ</b> を使用。同じレンダリングモード。' },
+          { h: '3D · 球',      p: '<b>サイズ</b> を使用。<b>カット</b> X・Y・⟋ で切り抜き。' },
+          { h: '3D · 楕円体',  p: '<b>幅</b> + <b>高さ</b> + <b>奥行き</b>、選択した軸で <b>カット</b>。' },
+        ]},
+        { h3: '4. アルゴリズム（2D のみ）', items: [
           { h: 'ユークリッド', p: 'ピクセル中心での距離テスト。最もなめらかな輪郭。' },
           { h: 'ブレゼンハム', p: '古典的な整数中点アルゴリズム。階段状のピクセルアート風。' },
-          { h: 'しきい値',     p: 'コーナーカバレッジテスト。よりブロック状のシルエット — 内側にコーナーがあるセルはすべて塗りつぶし。' },
+          { h: 'しきい値',     p: 'コーナーカバレッジテスト。最もブロック状のシルエット — 内側にコーナーがあるセルはすべて塗りつぶし。' },
         ]},
-        { h3: '4. 操作', items: [
-          { h: 'モードと形状',          p: '上部の <b>2D / 3D</b> と <b>円 / 楕円</b>（3D では <b>球 / 楕円体</b>）トグルが切り替えの唯一の方法です。' },
-          { h: 'カット (3D)',           p: '<b>X / Y / ⟋</b> トグルでカット軸を選択。<b>⟋</b> は x+y 平面の 45° 対角線。軸を切り替えると図形は自動的に復元されます — 一度に一つの軸だけがカットします。スライダーの最大値は選択した軸に合わせて調整されます。' },
-          { h: 'ピンチと回転',          p: 'キャンバスで指 2 本でズーム。3D では指の中点が図形も回転させます。3D ではマウスホイールでズーム、クリックドラッグで回転。' },
-          { h: 'グリッドとエッジ',      p: 'キャンバス左上のグリッドボタンは 2D ではセルグリッドを、3D ではボクセルごとのエッジオーバーレイ（既定 ON）を切り替えます。' },
-          { h: '言語',                  p: 'トップバー右側の<b>言語</b>ボタン（および設定のピッカー）でサポートされている言語間でインターフェースを切り替えます。選択はリロード後も保持されます（唯一の永続化される設定）。' },
-          { h: '元に戻す / やり直し',   p: '図形を変更するすべての編集（モード、形状、レンダリング、アルゴリズム、3D スタイル、スライダー、カット、軸、リセット）が記録されます。<span class="key">Ctrl+Z</span> で元に戻す。<span class="key">Ctrl+Y</span>、<span class="key">Ctrl+Shift+Z</span>、<span class="key">Ctrl+Alt+Z</span> すべてやり直しです。視覚のみのトグル（カメラ、エッジ、テーマ、サウンド、グリッド）は追跡されません。' },
-          { h: 'キーボード',            p: '<span class="key">G</span> グリッド &nbsp; <span class="key">C</span> 中心 &nbsp; <span class="key">D</span> ダウンロード &nbsp; <span class="key">T</span> テーマ &nbsp; <span class="key">I</span> 情報チップ &nbsp; <span class="key">M</span> 2D/3D &nbsp; <span class="key">S</span> サウンド &nbsp; <span class="key">Ctrl+Z</span> 元に戻す &nbsp; <span class="key">Ctrl+Y</span> やり直し' },
+        { h3: '5. 操作', items: [
+          { h: 'カット (3D)',      p: '<b>X / Y / ⟋</b> でカット軸を選択 — <b>⟋</b> は x+y 平面の 45° 対角線。軸を切り替えると比率カットが保たれ、スライダー最大値は選択軸に合わせて調整されます。' },
+          { h: 'ピンチと回転',     p: 'キャンバスで指 2 本でズーム。3D では指の中点が図形も回転させます。マウスホイールでズーム、クリックドラッグで回転。' },
+          { h: 'グリッドとガイド', p: 'キャンバス左上のボタンは 2D ではセルグリッドを、3D ではボクセルエッジを切り替えます。右下は中心ガイド（2D）を切り替え。' },
+          { h: 'キーボード',       p: '<span class="key">G</span> グリッド &nbsp; <span class="key">C</span> 中心 &nbsp; <span class="key">D</span> ダウンロード &nbsp; <span class="key">T</span> テーマ &nbsp; <span class="key">I</span> 情報チップ &nbsp; <span class="key">M</span> 2D/3D &nbsp; <span class="key">S</span> サウンド &nbsp; <span class="key">Ctrl+Z</span> 元に戻す &nbsp; <span class="key">Ctrl+Y</span> やり直し' },
         ]},
-        { h3: '5. 技術', items: [
-          { h: 'スタック',   p: 'Vanilla JavaScript + Canvas 2D + three.js。フレームワークなし、ビルドステップなし。' },
-          { h: 'オフライン', p: 'PWA としてインストール可能。読み込み後はネットワーク不要。言語のみ <code>localStorage</code> に保持されます。' },
-          { h: '出力',       p: '透明背景にアクセントカラーの PNG。2D は主軸で約 2048px でエクスポート。' },
-        ]},
-        { h3: '6. ライセンスとクレジット', items: [
-          { h: 'ライセンス', p: 'コードとデザインの全著作権を保有 — <code>LICENSE</code> を参照。サードパーティの帰属は <code>NOTICE.md</code> に。' },
-          { h: 'ソース',     p: 'リポジトリ：<code>github.com/ViniSouza128/pixel-round</code>。' },
-        ]},
-        { h3: '7. ドキュメント', items: [
-          { h: '数学解説 (PDF)', p: '方程式・3アルゴリズム・ボクセル化・切断・シェーディングの詳細な導出。<a href="docs_math/Pixel_Round_Math_ja-JP.pdf" target="_blank" rel="noopener">Pixel_Round_Math_ja-JP.pdf を開く →</a>' },
-          { h: '学習指導案 (PDF)', p: '高等学校第3学年数学のための4単位時間の学習指導案。<a href="docs_aula/Plano_de_Aula_ja-JP.pdf" target="_blank" rel="noopener">Plano_de_Aula_ja-JP.pdf を開く →</a>' },
-          { h: '他の言語',       p: 'どちらの文書も9言語で利用可能：<a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> と <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>。' },
+        { h3: '6. このアプリ', items: [
+          { h: 'スタックとオフライン', p: 'Vanilla JavaScript + Canvas 2D + three.js。フレームワークなし、ビルドステップなし。PWA としてインストール可能 — オフラインで動作。言語のみ <code>localStorage</code> に保持されます。' },
+          { h: '出力',                 p: '透明背景にアクセントカラーの PNG。2D は主軸で約 2048px でエクスポート。' },
+          { h: 'ライセンスとソース',   p: 'コードとデザインの全著作権を保有 — <code>LICENSE</code> を参照。サードパーティの帰属は <code>NOTICE.md</code> に。リポジトリ：<code>github.com/ViniSouza128/pixel-round</code>。' },
         ]},
       ],
     },
@@ -1150,44 +1106,37 @@ const TR = {
 
     info: {
       h2:  'Инфо',
-      sub: 'Пиксельно-точный генератор кругов, эллипсов, сфер и эллипсоидов.',
+      sub: 'Пиксельно-точный генератор кругов, эллипсов, сфер и эллипсоидов — для пиксель-арта, воксель-арта и уроков.',
       sections: [
-        { h3: '1. Что это', items: [
-          { p: 'Браузерный генератор кругов и эллипсов в пиксель-арте (2D) и воксельных сфер и эллипсоидов (3D). Вводите целые числа — получаете PNG. Без установки, без аккаунта, без бэкенда.' },
+        { h3: '1. Быстрый старт', items: [
+          { p: '<b>1.</b> Выберите режим и фигуру сверху — <b>2D / 3D</b>, затем <b>Круг / Эллипс</b> (или <b>Сфера / Эллипсоид</b> в 3D). <br><b>2.</b> Двигайте слайдеры, чтобы задать целочисленные размеры. <br><b>3.</b> Нажмите иконку загрузки над холстом, чтобы сохранить PNG с прозрачным фоном.' },
         ]},
-        { h3: '2. Режимы и фигуры', items: [
-          { h: '2D · Круг',      p: 'Только <b>Размер</b>. Залитый, тонкий или толстый пиксельный круг.' },
-          { h: '2D · Эллипс',    p: '<b>Ширина</b> + <b>Высота</b> независимо. Те же режимы отрисовки.' },
-          { h: '3D · Сфера',     p: 'Только <b>Размер</b>. Изометрическая воксельная сфера. <b>Срез</b> по X, Y или ⟋ разрезает фигуру.' },
-          { h: '3D · Эллипсоид', p: '<b>Ширина</b> + <b>Высота</b> + <b>Глубина</b> независимо. <b>Срез</b> по выбранной оси.' },
-        ]},
-        { h3: '3. Алгоритмы (только 2D)', items: [
-          { h: 'Евклидов',  p: 'Тест расстояния в центре пикселя. Самый плавный контур.' },
-          { h: 'Брезенхэм', p: 'Классический алгоритм средней точки. Ступенчатый вид пиксель-арта.' },
-          { h: 'Порог',     p: 'Тест покрытия угла. Более «блочный» силуэт — заполняется любая ячейка с углом внутри.' },
-        ]},
-        { h3: '4. Управление', items: [
-          { h: 'Режим и фигура',       p: 'Кнопки <b>2D / 3D</b> и <b>Круг / Эллипс</b> (или <b>Сфера / Эллипсоид</b> в 3D) сверху — ЕДИНСТВЕННЫЙ способ переключения.' },
-          { h: 'Срез (3D)',            p: 'Переключатель <b>X / Y / ⟋</b> выбирает ось среза. <b>⟋</b> — диагональ 45° в плоскости x+y. Смена оси автоматически восстанавливает фигуру — одновременно режет только одна ось. Максимум слайдера масштабируется под выбранную ось.' },
-          { h: 'Щипок и поворот',      p: 'Два пальца на холсте — зум. В 3D средняя точка пальцев также вращает фигуру. Колёсико мыши — зум в 3D; перетаскивание — поворот.' },
-          { h: 'Сетка и рёбра',        p: 'Кнопка сетки в верхнем левом углу холста переключает сетку ячеек в 2D и наложение рёбер на воксел в 3D (по умолчанию ВКЛ).' },
-          { h: 'Язык',                 p: 'Кнопка <b>язык</b> справа в топбаре (и выбор в Настройках) переключает язык интерфейса между доступными. Выбор сохраняется между перезагрузками (единственная сохраняемая настройка).' },
-          { h: 'Отменить / Повторить', p: 'Каждое изменение фигуры (режим, форма, отрисовка, алгоритм, стиль 3D, слайдеры, срез, ось, сброс) записывается. <span class="key">Ctrl+Z</span> отменяет; <span class="key">Ctrl+Y</span>, <span class="key">Ctrl+Shift+Z</span> и <span class="key">Ctrl+Alt+Z</span> — повтор. Визуальные переключатели (камера, рёбра, тема, звук, сетка) не отслеживаются.' },
-          { h: 'Клавиши',              p: '<span class="key">G</span> Сетка &nbsp; <span class="key">C</span> Центр &nbsp; <span class="key">D</span> Скачать &nbsp; <span class="key">T</span> Тема &nbsp; <span class="key">I</span> Инфо-чип &nbsp; <span class="key">M</span> 2D/3D &nbsp; <span class="key">S</span> Звук &nbsp; <span class="key">Ctrl+Z</span> Отменить &nbsp; <span class="key">Ctrl+Y</span> Повторить' },
-        ]},
-        { h3: '5. Технологии', items: [
-          { h: 'Стек',    p: 'Vanilla JavaScript + Canvas 2D + three.js. Без фреймворка, без сборки.' },
-          { h: 'Офлайн',  p: 'Устанавливается как PWA. После первой загрузки сеть не нужна. Только язык сохраняется в <code>localStorage</code>.' },
-          { h: 'Экспорт', p: 'PNG с акцентным цветом на прозрачном фоне. 2D экспортируется в ~2048px по главной оси.' },
-        ]},
-        { h3: '6. Лицензия и авторы', items: [
-          { h: 'Лицензия', p: 'Все права на код и дизайн защищены — см. <code>LICENSE</code>. Сторонние упоминания в <code>NOTICE.md</code>.' },
-          { h: 'Источник', p: 'Репозиторий: <code>github.com/ViniSouza128/pixel-round</code>.' },
-        ]},
-        { h3: '7. Документы', items: [
+        { h3: '2. Документы', items: [
           { h: 'Математическое сопровождение (PDF)', p: 'Подробный вывод уравнений, трёх алгоритмов, вокселизации, сечений и затенения. <a href="docs_math/Pixel_Round_Math_ru-RU.pdf" target="_blank" rel="noopener">Открыть Pixel_Round_Math_ru-RU.pdf →</a>' },
           { h: 'Технологическая карта урока (PDF)',  p: 'Четыре урока для 11 класса средней общеобразовательной школы. <a href="docs_aula/Plano_de_Aula_ru-RU.pdf" target="_blank" rel="noopener">Открыть Plano_de_Aula_ru-RU.pdf →</a>' },
-          { h: 'Другие языки',                       p: 'Оба документа доступны на 9 языках: <a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> и <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>.' },
+          { h: 'Все 9 языков',                       p: 'Оба документа доступны на 9 языках — смотрите <a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> и <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>.' },
+        ]},
+        { h3: '3. Фигуры', items: [
+          { h: '2D · Круг',      p: 'Использует <b>Размер</b>. Залитый, тонкий или толстый контур.' },
+          { h: '2D · Эллипс',    p: 'Использует <b>Ширину</b> + <b>Высоту</b>. Те же режимы отрисовки.' },
+          { h: '3D · Сфера',     p: 'Использует <b>Размер</b>. <b>Срез</b> по X, Y или ⟋ разрезает фигуру.' },
+          { h: '3D · Эллипсоид', p: 'Использует <b>Ширину</b> + <b>Высоту</b> + <b>Глубину</b>, плюс <b>Срез</b> по выбранной оси.' },
+        ]},
+        { h3: '4. Алгоритмы (только 2D)', items: [
+          { h: 'Евклидов',  p: 'Тест расстояния в центре пикселя. Самый плавный контур.' },
+          { h: 'Брезенхэм', p: 'Классический алгоритм средней точки. Ступенчатый вид пиксель-арта.' },
+          { h: 'Порог',     p: 'Тест покрытия угла. Самый «блочный» силуэт — заполняется любая ячейка с углом внутри.' },
+        ]},
+        { h3: '5. Управление', items: [
+          { h: 'Срез (3D)',            p: '<b>X / Y / ⟋</b> выбирает ось среза — <b>⟋</b> — диагональ 45° в плоскости x+y. Смена оси сохраняет пропорциональный срез; максимум слайдера масштабируется под выбранную ось.' },
+          { h: 'Щипок и поворот',      p: 'Два пальца на холсте — зум. В 3D средняя точка пальцев также вращает фигуру. Колёсико мыши — зум, перетаскивание — поворот.' },
+          { h: 'Сетка и направляющие', p: 'Кнопка в левом верхнем углу холста переключает сетку (2D) или рёбра вокселя (3D). В правом нижнем — осевые направляющие (2D).' },
+          { h: 'Клавиши',              p: '<span class="key">G</span> Сетка &nbsp; <span class="key">C</span> Центр &nbsp; <span class="key">D</span> Скачать &nbsp; <span class="key">T</span> Тема &nbsp; <span class="key">I</span> Инфо-чип &nbsp; <span class="key">M</span> 2D/3D &nbsp; <span class="key">S</span> Звук &nbsp; <span class="key">Ctrl+Z</span> Отменить &nbsp; <span class="key">Ctrl+Y</span> Повторить' },
+        ]},
+        { h3: '6. О приложении', items: [
+          { h: 'Стек и офлайн',  p: 'Vanilla JavaScript + Canvas 2D + three.js. Без фреймворка, без сборки. Устанавливается как PWA — работает офлайн. Только язык сохраняется в <code>localStorage</code>.' },
+          { h: 'Экспорт',        p: 'PNG с акцентным цветом на прозрачном фоне. 2D экспортируется в ~2048px по главной оси.' },
+          { h: 'Лицензия и код', p: 'Все права на код и дизайн защищены — см. <code>LICENSE</code>. Сторонние упоминания в <code>NOTICE.md</code>. Репозиторий: <code>github.com/ViniSouza128/pixel-round</code>.' },
         ]},
       ],
     },
@@ -1284,44 +1233,37 @@ const TR = {
 
     info: {
       h2:  '정보',
-      sub: '원, 타원, 구, 타원체를 위한 픽셀 정밀 생성기.',
+      sub: '원, 타원, 구, 타원체를 위한 픽셀 정밀 생성기 — 픽셀 아트, 복셀 아트, 교실 수업용.',
       sections: [
-        { h3: '1. 무엇인가', items: [
-          { p: '픽셀 아트 원과 타원(2D), 복셀 구와 타원체(3D)를 생성하는 브라우저 기반 도구. 정수 치수를 입력하면 PNG가 출력됩니다. 설치 불필요, 계정 불필요, 백엔드 불필요.' },
+        { h3: '1. 빠른 시작', items: [
+          { p: '<b>1.</b> 상단에서 모드와 도형을 선택 — <b>2D / 3D</b>, 그다음 <b>원 / 타원</b> (3D에서는 <b>구 / 타원체</b>). <br><b>2.</b> 슬라이더를 드래그하여 정수 치수를 설정. <br><b>3.</b> 캔버스 위의 다운로드 아이콘을 눌러 투명 배경 PNG 저장.' },
         ]},
-        { h3: '2. 모드 & 도형', items: [
-          { h: '2D · 원',     p: '<b>크기</b>만 사용. 채우기, 얇게 또는 굵게 픽셀 원.' },
-          { h: '2D · 타원',   p: '<b>너비</b> + <b>높이</b> 독립적. 동일한 렌더 모드 세트.' },
-          { h: '3D · 구',     p: '<b>크기</b>만 사용. 등축 복셀 구. <b>자르기</b> X, Y 또는 ⟋로 도형을 절단.' },
-          { h: '3D · 타원체', p: '<b>너비</b> + <b>높이</b> + <b>깊이</b> 독립적. 선택한 축으로 <b>자르기</b>.' },
-        ]},
-        { h3: '3. 알고리즘 (2D 전용)', items: [
-          { h: '유클리드', p: '픽셀 중심에서 거리 테스트. 가장 부드러운 윤곽.' },
-          { h: '브레젠험', p: '고전적인 정수 중점 알고리즘. 픽셀 아트 계단 형태.' },
-          { h: '임계값',   p: '모서리 커버리지 테스트. 더 두꺼운 실루엣 — 내부에 모서리가 있는 모든 셀이 채워짐.' },
-        ]},
-        { h3: '4. 조작', items: [
-          { h: '모드 & 도형',           p: '상단의 <b>2D / 3D</b> 및 <b>원 / 타원</b>(3D에서는 <b>구 / 타원체</b>) 토글이 유일한 전환 방법입니다.' },
-          { h: '자르기 (3D)',           p: '<b>X / Y / ⟋</b> 토글로 자르기 축을 선택. <b>⟋</b>는 x+y 평면의 45° 대각선. 축 전환 시 도형이 자동으로 복원됩니다 — 한 번에 한 축만 자릅니다. 슬라이더 최대값이 선택된 축에 맞게 조정됩니다.' },
-          { h: '핀치 & 회전',           p: '캔버스에 두 손가락으로 확대/축소. 3D에서는 손가락 중점이 도형을 회전시킵니다. 3D에서 마우스 휠로 줌, 클릭 드래그로 회전.' },
-          { h: '격자 & 모서리',         p: '캔버스 왼쪽 상단의 격자 버튼은 2D에서는 셀 격자를, 3D에서는 복셀별 모서리 오버레이를 전환합니다(기본값 켜짐).' },
-          { h: '언어',                  p: '상단 바 오른쪽의 <b>언어</b> 버튼(및 설정의 선택기)으로 지원되는 언어 간에 인터페이스를 전환합니다. 선택 사항은 새로 고침 후에도 유지됩니다(유일하게 지속되는 설정).' },
-          { h: '실행 취소 / 다시 실행', p: '도형을 변경하는 모든 편집(모드, 도형, 렌더, 알고리즘, 3D 스타일, 슬라이더, 자르기, 축, 초기화)이 기록됩니다. <span class="key">Ctrl+Z</span>로 실행 취소; <span class="key">Ctrl+Y</span>, <span class="key">Ctrl+Shift+Z</span>, <span class="key">Ctrl+Alt+Z</span>로 다시 실행. 시각적 토글(카메라, 모서리, 테마, 소리, 격자)은 추적되지 않습니다.' },
-          { h: '키보드',                p: '<span class="key">G</span> 격자 &nbsp; <span class="key">C</span> 중심 &nbsp; <span class="key">D</span> 다운로드 &nbsp; <span class="key">T</span> 테마 &nbsp; <span class="key">I</span> 정보 칩 &nbsp; <span class="key">M</span> 2D/3D &nbsp; <span class="key">S</span> 소리 &nbsp; <span class="key">Ctrl+Z</span> 실행 취소 &nbsp; <span class="key">Ctrl+Y</span> 다시 실행' },
-        ]},
-        { h3: '5. 기술', items: [
-          { h: '스택',   p: '바닐라 JavaScript + Canvas 2D + three.js. 프레임워크 없음, 빌드 단계 없음.' },
-          { h: '오프라인', p: 'PWA로 설치 가능. 로드 후 네트워크 불필요. 언어만 <code>localStorage</code>에 저장됩니다.' },
-          { h: '출력',   p: '투명 배경에 강조 색상 PNG. 2D는 주축에서 ~2048px로 내보냅니다.' },
-        ]},
-        { h3: '6. 라이선스 & 크레딧', items: [
-          { h: '라이선스', p: '코드 및 디자인의 모든 권리 보유 — <code>LICENSE</code> 참조. 타사 저작권은 <code>NOTICE.md</code>에 있습니다.' },
-          { h: '소스',     p: '저장소: <code>github.com/ViniSouza128/pixel-round</code>.' },
-        ]},
-        { h3: '7. 문서', items: [
+        { h3: '2. 문서', items: [
           { h: '수학 기술 문서 (PDF)', p: '방정식, 세 가지 알고리즘, 복셀화, 절단, 음영 처리의 상세한 유도. <a href="docs_math/Pixel_Round_Math_ko-KR.pdf" target="_blank" rel="noopener">Pixel_Round_Math_ko-KR.pdf 열기 →</a>' },
           { h: '수업 지도안 (PDF)',    p: '고등학교 3학년 수학과를 위한 4차시 수업 지도안. <a href="docs_aula/Plano_de_Aula_ko-KR.pdf" target="_blank" rel="noopener">Plano_de_Aula_ko-KR.pdf 열기 →</a>' },
-          { h: '다른 언어',            p: '두 문서 모두 9개 언어로 제공됩니다: <a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> 및 <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a>.' },
+          { h: '9개 언어 모두',         p: '두 문서 모두 9개 언어로 제공 — <a href="docs_math/" target="_blank" rel="noopener">docs_math/</a> 및 <a href="docs_aula/" target="_blank" rel="noopener">docs_aula/</a> 참조.' },
+        ]},
+        { h3: '3. 도형', items: [
+          { h: '2D · 원',     p: '<b>크기</b>를 사용. 채우기, 얇게 또는 굵게 윤곽.' },
+          { h: '2D · 타원',   p: '<b>너비</b> + <b>높이</b>를 사용. 동일한 렌더 모드.' },
+          { h: '3D · 구',     p: '<b>크기</b>를 사용. <b>자르기</b> X, Y 또는 ⟋로 절단.' },
+          { h: '3D · 타원체', p: '<b>너비</b> + <b>높이</b> + <b>깊이</b>, 선택한 축에서 <b>자르기</b>.' },
+        ]},
+        { h3: '4. 알고리즘 (2D 전용)', items: [
+          { h: '유클리드', p: '픽셀 중심에서 거리 테스트. 가장 부드러운 윤곽.' },
+          { h: '브레젠험', p: '고전적인 정수 중점 알고리즘. 픽셀 아트 계단 형태.' },
+          { h: '임계값',   p: '모서리 커버리지 테스트. 가장 두꺼운 실루엣 — 내부에 모서리가 있는 모든 셀이 채워짐.' },
+        ]},
+        { h3: '5. 조작', items: [
+          { h: '자르기 (3D)',  p: '<b>X / Y / ⟋</b>로 자르기 축을 선택 — <b>⟋</b>는 x+y 평면의 45° 대각선. 축 전환 시 비율 자르기가 유지되며 슬라이더 최대값은 선택된 축에 맞게 조정.' },
+          { h: '핀치 & 회전',  p: '캔버스에 두 손가락으로 확대/축소. 3D에서는 손가락 중점이 도형을 회전. 마우스 휠로 줌, 클릭 드래그로 회전.' },
+          { h: '격자 & 가이드', p: '캔버스 왼쪽 상단 버튼은 2D에서는 셀 격자를, 3D에서는 복셀별 모서리를 전환. 오른쪽 하단은 중심 가이드(2D)를 전환.' },
+          { h: '키보드',       p: '<span class="key">G</span> 격자 &nbsp; <span class="key">C</span> 중심 &nbsp; <span class="key">D</span> 다운로드 &nbsp; <span class="key">T</span> 테마 &nbsp; <span class="key">I</span> 정보 칩 &nbsp; <span class="key">M</span> 2D/3D &nbsp; <span class="key">S</span> 소리 &nbsp; <span class="key">Ctrl+Z</span> 실행 취소 &nbsp; <span class="key">Ctrl+Y</span> 다시 실행' },
+        ]},
+        { h3: '6. 정보', items: [
+          { h: '스택 & 오프라인', p: '바닐라 JavaScript + Canvas 2D + three.js. 프레임워크 없음, 빌드 단계 없음. PWA로 설치 가능 — 오프라인 작동. 언어만 <code>localStorage</code>에 저장.' },
+          { h: '출력',           p: '투명 배경에 강조 색상 PNG. 2D는 주축에서 ~2048px로 내보냄.' },
+          { h: '라이선스 & 소스', p: '코드 및 디자인의 모든 권리 보유 — <code>LICENSE</code> 참조. 타사 저작권은 <code>NOTICE.md</code>에 있습니다. 저장소: <code>github.com/ViniSouza128/pixel-round</code>.' },
         ]},
       ],
     },
