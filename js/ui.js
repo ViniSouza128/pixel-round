@@ -175,6 +175,20 @@ function _applyHistory(snap){
     if (k && k in state) v.textContent = state[k];
   });
   syncShape();
+  /* syncShape() → syncCutMax() recomputes state.cut from cutPct * max
+     and could round it ±1 away from the snapshot. Restore the exact
+     snapshotted cut so undo is byte-faithful, and re-sync the slider /
+     value label. */
+  if ('cut' in o){
+    state.cut = o.cut;
+    const cs = document.querySelector('[data-slider=cut]');
+    if (cs){
+      cs.value = state.cut;
+      setSliderPct(cs);
+      const cv = document.querySelector('[data-val=cut]');
+      if (cv) cv.textContent = cs.value;
+    }
+  }
   if (state.mode === '3d' && typeof autoZoom3D === 'function') autoZoom3D();
   redraw();
   _histApplying = false;
@@ -245,8 +259,15 @@ function resetState(){
     if (k && (k in state)) s.value = state[k];
     setSliderPct(s);
   });
+  // Sound isn't in `state` — it lives in Sfx. "Restore all settings"
+  // is meaningless if mute survives, so flip it back to the default
+  // ON state and reflect that in the Settings checkbox.
+  Sfx.setEnabled(true);
   document.querySelectorAll('[data-pref]').forEach(p => {
-    if (p.dataset.pref in state) p.checked = !!state[p.dataset.pref];
+    const pk = p.dataset.pref;
+    if (pk === 'sound')        p.checked = true;
+    else if (pk === 'locale')  return;             // locale is intentionally not reset
+    else if (pk in state)      p.checked = !!state[pk];
   });
   ['render','algo'].forEach(k =>
     document.querySelectorAll(`[data-${k}]`).forEach(p => p.classList.toggle('active', p.dataset[k] === state[k]))
@@ -283,6 +304,9 @@ function isToolToggle(el){
   if (!el) return false;
   if (el.dataset.route || el.dataset.act === 'logo' || el.dataset.act === 'theme') return false;
   if (el.dataset.act === 'info-chip' || el.dataset.act === 'lang') return false;
+  // Reset lives in the Settings page itself — clicking it should NOT
+  // teleport the user out of Settings before the reset toast appears.
+  if (el.dataset.act === 'reset') return false;
   return !!(el.dataset.render || el.dataset.algo || el.dataset['3dstyle']
          || el.dataset.mode   || el.dataset.shape|| el.dataset.axis
          || el.dataset.act);
@@ -314,7 +338,9 @@ function setupClickDelegation(){
     }
 
     const a = t.dataset.act;
-    if (a === 'logo'){ goRoute('tool'); return; }
+    /* Brand is a real <a href="#"> for keyboard / a11y; preventDefault
+       stops the browser from scrolling to top and appending "#" to the URL. */
+    if (a === 'logo'){ e.preventDefault(); goRoute('tool'); return; }
     if (a === 'theme'){ cycleTheme(); return; }
     if (a === 'lang'){ if (typeof cycleLocale === 'function') cycleLocale(); Sfx.click(); return; }
 
@@ -460,7 +486,9 @@ function setupSliders(){
       if (k === 'cut'){
         const max = +sl.max || 1;
         state.cutPct = max > 0 ? (+sl.value / max) : 1;
-        if (state.mode === '3d') update3D();
+        // Re-fit the camera every cut step — without it the remaining
+        // figure drifts off-centre as voxels are trimmed away.
+        if (state.mode === '3d'){ autoZoom3D(); update3D(); }
       } else {
         syncCutMax();
         if (state.mode === '3d'){ autoZoom3D(); update3D(); }
@@ -543,8 +571,15 @@ function setup3DPointer(){
     // double-click resets the zoom explicitly.
     updateCamera3D();
   });
-  window.addEventListener('mouseup',   () => { _drag = null; });
-  window.addEventListener('mouseleave',() => { _drag = null; });
+  /* Multiple release paths so a drag that ends outside the window
+     (mouseup off the document, OS reclaiming focus, tab switch) still
+     clears _drag. Without all three, releasing outside leaves _drag
+     set and re-entering the page resumes rotation under the cursor
+     without a fresh click. */
+  window.addEventListener('mouseup',     () => { _drag = null; });
+  window.addEventListener('blur',        () => { _drag = null; });
+  window.addEventListener('pointercancel',() => { _drag = null; });
+  document.addEventListener('mouseleave',() => { _drag = null; });
 
   frame.addEventListener('touchstart', e => {
     if (state.mode !== '3d') return;
@@ -633,12 +668,14 @@ function setupPinch(){
 /* ---------- KEYBOARD ----------------------------------------------------- */
 function setupKeyboard(){
   document.addEventListener('keydown', e => {
-    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
     const k = e.key.toLowerCase();
-    // Undo / Redo. Three redo bindings so muscle memory from any host
-    // app works: Ctrl+Y (Office / most Windows apps), Ctrl+Shift+Z
-    // (Photoshop / web editors), Ctrl+Alt+Z (some Linux DEs / IDEs).
-    // Plain Ctrl+Z is always undo.
+    const tag = e.target.tagName;
+    const typing = (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT');
+    // Undo / Redo is ALWAYS available — including while focus is on a
+    // slider (the most common state right after a drag) and while the
+    // locale <select> has focus. Three redo bindings cover muscle memory
+    // from Office (Ctrl+Y), Photoshop / web editors (Ctrl+Shift+Z) and
+    // some Linux DEs / IDEs (Ctrl+Alt+Z). Plain Ctrl+Z is always undo.
     if ((e.ctrlKey || e.metaKey) && (k === 'z' || k === 'y')){
       e.preventDefault();
       const wantRedo = (k === 'y') || (k === 'z' && (e.shiftKey || e.altKey));
@@ -646,6 +683,10 @@ function setupKeyboard(){
       if (did) toast(window.t(wantRedo ? 'redo' : 'undo'));
       return;
     }
+    // Everything else (G/C/D/T/I/M/S) is suppressed while the user is
+    // typing into a form control — keeps the locale <select>'s
+    // type-to-jump behaviour from spuriously toggling sound, mode, etc.
+    if (typing) return;
     if (k === 'g'){
       const btn = document.querySelector('[data-act=grid]');
       btn?.click();

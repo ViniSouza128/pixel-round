@@ -23,7 +23,7 @@
 
   <!-- UNIFIED TOPBAR: brand (L) · toggles (C) · theme/info/settings (R) -->
   <div class="topbar">
-    <a class="brand" data-act="logo" aria-label="Pixel Round home" title="Pixel Round" data-i18n-title="brand_title" data-i18n-aria="brand_aria">
+    <a class="brand" data-act="logo" href="#" aria-label="Pixel Round home" title="Pixel Round" data-i18n-title="brand_title" data-i18n-aria="brand_aria">
       <svg class="mark" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
         <circle cx="12" cy="12" r="9"/>
         <circle cx="12" cy="12" r="4" fill="currentColor"/>
@@ -32,8 +32,8 @@
     </a>
     <div class="center">
       <div class="mode-strip">
-        <button class="mode-btn active" data-mode="2d">2D</button>
-        <button class="mode-btn" data-mode="3d">3D</button>
+        <button class="mode-btn active" data-mode="2d" data-i18n="mode_2d">2D</button>
+        <button class="mode-btn" data-mode="3d" data-i18n="mode_3d">3D</button>
       </div>
       <div class="mode-strip">
         <button class="shape-btn active" data-shape="circle">Circle</button>
@@ -106,10 +106,6 @@
                 <div><span data-info-algo-lbl data-i18n="chip_algo">Algo</span>: <b data-info-algo>Euclidean</b></div>
               </div>
             </div>
-            <!-- Toast host inside the canvas frame so floating messages
-                 overlay the canvas bottom; anchoring to the page bottom
-                 puts toasts off-screen on mobile / responsive layouts. -->
-            <div class="toast-host"></div>
           </div>
 
           <div class="pill-row right">
@@ -199,6 +195,12 @@
     </div>
 
   </div>
+
+  <!-- Toast host lives at the app root (not inside the canvas frame) so
+       toasts are visible from every route — Info, Settings, and Tool.
+       Fixed positioning keeps it pinned to the viewport bottom on every
+       layout including mobile. -->
+  <div class="toast-host"></div>
 
 </div>
 

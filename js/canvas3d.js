@@ -118,8 +118,27 @@ function autoZoom3D(){
   const Dy = isEllipse ? state.height : state.size;
   const Dz = isEllipse ? state.depth  : state.size;
 
+  /* When the figure is cut, fit the camera to the REMAINING bounding
+     box, not the full ellipsoid — otherwise a 75%-cut sphere appears
+     tiny in the corner of the canvas. The diag cut roughly halves
+     both X and Y when deep, but a conservative approximation works:
+     for axis='x'/'y' we shrink that dimension to the cut value; for
+     'diag' we clamp the (Dx+Dy) total. */
+  let ex = Dx, ey = Dy;
+  const cut = state.cut;
+  if (cut > 0 && cut < (state.axis === 'diag' ? Dx + Dy : (state.axis === 'x' ? Dx : Dy))){
+    if (state.axis === 'x')      ex = cut;
+    else if (state.axis === 'y') ey = cut;
+    else if (state.axis === 'diag'){
+      // (x+y) ≥ cut removes the upper-right triangle; the remaining
+      // AABB is bounded by min(cut, Dx) in X and min(cut, Dy) in Y.
+      ex = Math.min(cut, Dx);
+      ey = Math.min(cut, Dy);
+    }
+  }
+
   // Half-diagonal of the AABB = radius of the tightest enclosing sphere.
-  const hx = Dx / 2, hy = Dy / 2, hz = Dz / 2;
+  const hx = ex / 2, hy = ey / 2, hz = Dz / 2;
   const R = Math.sqrt(hx * hx + hy * hy + hz * hz);
 
   const vFov = camera3D.fov * Math.PI / 180;

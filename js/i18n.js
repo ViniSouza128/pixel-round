@@ -414,7 +414,13 @@ function _applyAttributes(){
     const v = t(el.dataset.i18nTitle);
     if (v != null){
       el.title = v;
-      if (el.hasAttribute('aria-label')) el.setAttribute('aria-label', v);
+      /* Only mirror to aria-label when there's NO explicit data-i18n-aria
+         on the same element — otherwise the title would clobber a
+         dedicated aria translation (this used to silently kill brand_aria
+         and similar). */
+      if (el.hasAttribute('aria-label') && !el.hasAttribute('data-i18n-aria')){
+        el.setAttribute('aria-label', v);
+      }
     }
   });
   document.querySelectorAll('[data-i18n-aria]').forEach(el => {

@@ -500,12 +500,15 @@ body.mode3d .three-canvas{display:block;}
 .segmented button.active{background:var(--accent); color:var(--on-accent);}
 
 /* ---------- TOAST -------------------------------------------------------- */
-/* Anchored INSIDE the .canvas-frame so toasts overlay the canvas bottom.
-   Sitting at the page bottom (fixed) hides them off-screen on mobile /
-   short-viewport layouts where the canvas fills the visible area. */
+/* Pinned to the viewport bottom (position:fixed). Lives at the app root so
+   it's visible from every route — Info, Settings, Tool — not just from
+   the canvas. `env(safe-area-inset-bottom)` keeps it above the iOS home
+   indicator. */
 .toast-host{
-  position:absolute; bottom:14px; left:50%; transform:translateX(-50%);
-  z-index:3; display:flex; flex-direction:column-reverse; gap:8px;
+  position:fixed;
+  bottom:calc(18px + env(safe-area-inset-bottom, 0px));
+  left:50%; transform:translateX(-50%);
+  z-index:300; display:flex; flex-direction:column-reverse; gap:8px;
   pointer-events:none;
 }
 .toast{
