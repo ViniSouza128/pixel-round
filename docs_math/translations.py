@@ -148,6 +148,12 @@ T["en-US"] = dict(
     S17_AREA7_NAME="Signal synthesis",
     S17_AREA7_DESC="pure sine waves and approximation to the 12-tone equal temperament.",
     S17_P2=r"The central observation that the study allows to formulate is the following: on a discrete grid, \acc{there is no single correct representation} of a continuous curve. Each algorithm presented in this document corresponds to a distinct mathematical definition of the cell-inclusion criterion, and each definition produces a silhouette with its own formal properties --- smoothness in the Euclidean algorithm, the stepped pattern of Bresenham, larger coverage in the corner-coverage criterion. The choice of algorithm is therefore a technical decision that must consider the intended visual representation and the desired metric characteristics of the resulting shape.",
+    FIG_S3_CAP=r"Ellipse with $W = 24$ and $H = 12$ on the discrete grid.",
+    FIG_S4_CAP=r"Euclidean algorithm at $D = 20$.",
+    FIG_S5_CAP=r"Bresenham algorithm at $D = 20$.",
+    FIG_S6_CAP=r"Threshold algorithm at $D = 20$.",
+    FIG_S10_CAP=r"Voxelised sphere ($D = 12$) and ellipsoid ($W = 20,\, H = 10,\, D = 12$).",
+    FIG_S11_CAP=r"Planar cuts at 50\% along Y, X and the diagonal axis (left to right).",
 )
 
 # ============================================================================
@@ -290,6 +296,12 @@ T["pt-BR"] = dict(
     S17_AREA7_NAME="Síntese de sinais",
     S17_AREA7_DESC="ondas senoidais puras e aproximação ao temperamento igual de doze tons.",
     S17_P2=r"A observação central que o estudo permite formular é a seguinte: em uma malha discreta, \acc{não existe uma única representação correta} de uma curva contínua. Cada algoritmo apresentado neste documento corresponde a uma definição matemática distinta do critério de inclusão de células, e cada definição produz uma silhueta com propriedades formais próprias --- suavidade no algoritmo Euclidiano, padrão escalonado de Bresenham, maior abrangência no critério de cobertura por quina. A escolha do algoritmo, portanto, é uma decisão técnica que deve considerar o objetivo de representação visual pretendido e as características métricas desejadas para a forma resultante.",
+    FIG_S3_CAP=r"Elipse com $W = 24$ e $H = 12$ sobre a malha discreta.",
+    FIG_S4_CAP=r"Algoritmo Euclidiano para $D = 20$.",
+    FIG_S5_CAP=r"Algoritmo de Bresenham para $D = 20$.",
+    FIG_S6_CAP=r"Algoritmo de Limiar para $D = 20$.",
+    FIG_S10_CAP=r"Esfera ($D = 12$) e elipsoide ($W = 20,\, H = 10,\, D = 12$) voxelizados.",
+    FIG_S11_CAP=r"Cortes planos a 50\% nos eixos Y, X e diagonal (da esquerda para a direita).",
 )
 
 # ============================================================================
@@ -432,6 +444,12 @@ T["es-ES"] = dict(
     S17_AREA7_NAME="Síntesis de señales",
     S17_AREA7_DESC="ondas senoidales puras y aproximación al temperamento igual de doce tonos.",
     S17_P2=r"La observación central que el estudio permite formular es la siguiente: en una rejilla discreta, \acc{no existe una única representación correcta} de una curva continua. Cada algoritmo presentado en este documento corresponde a una definición matemática distinta del criterio de inclusión de celdas, y cada definición produce una silueta con propiedades formales propias --- suavidad en el algoritmo Euclídeo, patrón escalonado de Bresenham, mayor cobertura en el criterio de cobertura por esquina. La elección del algoritmo es, por tanto, una decisión técnica que debe considerar el objetivo de representación visual pretendido y las características métricas deseadas para la forma resultante.",
+    FIG_S3_CAP=r"Elipse con $W = 24$ y $H = 12$ sobre la rejilla discreta.",
+    FIG_S4_CAP=r"Algoritmo Euclídeo para $D = 20$.",
+    FIG_S5_CAP=r"Algoritmo de Bresenham para $D = 20$.",
+    FIG_S6_CAP=r"Algoritmo de Umbral para $D = 20$.",
+    FIG_S10_CAP=r"Esfera ($D = 12$) y elipsoide ($W = 20,\, H = 10,\, D = 12$) voxelizados.",
+    FIG_S11_CAP=r"Cortes planos al 50\% en los ejes Y, X y diagonal (de izquierda a derecha).",
 )
 
 
