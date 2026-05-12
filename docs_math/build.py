@@ -40,6 +40,7 @@ TEX = r"""% !TEX program = xelatex
 \tcbuselibrary{skins,breakable}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{float}              % oferece [H] = "exatamente aqui, sem float"
 \graphicspath{{../docs_aula/img/}}
 \usepackage[hidelinks,bookmarks=true,bookmarksopen=true,
             pdftitle={Pixel Round — «PDF_TITLE»},
@@ -168,7 +169,7 @@ $\displaystyle d_x = \dfrac{i+\tfrac{1}{2}-c_x}{r_x},\qquad
                 \text{«S3_INSIDE»}\;\Longleftrightarrow\; d_x^2 + d_y^2 \leq 1$
 \end{formula}
 
-\begin{figure}[!htb]\centering
+\begin{figure}[H]\centering
 \includegraphics[width=0.62\textwidth]{fig04_2d_ellipse_24x12.png}
 \caption{«FIG_S3_CAP»}
 \end{figure}
@@ -201,7 +202,7 @@ $\displaystyle \mathit{lo} = \lceil c_x - \mathit{dxM} - \tfrac{1}{2} \rceil,
 
 \textbf{«S4_JUST_LABEL»} «S4_P4»
 
-\begin{figure}[!htb]\centering
+\begin{figure}[H]\centering
 \includegraphics[width=0.48\textwidth]{fig01_2d_d20_euclidean.png}
 \caption{«FIG_S4_CAP»}
 \end{figure}
@@ -232,7 +233,7 @@ F\!\left(x+1,\;y-\tfrac{1}{2}\right) \;=\; (x+1)^2 + \left(y-\tfrac{1}{2}\right)
 \]
 «S5_P5»
 
-\begin{figure}[!htb]\centering
+\begin{figure}[H]\centering
 \includegraphics[width=0.48\textwidth]{fig02_2d_d20_bresenham.png}
 \caption{«FIG_S5_CAP»}
 \end{figure}
@@ -254,7 +255,7 @@ p_2 &= b^2\!\left(x+\tfrac{1}{2}\right)^{\!2} + a^2\!\left(y-1\right)^{\!2} - a^
 
 «S5_P8»
 
-\begin{figure}[!htb]\centering
+\begin{figure}[H]\centering
 \includegraphics[width=0.62\textwidth]{fig_5b_bresenham_ellipse.png}
 \caption{«FIG_S5B_CAP»}
 \end{figure}
@@ -276,7 +277,7 @@ $\displaystyle \text{«S3_INSIDE»}\;\Longleftrightarrow\;
 
 «S6_P3»
 
-\begin{figure}[!htb]\centering
+\begin{figure}[H]\centering
 \includegraphics[width=0.48\textwidth]{fig03_2d_d20_threshold.png}
 \caption{«FIG_S6_CAP»}
 \end{figure}
@@ -342,7 +343,7 @@ V \;=\; \dfrac{4}{3}\,\pi\, r_x\, r_y\, r_z
 
 \textbf{«S10_SHELL_LABEL»} «S10_P3»
 
-\begin{figure}[!htb]\centering
+\begin{figure}[H]\centering
 \begin{subfigure}[t]{0.42\linewidth}\centering
   \includegraphics[width=\linewidth]{fig07_3d_sphere_d12.png}
 \end{subfigure}\hfill
@@ -370,7 +371,7 @@ V \;=\; \dfrac{4}{3}\,\pi\, r_x\, r_y\, r_z
 \]
 «S11_P3»
 
-\begin{figure}[!htb]\centering
+\begin{figure}[H]\centering
 \begin{subfigure}[t]{0.31\linewidth}\centering
   \includegraphics[width=\linewidth]{fig09_3d_cut_y50.png}
 \end{subfigure}\hfill
