@@ -20,7 +20,7 @@
        opportunistically with `no-cors`. They live in the same cache and
        get refreshed alongside other assets.
    ============================================================================ */
-const CACHE = 'pixel-round-v3';
+const CACHE = 'pixel-round-v4';
 
 /* Local app shell — these MUST work for the app to function. */
 const CORE_ASSETS = [
@@ -29,6 +29,10 @@ const CORE_ASSETS = [
   './style.css',
   './manifest.json',
   './favicon.svg',
+  './icon-192.png',
+  './icon-512.png',
+  './icon-maskable-192.png',
+  './icon-maskable-512.png',
   './js/i18n.js',
   './js/state.js',
   './js/algorithms.js',
