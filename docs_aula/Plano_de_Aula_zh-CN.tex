@@ -35,7 +35,17 @@
 \usepackage{graphicx}
 \usepackage{tcolorbox}
 \tcbuselibrary{skins,breakable}
-\usepackage[hidelinks,bookmarks=true,bookmarksopen=true,
+\usepackage{needspace}                   % evita orfas em caixas didaticas
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}                       % [H] = "exatamente aqui, sem float"
+
+\raggedbottom                            % paginas terminam onde o texto termina
+\usepackage[colorlinks=true,
+            linkcolor=linkc,
+            urlcolor=linkc,
+            citecolor=linkc,
+            bookmarks=true,bookmarksopen=true,
             pdftitle={Pixel Round — 教学设计 (zh-CN)},
             pdfauthor={Vinícius Rodrigues de Souza}]{hyperref}
 
@@ -45,8 +55,13 @@
 \definecolor{muted}{HTML}{4E4E58}
 \definecolor{bg}{HTML}{FBF6E9}
 \definecolor{rule}{HTML}{D8D1BC}
+\definecolor{linkc}{HTML}{8A0F0F}             % links: tom mais escuro do accent
 
 \color{ink}
+
+% Penalidades altas contra orfas / viuvas globalmente
+\widowpenalty=10000
+\clubpenalty=10000
 
 % ---------- 标题样式 ---------------------------------------------------------
 \titleformat{\section}
@@ -76,7 +91,8 @@
   colback=bg, colframe=rule, boxrule=0.4pt, arc=2pt,
   left=10pt,right=10pt,top=8pt,bottom=8pt,
   before skip=8pt, after skip=8pt,
-  fontupper=\color{accent}, breakable
+  fontupper=\color{accent}, breakable,
+  before={\par\needspace{4\baselineskip}}
 }
 
 \newtcolorbox{huodong}[1][教学活动]{
@@ -84,6 +100,7 @@
   colback=bg, colframe=accent, boxrule=0.6pt, arc=4pt,
   left=12pt,right=12pt,top=10pt,bottom=10pt,
   before skip=12pt, after skip=12pt,
+  before={\par\needspace{14\baselineskip}},
   attach boxed title to top left={xshift=10pt,yshift=-8pt},
   boxed title style={colback=accent,colframe=accent,boxrule=0pt,arc=2pt},
   coltitle=white, fonttitle=\sffamily\bfseries\small,
@@ -95,6 +112,7 @@
   colback=bg!50!white, colframe=rule, boxrule=0.4pt, arc=2pt,
   left=10pt,right=10pt,top=8pt,bottom=8pt,
   before skip=8pt, after skip=8pt,
+  before={\par\needspace{6\baselineskip}},
   attach boxed title to top left={xshift=10pt,yshift=-7pt},
   boxed title style={colback=muted,colframe=muted,boxrule=0pt,arc=2pt},
   coltitle=white, fonttitle=\sffamily\bfseries\footnotesize,
@@ -106,6 +124,7 @@
   colback=bg!70!white, colframe=accent!60!ink, boxrule=0.4pt, arc=2pt,
   left=10pt,right=10pt,top=6pt,bottom=6pt,
   before skip=6pt, after skip=6pt,
+  before={\par\needspace{4\baselineskip}},
   attach boxed title to top left={xshift=10pt,yshift=-6pt},
   boxed title style={colback=accent!60!ink,colframe=accent!60!ink,boxrule=0pt,arc=2pt},
   coltitle=white, fonttitle=\sffamily\bfseries\footnotesize,
@@ -119,6 +138,17 @@
 \newcommand{\code}[1]{\texttt{\small #1}}
 \newcommand{\acc}[1]{\textcolor{accent}{\textbf{#1}}}
 \newcommand{\shijian}[1]{\textnormal{\footnotesize\color{bg!90!white}\textsf{#1}}}
+
+% Configuracao de legendas
+\captionsetup{font=small, labelfont={bf,color=accent}, textfont={color=muted}, justification=centering}
+\captionsetup[sub]{font=footnotesize, labelfont={bf,color=accent!75!ink}, textfont={color=muted}}
+
+% Espacamento das figuras
+\setlength{\textfloatsep}{14pt plus 2pt minus 2pt}
+\setlength{\floatsep}{14pt plus 2pt minus 2pt}
+\setlength{\intextsep}{14pt plus 2pt minus 2pt}
+
+\graphicspath{{img/}}
 
 \begin{document}
 
@@ -146,7 +176,16 @@
     数学建模、直观想象、数学运算与数据分析等核心素养。
   \end{minipage}
   \vspace{0.9cm}\\
+    \vspace{1.4cm}
+  \begin{minipage}{0.78\textwidth}
+    \centering
+    \includegraphics[width=0.55\linewidth]{fig07_3d_sphere_d12.png}\\[0.6em]
+    {\sffamily\footnotesize\color{muted}由 Pixel Round 体素化的直径 12 球。}
+  \end{minipage}
+  \vspace{1.0cm}\\
   {\color{rule}\rule{0.6\textwidth}{0.6pt}\par}
+  \vspace{1.0cm}
+{\color{rule}\rule{0.6\textwidth}{0.6pt}\par}
   \vspace{1.8cm}
   \begin{minipage}{0.82\textwidth}
     \centering\sffamily\small\color{muted}
@@ -504,6 +543,24 @@ $\displaystyle n_x = \mathrm{clamp}(c_x,\, i,\, i{+}1),\qquad n_y = \mathrm{clam
 
 \textbf{预期结果：}欧几里得通常误差小于 $1\%$；阈值高估若干个百分点；Bresenham 介于两者之间。集体反馈。
 \end{huodong}
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.31\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig01_2d_d20_euclidean.png}
+  \caption{\emph{欧几里得}}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.31\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig02_2d_d20_bresenham.png}
+  \caption{\emph{Bresenham}}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.31\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig03_2d_d20_threshold.png}
+  \caption{\emph{阈值}}
+\end{subfigure}
+\caption{同一直径 20 的圆在三种算法中的表现。直径较大时差异更细微，直径较小时差异更明显。}
+\label{fig:comp-d20}
+\end{figure}
+
 
 % =============================================================================
 \subsection{第三课时 ---\quad “从椭圆到椭球：跨入三维”}
@@ -530,6 +587,20 @@ $\displaystyle a_x^2 + a_y^2 + a_z^2 \leq 1,\quad a_\xi = \dfrac{\xi + \tfrac{1}
 
 \textbf{演示：}将 Pixel Round 切换为 3D 模式，在球与椭球之间切换，鼠标拖动旋转，对比三种渲染样式（\emph{Classic, Smooth, Blocks}）。
 \end{huodong}
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.42\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig07_3d_sphere_d12.png}
+  \caption{球 $D = 12$（$r_x = r_y = r_z = 6$）。}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.42\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig08_3d_ellipsoid.png}
+  \caption{椭球 $W = 20, H = 10, D = 12$。}
+\end{subfigure}
+\caption{三维体素化。每个立方体是一个体素，其中心坐标根据隐式方程测试。}
+\label{fig:3d-shapes}
+\end{figure}
+
 
 \begin{huodong}[3.2 ---\quad 连续体积与离散体积 \quad\shijian{15 分钟}]
 椭球的连续体积是积分学经典结果：
@@ -567,6 +638,24 @@ $\begin{array}{lcl}
 
 \textbf{引导提问：}\emph{“对角切割的滑块为什么范围是 $0$ 到 $D_x + D_y$，而不是 $D_x$？方程的哪部分告诉我们这一点？”}
 \end{huodong}
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.31\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig09_3d_cut_y50.png}
+  \caption{Y 方向切割 50\%（$y \geq 5$ 被舍弃）}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.31\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig10_3d_cut_x50.png}
+  \caption{X 方向切割 50\%（$x \geq 10$ 被舍弃）}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.31\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig11_3d_cut_diag50.png}
+  \caption{对角切割（$x + y \geq 15$ 被舍弃）}
+\end{subfigure}
+\caption{同一椭球（$W = 20, H = 10, D = 12$）上的三种平面切割，每种保留 50\% 的体积。请注意对角切割的阶梯形图案。}
+\label{fig:cortes}
+\end{figure}
+
 
 \begin{huodong}[3.4 ---\quad 中国数学史回响 \quad\shijian{7 分钟}]
 \emph{回到刘徽与祖冲之的圆周率工作。}

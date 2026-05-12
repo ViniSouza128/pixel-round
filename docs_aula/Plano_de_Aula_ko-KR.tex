@@ -35,7 +35,17 @@
 \usepackage{graphicx}
 \usepackage{tcolorbox}
 \tcbuselibrary{skins,breakable}
-\usepackage[hidelinks,bookmarks=true,bookmarksopen=true,
+\usepackage{needspace}                   % evita orfas em caixas didaticas
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}                       % [H] = "exatamente aqui, sem float"
+
+\raggedbottom                            % paginas terminam onde o texto termina
+\usepackage[colorlinks=true,
+            linkcolor=linkc,
+            urlcolor=linkc,
+            citecolor=linkc,
+            bookmarks=true,bookmarksopen=true,
             pdftitle={Pixel Round — 수업 지도안 (ko-KR)},
             pdfauthor={Vinícius Rodrigues de Souza}]{hyperref}
 
@@ -45,8 +55,13 @@
 \definecolor{muted}{HTML}{4E4E58}
 \definecolor{bg}{HTML}{FBF6E9}
 \definecolor{rule}{HTML}{D8D1BC}
+\definecolor{linkc}{HTML}{8A0F0F}             % links: tom mais escuro do accent
 
 \color{ink}
+
+% Penalidades altas contra orfas / viuvas globalmente
+\widowpenalty=10000
+\clubpenalty=10000
 
 % ---------- 제목 스타일 ------------------------------------------------------
 \titleformat{\section}
@@ -76,7 +91,8 @@
   colback=bg, colframe=rule, boxrule=0.4pt, arc=2pt,
   left=10pt,right=10pt,top=8pt,bottom=8pt,
   before skip=8pt, after skip=8pt,
-  fontupper=\color{accent}, breakable
+  fontupper=\color{accent}, breakable,
+  before={\par\needspace{4\baselineskip}}
 }
 
 \newtcolorbox{hwaldong}[1][학습 활동]{
@@ -84,6 +100,7 @@
   colback=bg, colframe=accent, boxrule=0.6pt, arc=4pt,
   left=12pt,right=12pt,top=10pt,bottom=10pt,
   before skip=12pt, after skip=12pt,
+  before={\par\needspace{14\baselineskip}},
   attach boxed title to top left={xshift=10pt,yshift=-8pt},
   boxed title style={colback=accent,colframe=accent,boxrule=0pt,arc=2pt},
   coltitle=white, fonttitle=\sffamily\bfseries\small,
@@ -95,6 +112,7 @@
   colback=bg!50!white, colframe=rule, boxrule=0.4pt, arc=2pt,
   left=10pt,right=10pt,top=8pt,bottom=8pt,
   before skip=8pt, after skip=8pt,
+  before={\par\needspace{6\baselineskip}},
   attach boxed title to top left={xshift=10pt,yshift=-7pt},
   boxed title style={colback=muted,colframe=muted,boxrule=0pt,arc=2pt},
   coltitle=white, fonttitle=\sffamily\bfseries\footnotesize,
@@ -106,6 +124,7 @@
   colback=bg!70!white, colframe=accent!60!ink, boxrule=0.4pt, arc=2pt,
   left=10pt,right=10pt,top=6pt,bottom=6pt,
   before skip=6pt, after skip=6pt,
+  before={\par\needspace{4\baselineskip}},
   attach boxed title to top left={xshift=10pt,yshift=-6pt},
   boxed title style={colback=accent!60!ink,colframe=accent!60!ink,boxrule=0pt,arc=2pt},
   coltitle=white, fonttitle=\sffamily\bfseries\footnotesize,
@@ -119,6 +138,17 @@
 \newcommand{\code}[1]{\texttt{\small #1}}
 \newcommand{\acc}[1]{\textcolor{accent}{\textbf{#1}}}
 \newcommand{\sigan}[1]{\textnormal{\footnotesize\color{bg!90!white}\textsf{#1}}}
+
+% Configuracao de legendas
+\captionsetup{font=small, labelfont={bf,color=accent}, textfont={color=muted}, justification=centering}
+\captionsetup[sub]{font=footnotesize, labelfont={bf,color=accent!75!ink}, textfont={color=muted}}
+
+% Espacamento das figuras
+\setlength{\textfloatsep}{14pt plus 2pt minus 2pt}
+\setlength{\floatsep}{14pt plus 2pt minus 2pt}
+\setlength{\intextsep}{14pt plus 2pt minus 2pt}
+
+\graphicspath{{img/}}
 
 \begin{document}
 
@@ -146,7 +176,16 @@
     수학과 ``기하'' 과목과 ``인공지능 수학'' 과목에 부합한다.
   \end{minipage}
   \vspace{0.9cm}\\
+    \vspace{1.4cm}
+  \begin{minipage}{0.78\textwidth}
+    \centering
+    \includegraphics[width=0.55\linewidth]{fig07_3d_sphere_d12.png}\\[0.6em]
+    {\sffamily\footnotesize\color{muted}Pixel Round로 복셀화된 지름 12 구.}
+  \end{minipage}
+  \vspace{1.0cm}\\
   {\color{rule}\rule{0.6\textwidth}{0.6pt}\par}
+  \vspace{1.0cm}
+{\color{rule}\rule{0.6\textwidth}{0.6pt}\par}
   \vspace{1.8cm}
   \begin{minipage}{0.82\textwidth}
     \centering\sffamily\small\color{muted}
@@ -514,6 +553,24 @@ $\left(\dfrac{n_x - c_x}{r_x}\right)^{\!2} + \left(\dfrac{n_y - c_y}{r_y}\right)
 
 \textbf{예상 결과:}유클리드 < 1\%, 임계값 5--8\% 과대 추정, 브레젠험 그 중간. 전체 공유.
 \end{hwaldong}
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.31\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig01_2d_d20_euclidean.png}
+  \caption{\emph{유클리드}}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.31\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig02_2d_d20_bresenham.png}
+  \caption{\emph{Bresenham}}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.31\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig03_2d_d20_threshold.png}
+  \caption{\emph{임계값}}
+\end{subfigure}
+\caption{세 알고리즘에서 같은 지름 20 원의 비교. 지름이 클수록 차이는 미묘하며, 작은 지름에서 더 뚜렷하다.}
+\label{fig:comp-d20}
+\end{figure}
+
 
 % =============================================================================
 \subsection{3차시 ---\,``타원에서 타원체로:3차원으로의 도약''}
@@ -540,6 +597,20 @@ $\displaystyle a_x^2 + a_y^2 + a_z^2 \leq 1,\quad a_\xi = \dfrac{\xi + \tfrac{1}
 
 \textbf{실연:}Pixel Round를 3D 모드로 전환. 구와 타원체를 번갈아 보여주고, 마우스로 회전, 세 가지 렌더링 스타일 (\emph{Classic, Smooth, Blocks}) 을 비교.
 \end{hwaldong}
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.42\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig07_3d_sphere_d12.png}
+  \caption{구 $D = 12$ ($r_x = r_y = r_z = 6$).}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.42\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig08_3d_ellipsoid.png}
+  \caption{타원체 $W = 20, H = 10, D = 12$.}
+\end{subfigure}
+\caption{3D 복셀화. 각 정육면체가 하나의 복셀이며, 중심 좌표가 음함수 방정식으로 판정된다.}
+\label{fig:3d-shapes}
+\end{figure}
+
 
 \begin{hwaldong}[3.2 ---\, 연속 부피와 이산 부피 \quad\sigan{15분}]
 타원체의 연속 부피는 미적분의 고전적 결과:
@@ -577,6 +648,24 @@ $\begin{array}{lcl}
 
 \textbf{발문:}\emph{``대각선 절단의 슬라이더는 왜 $0$ 부터 $D_x + D_y$ 까지 움직이는가? $D_x$ 가 아닌 이유는? 방정식의 어디에 답이 있는가?''}
 \end{hwaldong}
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.31\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig09_3d_cut_y50.png}
+  \caption{Y 절단 50\% ($y \geq 5$ 제거)}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.31\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig10_3d_cut_x50.png}
+  \caption{X 절단 50\% ($x \geq 10$ 제거)}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.31\linewidth}\centering
+  \includegraphics[width=\linewidth]{fig11_3d_cut_diag50.png}
+  \caption{대각 절단 ($x + y \geq 15$ 제거)}
+\end{subfigure}
+\caption{같은 타원체($W = 20, H = 10, D = 12$)에 대한 세 가지 평면 절단, 각 부피의 50\%를 유지. 대각 절단의 계단 패턴에 주목.}
+\label{fig:cortes}
+\end{figure}
+
 
 \begin{hwaldong}[3.4 ---\, 한국 문화와의 접점 \quad\sigan{10분}]
 \emph{한글, 한옥, 케이팝 시각 디자인 속의 기하학.}
